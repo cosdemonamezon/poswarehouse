@@ -13,7 +13,7 @@ class CreateOrderOffLine extends StatefulWidget {
 class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   GlobalKey globalKey = GlobalKey();
   TextEditingController textPriceController = TextEditingController();
-  String changPrice = '0.00';
+  String changPrice = '0.00';  
 
   @override
   void initState() {
@@ -50,9 +50,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                               children: [
                                 Icon(Icons.list_alt_rounded),
                                 Text(
-                                  "ข้อมูล",
+                                  "ข้อมูลลูกค้า",
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w300),
                                 )
                               ],
@@ -76,15 +76,14 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                           padding:
                                               EdgeInsets.symmetric(vertical: 2),
                                           child: Text(
-                                            'รหัส',
+                                            'รหัสสมาชิก',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: size.height * 0.001),
+                                        SizedBox(
+                                          height: size.height * 0.055,
                                           child: appTextFormField(
                                             sufPress: () {},
                                             vertical: 5.0,
@@ -93,7 +92,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                         ),
                                         Padding(
                                           padding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                              EdgeInsets.symmetric(vertical: 2),
                                           child: Text(
                                             'ชื่อลูกค้า',
                                             style: TextStyle(
@@ -101,9 +100,26 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 fontSize: 16),
                                           ),
                                         ),
+                                        SizedBox(
+                                          height: size.height * 0.055,
+                                          child: appTextFormField(
+                                            sufPress: () {},
+                                            vertical: 5.0,
+                                            horizontal: 5.0,
+                                          ),
+                                        ),
                                         Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: size.height * 0.001),
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 2),
+                                          child: Text(
+                                            'อีเมล',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: size.height * 0.055,
                                           child: appTextFormField(
                                             sufPress: () {},
                                             vertical: 5.0,
@@ -123,7 +139,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                              EdgeInsets.symmetric(vertical: 2),
                                           child: Text(
                                             'วันที่',
                                             style: TextStyle(
@@ -131,9 +147,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 fontSize: 16),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: size.height * 0.001),
+                                        SizedBox(
+                                          height: size.height * 0.055,
                                           child: appTextFormField(
                                             sufPress: () {},
                                             sufIcon: Icons.calendar_month,
@@ -143,7 +158,25 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                         ),
                                         Padding(
                                           padding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                              EdgeInsets.symmetric(vertical: 2),
+                                          child: Text(
+                                            'ที่อยู่',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: size.height * 0.055,
+                                          child: appTextFormField(
+                                            sufPress: () {},
+                                            vertical: 5.0,
+                                            horizontal: 5.0,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 2),
                                           child: Text(
                                             'เบอร์โทร',
                                             style: TextStyle(
@@ -151,9 +184,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 fontSize: 16),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: size.height * 0.001),
+                                        SizedBox(
+                                          height: size.height * 0.055,
                                           child: appTextFormField(
                                             sufPress: () {},
                                             vertical: 5.0,
@@ -227,11 +259,12 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 ],
                               ),
                             ),
+                            
                             /////////////////\\\\\\\\\\\\\
                             Container(
                               width: size.width * 0.68,
-                              height: size.height * 0.40,
-                              color: Colors.amber,
+                              height: size.height * 0.35,
+                              //color: Colors.amber,
                               child: SingleChildScrollView(
                                 child: SizedBox(
                                   width: double.infinity,
@@ -285,7 +318,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                               children: [
                                 Container(
                                   width: size.width * 0.22,
-                                  color: Colors.red,
+                                  //color: Colors.red,
                                   child: Column(
                                     children: [
                                       Row(

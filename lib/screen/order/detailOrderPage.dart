@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 
 class DetailOrderPage extends StatefulWidget {
   DetailOrderPage({Key? key}) : super(key: key);
@@ -37,9 +38,12 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Icon(
-                          Icons.print_rounded,
-                          size: 40,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.print_rounded,
+                            size: 40,
+                          ),
                         ),
                       ),
                     ],
@@ -84,23 +88,13 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.06,
-                        width: size.width * 0.45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 227, 237, 241),
-                              border: Border.all(color: Colors.white)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'PO-02245',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
@@ -110,49 +104,45 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.06,
-                        width: size.width * 0.45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 227, 237, 241),
-                              border: Border.all(color: Colors.white)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'รับสินค้าเข้า',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
-                          'หมวดหมู่',
+                          'เบอร์โทร',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.06,
-                        width: size.width * 0.45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 227, 237, 241),
-                              border: Border.all(color: Colors.white)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'เคสมือถือ',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2),
+                        child: Text(
+                          'ประเภทสินค้า',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
                     ],
                   ),
                   //------------------
@@ -163,29 +153,19 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
-                          'ชื่อร้าน',
+                          'ชื่อร้านค้า',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.06,
-                        width: size.width * 0.45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 227, 237, 241),
-                              border: Border.all(color: Colors.white)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'ร้าน 222 โฟน',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
@@ -195,49 +175,45 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.06,
-                        width: size.width * 0.45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 227, 237, 241),
-                              border: Border.all(color: Colors.white)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '20/1 เมือง 12315566',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
-                          'วันที่เริ่ม',
+                          'วันที่รับ',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.06,
-                        width: size.width * 0.45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 227, 237, 241),
-                              border: Border.all(color: Colors.white)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '28/02/2566',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2),
+                        child: Text(
+                          'พื้นที่จัดเก็บสินค้า',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          width: size.width * 0.45,
+                          child: appTextFormField(
+                            sufPress: () {},
+                            vertical: 25.0,
+                            horizontal: 10.0,
+                          )),
                     ],
                   ),
                 ],
@@ -271,10 +247,13 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         label: Text('จำนวน'),
                       ),
                       DataColumn(
-                        label: Text('ราคาขาย'),
+                        label: Text('ราคาทุน'),
                       ),
                       DataColumn(
                         label: Text('ยอดรวม'),
+                      ),
+                      DataColumn(
+                        label: Text('ที่เก็บสินค้า'),
                       ),
                     ],
                     rows: List<DataRow>.generate(
@@ -291,6 +270,8 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                     Text('${newitemcell[index]['price']}')),
                                 DataCell(
                                     Text('${newitemcell[index]['total']}')),
+                                DataCell(Text(
+                                    '${newitemcell[index]['warehouseID']}')),
                               ],
                             ))),
               ),

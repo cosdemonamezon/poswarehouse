@@ -167,15 +167,21 @@ class _OrderPageState extends State<OrderPage> {
                                                     : Colors.red,
                                     label:
                                         Text('${itemcell[index]['status']}'))),
-                                DataCell(IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailOrderPage()));
-                                    },
-                                    icon: Icon(Icons.more_vert)))
+                                DataCell(Row(
+                                  children: [                                    
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailOrderPage()));
+                                        },
+                                        icon: Icon(Icons.remove_red_eye_outlined)),
+                                    IconButton(onPressed: (){}, icon: Icon(Icons.edit_calendar_outlined)),
+                                    IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                                  ],
+                                ))
                               ],
                               selected: selected[index],
                               onSelectChanged: (bool? value) {

@@ -6,10 +6,12 @@ class DialogOk extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.description,
-      required this.press})
+      required this.press, this.warehouseID, this.warehouseName})
       : super(key: key);
   final String title, description;
   final VoidCallback press;
+  final TextEditingController? warehouseName;
+  final TextEditingController? warehouseID;
 
   @override
   State<DialogOk> createState() => _DialogOkState();
@@ -59,7 +61,7 @@ class _DialogOkState extends State<DialogOk> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
-                          'ชื่อหมวดหมู่',
+                          'ชื่อประเภทสินค้า',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -67,8 +69,43 @@ class _DialogOkState extends State<DialogOk> {
                       SizedBox(height: size.height * 0.02),
                       SizedBox(
                         height: size.height * 0.08,
-                        width: size.width * 0.45,
+                        width: size.width * 0.25,
                         child: TextFormField(
+                          controller: widget.warehouseName,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 10),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: size.width * 0.02,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2),
+                        child: Text(
+                          'พื้นที่จัดเก็บสินค้า',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      SizedBox(
+                        height: size.height * 0.08,
+                        width: size.width * 0.25,
+                        child: TextFormField(
+                          controller: widget.warehouseID,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 10),
@@ -99,7 +136,7 @@ class _DialogOkState extends State<DialogOk> {
                         color: kPrimaryColor),
                     child: Center(
                       child: Text(
-                        'สร้าง',
+                        'บันทึก',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -124,10 +161,12 @@ class DialogWareHouse extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.description,
-      required this.press})
+      required this.press, this.warehouseID, this.warehouseName})
       : super(key: key);
   final String title, description;
   final VoidCallback press;
+  final TextEditingController? warehouseName;
+  final TextEditingController? warehouseID;
 
   @override
   State<DialogWareHouse> createState() => _DialogWareHouseState();
@@ -187,6 +226,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                         height: size.height * 0.08,
                         width: size.width * 0.25,
                         child: TextFormField(
+                          controller: widget.warehouseName,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 10),
@@ -220,6 +260,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                         height: size.height * 0.08,
                         width: size.width * 0.25,
                         child: TextFormField(
+                          controller: widget.warehouseID,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 10),

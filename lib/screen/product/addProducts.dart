@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 
 class AddProducts extends StatefulWidget {
   AddProducts({Key? key}) : super(key: key);
@@ -9,6 +10,12 @@ class AddProducts extends StatefulWidget {
 }
 
 class _AddProductsState extends State<AddProducts> {
+  final GlobalKey<FormState> addProductFormKey = GlobalKey<FormState>();
+  final TextEditingController productId = TextEditingController();
+  final TextEditingController productName = TextEditingController();
+  final TextEditingController originPrice = TextEditingController();
+  final TextEditingController retailPrice = TextEditingController();
+  final TextEditingController wholesalePrice = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -23,33 +30,6 @@ class _AddProductsState extends State<AddProducts> {
             children: [
               SizedBox(
                 height: size.height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: GestureDetector(
-                      onTap: () async {},
-                      child: Container(
-                        width: size.width * 0.1,
-                        height: size.height * 0.08,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: kPrimaryColor),
-                        child: Center(
-                          child: Text(
-                            'เลือกสินค้า',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ),
               SizedBox(
                 height: size.height * 0.02,
@@ -67,29 +47,20 @@ class _AddProductsState extends State<AddProducts> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'รหัส',
+                            'รหัสสินค้า',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 227, 237, 241),
-                                border: Border.all(color: Colors.white)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'PO-02245',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                            height: size.height * 0.08,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              controller: productId,
+                              sufPress: () {},
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
                         Container(
                           height: size.height * 0.12,
                           width: size.width * 0.45,
@@ -123,29 +94,20 @@ class _AddProductsState extends State<AddProducts> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'ชื่อลูกค้า / ร้านค้า',
+                            'ราคาทุน',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 227, 237, 241),
-                                border: Border.all(color: Colors.white)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'ร้าน 232323',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                            height: size.height * 0.08,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              controller: originPrice,
+                              sufPress: () {},
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
                       ],
                     ),
                   ),
@@ -159,81 +121,54 @@ class _AddProductsState extends State<AddProducts> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'วันที่',
+                            'ชื่อสินค้า',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 227, 237, 241),
-                                border: Border.all(color: Colors.white)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '28/02/2023',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                            height: size.height * 0.08,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              controller: productName,
+                              sufPress: () {},
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'ชำระเงินด้วย',
+                            'ราคาขายปลีก',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 227, 237, 241),
-                                border: Border.all(color: Colors.white)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'เงินสด',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                            height: size.height * 0.08,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              controller: retailPrice,
+                              sufPress: () {},
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'ชำระเงินด้วย',
+                            'ราคาขายส่ง',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 227, 237, 241),
-                                border: Border.all(color: Colors.white)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'เงินสด',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                            height: size.height * 0.08,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              controller: wholesalePrice,
+                              sufPress: () {},
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
                       ],
                     ),
                   ),

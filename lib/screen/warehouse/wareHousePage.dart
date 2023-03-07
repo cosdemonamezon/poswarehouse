@@ -11,6 +11,11 @@ class WareHousePage extends StatefulWidget {
 }
 
 class WareHousePageState extends State<WareHousePage> {
+  final GlobalKey<FormState> warehouseFormKey = GlobalKey<FormState>();
+  final TextEditingController? warehouseID = TextEditingController();
+  final TextEditingController? warehouseName = TextEditingController();
+  
+  
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   List<Map<String, dynamic>> itemcell = [
@@ -71,8 +76,10 @@ class WareHousePageState extends State<WareHousePage> {
                           barrierDismissible: false,
                           builder: (BuildContext context) {
                             return DialogWareHouse(
-                              title: 'รอตรวจสอบ',
-                              description: 'รายการนี้กำลังรอ ทีมแอดมินตรวจสอบ',
+                              warehouseID: warehouseID,
+                              warehouseName: warehouseName,
+                              title: '',
+                              description: '',
                               press: () {
                                 Navigator.pop(context);
                               },

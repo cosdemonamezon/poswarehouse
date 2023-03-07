@@ -190,15 +190,17 @@ class _AppTextFormEmailState extends State<AppTextFormEmail> {
 }
 
 class appTextFormField extends StatelessWidget {
-  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, required this.horizontal, required this.vertical});
+  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, required this.horizontal, required this.vertical, this.controller});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
   final double vertical;
   final double horizontal;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),

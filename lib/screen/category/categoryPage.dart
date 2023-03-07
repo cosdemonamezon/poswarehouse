@@ -11,25 +11,17 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  List multipleSelected = [];
-  List checkListItems = [
-    {
-      "id": 1,
-      "value": false,
-      "title": "หมวดหมู่สินค้า",
-    },
-    {
-      "id": 2,
-      "value": false,
-      "title": "เบ็ดเตล็ด",
-    },
-  ];
+  static const int numItems = 10;
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  final GlobalKey<FormState> warehouseFormKey = GlobalKey<FormState>();
+  final TextEditingController? warehouseID = TextEditingController();
+  final TextEditingController? warehouseName = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('หมวดหมู่'),
+        title: Text('ประเภทสินค้าทั้งหมด'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -60,6 +52,8 @@ class _CategoryPageState extends State<CategoryPage> {
                           barrierDismissible: false,
                           builder: (BuildContext context) {
                             return DialogOk(
+                              warehouseID: warehouseID,
+                              warehouseName: warehouseName,
                               title: 'รอตรวจสอบ',
                               description: 'รายการนี้กำลังรอ ทีมแอดมินตรวจสอบ',
                               press: () {
@@ -70,14 +64,14 @@ class _CategoryPageState extends State<CategoryPage> {
                         );
                       },
                       child: Container(
-                        width: size.width * 0.1,
+                        width: size.width * 0.2,
                         height: size.height * 0.08,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: kPrimaryColor),
                         child: Center(
                           child: Text(
-                            'เพิ่มหมวดหมู่',
+                            'สร้างประเภทสินค้า',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -92,45 +86,54 @@ class _CategoryPageState extends State<CategoryPage> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              Column(
-                children: List.generate(
-                    checkListItems.length,
-                    (index) => SizedBox(
-                          height: size.height * 0.12,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 245, 251, 253),
-                                border: Border.all(color: Colors.white),
-                              ),
-                              child: CheckboxListTile(
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                contentPadding: EdgeInsets.zero,
-                                dense: true,
-                                title: Text(
-                                  '${checkListItems[index]["title"]}',
-                                  style: TextStyle(fontSize: 25.0),
-                                ),
-                                value: checkListItems[index]["value"],
-                                onChanged: (value) {
-                                  setState(() {
-                                    checkListItems[index]["value"] = value;
-                                    if (multipleSelected
-                                        .contains(checkListItems[index])) {
-                                      multipleSelected
-                                          .remove(checkListItems[index]);
-                                    } else {
-                                      multipleSelected
-                                          .add(checkListItems[index]);
-                                    }
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        )),
+              SizedBox(
+                width: double.infinity,
+                child: DataTable(
+                    columns: <DataColumn>[
+                      DataColumn(
+                        label: Text('ประเภทสินค้า'),
+                      ),
+                      DataColumn(
+                        label: Text('พื้นที่เก็บสินค้า'),
+                      ),
+                      DataColumn(
+                        label: Text(''),
+                      ),
+                    ],
+                    rows: List<DataRow>.generate(
+                        4,
+                        (index) => DataRow(
+                              color: MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                // All rows will have the same selected color.
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.08);
+                                }
+                                // Even rows will have a grey color.
+                                if (index.isEven) {
+                                  return Colors.grey.withOpacity(0.3);
+                                }
+                                return null; // Use default value for other states and odd rows.
+                              }),
+                              cells: <DataCell>[
+                                DataCell(Text('${productType[index]['typeProduct']}')),
+                                DataCell(Text('${productType[index]['warehouseID']}')),
+                                DataCell(Row(children: [
+                                  Icon(Icons.remove_red_eye),
+                                  Icon(Icons.edit_calendar_sharp),
+                                  Icon(Icons.delete),
+                                ],)),
+                              ],
+                              selected: selected[index],
+                              onSelectChanged: (bool? value) {
+                                setState(() {
+                                  selected[index] = value!;
+                                });
+                              },
+                            ))),
               ),
             ],
           ),

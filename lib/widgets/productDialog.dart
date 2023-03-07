@@ -97,10 +97,7 @@ class _ProductDialogState extends State<ProductDialog> {
                                 DataCell(Text('${productList[index]['id']}')),
                                 DataCell(
                                     Text('${productList[index]['name']}')),
-                                DataCell(SizedBox(
-                                  height: size.height * 0.10,
-                                  width: size.width * 0.10,
-                                  child: Center(child: Image.asset('${productList[index]['image']}')))),
+                                DataCell(Image.asset('${productList[index]['image']}')),
                                 DataCell(
                                     Text('${productList[index]['price']}')),
                                 DataCell(
