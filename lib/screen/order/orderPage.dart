@@ -105,7 +105,9 @@ class _OrderPageState extends State<OrderPage> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              SizedBox(
+              Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey)),
                 width: double.infinity,
                 child: DataTable(
                     columns: <DataColumn>[
@@ -168,7 +170,7 @@ class _OrderPageState extends State<OrderPage> {
                                     label:
                                         Text('${itemcell[index]['status']}'))),
                                 DataCell(Row(
-                                  children: [                                    
+                                  children: [
                                     IconButton(
                                         onPressed: () {
                                           Navigator.push(
@@ -177,9 +179,15 @@ class _OrderPageState extends State<OrderPage> {
                                                   builder: (context) =>
                                                       DetailOrderPage()));
                                         },
-                                        icon: Icon(Icons.remove_red_eye_outlined)),
-                                    IconButton(onPressed: (){}, icon: Icon(Icons.edit_calendar_outlined)),
-                                    IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                                        icon: Icon(
+                                            Icons.remove_red_eye_outlined)),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon:
+                                            Icon(Icons.edit_calendar_outlined)),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.delete)),
                                   ],
                                 ))
                               ],
