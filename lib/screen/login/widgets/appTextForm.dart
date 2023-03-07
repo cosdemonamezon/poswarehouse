@@ -218,3 +218,31 @@ class appTextFormField extends StatelessWidget {
     );
   }
 }
+
+class appTextTowFormField extends StatelessWidget {
+  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress,  this.controller, this.labelText});
+  IconData? preIcon;
+  IconData? sufIcon;
+  VoidCallback sufPress;
+  final TextEditingController? controller;
+  String? labelText;
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: '${labelText}',
+          filled: true,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          prefixIcon: Icon(preIcon),
+          suffixIcon: IconButton(
+            onPressed: sufPress,
+            icon: Icon(sufIcon))),
+    );
+  }
+}

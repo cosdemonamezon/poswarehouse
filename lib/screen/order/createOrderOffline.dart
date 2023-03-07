@@ -13,12 +13,23 @@ class CreateOrderOffLine extends StatefulWidget {
 class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   GlobalKey globalKey = GlobalKey();
   TextEditingController textPriceController = TextEditingController();
-  String changPrice = '0.00';  
+  String changPrice = '0.00';
+  bool isRetailPrice = false;
+  bool isWholeSalePrice = false;
+  bool isStockSellingPrice = false;
+  List multipleSelected = [];
+  String gender = "";
+  String radioButtonItem = 'ONE';
+  int id = 1;
 
   @override
   void initState() {
     super.initState();
     textPriceController.text = '0.00';
+    setState(() {
+      radioButtonItem = checkListItems[0]['title'];
+      id = id = int.parse(checkListItems[0]["id"].toString());
+    });
   }
 
   @override
@@ -57,9 +68,13 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 )
                               ],
                             ),
+                            SizedBox(
+                              height: size.height * 0.01,
+                            ),
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 2),
+                                horizontal: 25,
+                              ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -72,58 +87,31 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 2),
-                                          child: Text(
-                                            'รหัสสมาชิก',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
+                                        SizedBox(
+                                          height: size.height * 0.06,
+                                          child: appTextTowFormField(
+                                            labelText: 'รหัสสมาชิก',
+                                            sufPress: () {},
                                           ),
                                         ),
                                         SizedBox(
-                                          height: size.height * 0.055,
-                                          child: appTextFormField(
-                                            sufPress: () {},
-                                            vertical: 5.0,
-                                            horizontal: 5.0,
-                                          ),
+                                          height: size.height * 0.01,
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 2),
-                                          child: Text(
-                                            'ชื่อลูกค้า',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
+                                        SizedBox(
+                                          height: size.height * 0.06,
+                                          child: appTextTowFormField(
+                                            labelText: 'ชื่อลูกค้า',
+                                            sufPress: () {},
                                           ),
                                         ),
                                         SizedBox(
-                                          height: size.height * 0.055,
-                                          child: appTextFormField(
-                                            sufPress: () {},
-                                            vertical: 5.0,
-                                            horizontal: 5.0,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 2),
-                                          child: Text(
-                                            'อีเมล',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
+                                          height: size.height * 0.01,
                                         ),
                                         SizedBox(
-                                          height: size.height * 0.055,
-                                          child: appTextFormField(
+                                          height: size.height * 0.06,
+                                          child: appTextTowFormField(
+                                            labelText: 'อีเมล',
                                             sufPress: () {},
-                                            vertical: 5.0,
-                                            horizontal: 5.0,
                                           ),
                                         ),
                                       ],
@@ -137,59 +125,32 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 2),
-                                          child: Text(
-                                            'วันที่',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                        ),
                                         SizedBox(
-                                          height: size.height * 0.055,
-                                          child: appTextFormField(
+                                          height: size.height * 0.06,
+                                          child: appTextTowFormField(
+                                            labelText: 'วันที่',
                                             sufPress: () {},
                                             sufIcon: Icons.calendar_month,
-                                            vertical: 5.0,
-                                            horizontal: 5.0,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 2),
-                                          child: Text(
-                                            'ที่อยู่',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
                                           ),
                                         ),
                                         SizedBox(
-                                          height: size.height * 0.055,
-                                          child: appTextFormField(
-                                            sufPress: () {},
-                                            vertical: 5.0,
-                                            horizontal: 5.0,
-                                          ),
+                                          height: size.height * 0.01,
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 2),
-                                          child: Text(
-                                            'เบอร์โทร',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
+                                        SizedBox(
+                                          height: size.height * 0.06,
+                                          child: appTextTowFormField(
+                                            labelText: 'ที่อยู่',
+                                            sufPress: () {},
                                           ),
                                         ),
                                         SizedBox(
-                                          height: size.height * 0.055,
-                                          child: appTextFormField(
+                                          height: size.height * 0.01,
+                                        ),
+                                        SizedBox(
+                                          height: size.height * 0.06,
+                                          child: appTextTowFormField(
+                                            labelText: 'เบอร์โทร',
                                             sufPress: () {},
-                                            vertical: 5.0,
-                                            horizontal: 5.0,
                                           ),
                                         ),
                                       ],
@@ -259,7 +220,79 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 ],
                               ),
                             ),
-                            
+
+                            ///--------------------------\\\\
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: List.generate(checkListItems.length, (index) => SizedBox(
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        value: int.parse(checkListItems[index]["id"].toString()),
+                                        groupValue: id,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            radioButtonItem = '${checkListItems[index]["title"]}';
+                                            id = int.parse(checkListItems[index]["id"].toString());
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        '${checkListItems[index]["title"]}',
+                                        style: TextStyle(fontSize: 17.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),),
+                            ),
+                            Row(children: [
+                              // Wrap(
+                              //   direction: Axis.horizontal,
+                              //   children: List.generate(
+                              //     checkListItems.length,
+                              //     (index) => RadioListTile(
+                              //       title: Text("${checkListItems[index]["title"]}"),
+                              //       value: "${checkListItems[index]["title"]}",
+                              //       groupValue: gender,
+                              //       onChanged: (value) {
+                              //         setState(() {
+                              //           gender = value.toString();
+                              //         });
+                              //       },
+                              //     ),
+                              //   ),
+                              // ),
+                              // Wrap(
+                              //   direction: Axis.horizontal,
+                              //   children: List.generate(
+                              //     checkListItems.length,
+                              //     (index) => SizedBox(
+                              //       child: Row(
+                              //         children: [
+                              //           Checkbox(
+                              //             checkColor: Colors.white,
+                              //             value: checkListItems[index]["value"],
+                              //             onChanged: (value) {
+
+                              //               setState(() {
+                              //                 checkListItems[index]["value"] = value;
+                              //                 if (multipleSelected.contains(
+                              //                     checkListItems[index]["value"])) {
+                              //                   multipleSelected.remove(checkListItems[index]);
+                              //                 } else {
+                              //                   multipleSelected.clear();
+                              //                   multipleSelected.add(checkListItems[index]);
+                              //                 }
+                              //               });
+                              //             },
+                              //           ),
+                              //           Text('${checkListItems[index]["title"]}')
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ]),
                             /////////////////\\\\\\\\\\\\\
                             Container(
                               width: size.width * 0.68,

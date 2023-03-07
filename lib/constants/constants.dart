@@ -12,6 +12,7 @@ List<Map<String, dynamic>> newitemcell = [
     "amount": "10",
     "price": "99",
     "total": "990",
+    "type": "เบ็ดเตล็ด",
     "warehouseID": "AA001"
   },
   {
@@ -21,6 +22,7 @@ List<Map<String, dynamic>> newitemcell = [
     "amount": "10",
     "price": "99",
     "total": "990",
+    "type": "เบ็ดเตล็ด",
     "warehouseID": "AA002"
   },
   {
@@ -30,6 +32,7 @@ List<Map<String, dynamic>> newitemcell = [
     "amount": "10",
     "price": "99",
     "total": "990",
+    "type": "เบ็ดเตล็ด",
     "warehouseID": "AA003"
   },
   {
@@ -39,6 +42,7 @@ List<Map<String, dynamic>> newitemcell = [
     "amount": "10",
     "price": "99",
     "total": "990",
+    "type": "เบ็ดเตล็ด",
     "warehouseID": "AA004"
   },
   {
@@ -48,6 +52,7 @@ List<Map<String, dynamic>> newitemcell = [
     "amount": "10",
     "price": "99",
     "total": "990",
+    "type": "เบ็ดเตล็ด",
     "warehouseID": "AA005"
   },
   {
@@ -57,6 +62,7 @@ List<Map<String, dynamic>> newitemcell = [
     "amount": "10",
     "price": "99",
     "total": "990",
+    "type": "เบ็ดเตล็ด",
     "warehouseID": "AA006"
   }
 ];
@@ -105,17 +111,17 @@ List<Map<String, dynamic>> productType = [
 
 List checkListItems = [
   {
-    "id": 0,
+    "id": 1,
     "value": false,
     "title": "ราคาขายปลีก",
   },
   {
-    "id": 1,
+    "id": 2,
     "value": false,
     "title": "ราคาขายส่ง",
   },
   {
-    "id": 2,
+    "id": 3,
     "value": false,
     "title": "ราคาขายยกคลัง",
   }
