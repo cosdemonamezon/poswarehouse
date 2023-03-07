@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/screen/category/categoryPage.dart';
 import 'package:poswarehouse/screen/order/orderPage.dart';
+import 'package:poswarehouse/screen/pickupProduct/pickupProductPage.dart';
 import 'package:poswarehouse/screen/product/productsPage.dart';
 import 'package:poswarehouse/screen/saleItems/saleItemsPage.dart';
 import 'package:poswarehouse/screen/warehouse/wareHousePage.dart';
@@ -20,6 +21,9 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
       width: size.width * 0.3,
       child: Column(
         children: [
+          SizedBox(
+            height: size.height * 0.02,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -34,11 +38,12 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             height: size.height * 0.02,
           ),
           Center(
-            child: Text('ADMIN'),
+            child: Text('ADMIN',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
           ),
+          
           ListTile(
             title:
-                Center(child: Text("ภาพรวม", style: TextStyle(fontSize: 16))),
+                Center(child: Text("เช็คสต็อกสินค้า", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.output),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
@@ -98,10 +103,12 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
           Divider(),
           ListTile(
             title:
-                Center(child: Text("ตั้งค่า", style: TextStyle(fontSize: 16))),
+                Center(child: Text("เบิกสินค้า", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.settings),
             trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PickupProductPage()));
+            },
           ),
           Divider(),
           ListTile(

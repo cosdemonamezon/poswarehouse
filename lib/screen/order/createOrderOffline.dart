@@ -188,9 +188,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                           barrierDismissible: false,
                                           builder: (BuildContext context) {
                                             return ProductDialog(
-                                              title: 'รอตรวจสอบ',
-                                              description:
-                                                  'รายการนี้กำลังรอ ทีมแอดมินตรวจสอบ',
+                                              title: '',
+                                              description: '',
                                               press: () {
                                                 Navigator.pop(context);
                                               },

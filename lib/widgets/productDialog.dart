@@ -29,115 +29,125 @@ class _ProductDialogState extends State<ProductDialog> {
       ),
       child: SizedBox(
         width: size.width * 0.70,
-        height: size.height * 0.50,
+        height: size.height * 0.55,
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      onPressed: widget.press,
-                      icon: Icon(
-                        Icons.cancel,
-                        size: 30,
-                        color: Colors.blueAccent,
-                      )),
-                ],
-              ),
-              SizedBox(height: size.height * 0.02),
-              Center(
-                child: Text('เลือกสินค้า',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: DataTable(
-                    columns: <DataColumn>[
-                      DataColumn(
-                        label: Text('รหัส'),
-                      ),
-                      DataColumn(
-                        label: Text('ชื่อสินค้า'),
-                      ),
-                      DataColumn(
-                        label: Text('รูปภาพ'),
-                      ),
-                      DataColumn(
-                        label: Text('ราคาทุน'),
-                      ),
-                      DataColumn(
-                        label: Text('ราคาขาย'),
-                      ),
-                      DataColumn(
-                        label: Text('คงเหลือ'),
-                      ),
-                    ],
-                    rows: List<DataRow>.generate(
-                        productList.length,
-                        (index) => DataRow(
-                          color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                                // All rows will have the same selected color.
-                                if (states.contains(MaterialState.selected)) {
-                                  return Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.08);
-                                }
-                                // Even rows will have a grey color.
-                                if (index.isEven) {
-                                  return Colors.grey.withOpacity(0.3);
-                                }
-                                return null; // Use default value for other states and odd rows.
-                              }),
-                              cells: <DataCell>[
-                                DataCell(Text('${productList[index]['id']}')),
-                                DataCell(
-                                    Text('${productList[index]['name']}')),
-                                DataCell(Image.asset('${productList[index]['image']}')),
-                                DataCell(
-                                    Text('${productList[index]['price']}')),
-                                DataCell(
-                                    Text('${productList[index]['saleprice']}')),
-                                DataCell(
-                                    Text('${productList[index]['total']}')),
-                              ],
-                              selected: selected[index],
-                              onSelectChanged: (bool? value) {
-                                setState(() {
-                                  selected[index] = value!;
-                                });
-                              },
-                            ))),
-              ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: GestureDetector(
-                  onTap: () async {},
-                  child: Container(
-                    width: size.width * 0.1,
-                    height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor),
-                    child: Center(
-                      child: Text(
-                        'บันทึก',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        onPressed: widget.press,
+                        icon: Icon(
+                          Icons.cancel,
+                          size: 30,
+                          color: Colors.blueAccent,
+                        )),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.02),
+                Center(
+                  child: Text('เลือกสินค้า',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  child: DataTable(
+                      columns: <DataColumn>[
+                        DataColumn(
+                          label: Text('รหัส'),
+                        ),
+                        DataColumn(
+                          label: Text('ชื่อสินค้า'),
+                        ),
+                        DataColumn(
+                          label: Text('รูปภาพ'),
+                        ),
+                        DataColumn(
+                          label: Text('ราคาส่ง'),
+                        ),
+                        DataColumn(
+                          label: Text('ราคาขายปลีก'),
+                        ),
+                        DataColumn(
+                          label: Text('ราคาขายยกแพ็ค'),
+                        ),
+                        DataColumn(
+                          label: Text('คงเหลือ'),
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                          productList.length,
+                          (index) => DataRow(
+                                color: MaterialStateProperty.resolveWith<Color?>(
+                                    (Set<MaterialState> states) {
+                                  // All rows will have the same selected color.
+                                  if (states.contains(MaterialState.selected)) {
+                                    return Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.08);
+                                  }
+                                  // Even rows will have a grey color.
+                                  if (index.isEven) {
+                                    return Colors.grey.withOpacity(0.3);
+                                  }
+                                  return null; // Use default value for other states and odd rows.
+                                }),
+                                cells: <DataCell>[
+                                  DataCell(Text('${productList[index]['id']}')),
+                                  DataCell(Text('${productList[index]['name']}')),
+                                  DataCell(Image.asset(
+                                      '${productList[index]['image']}')),
+                                  DataCell(
+                                      Text('${productList[index]['price']}')),
+                                  DataCell(
+                                      Text('${productList[index]['saleprice']}')),
+                                  DataCell(
+                                      Text('${productList[index]['packprice']}')),
+                                  DataCell(
+                                      Text('${productList[index]['total']}')),
+                                ],
+                                selected: selected[index],
+                                onSelectChanged: (bool? value) {
+                                  setState(() {
+                                    selected[index] = value!;
+                                  });
+                                },
+                              ))),
+                ),
+                SizedBox(height: size.height * 0.05),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: GestureDetector(
+                    onTap: () async {},
+                    child: Container(
+                      width: size.width * 0.1,
+                      height: size.height * 0.08,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: kPrimaryColor),
+                      child: Center(
+                        child: Text(
+                          'เลือก',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-            ],
+                SizedBox(height: size.height * 0.03),
+              ],
+            ),
           ),
         ),
       ),

@@ -74,6 +74,7 @@ List<Map<String, dynamic>> productList = [
     "image": "assets/images/pos1.jpg",
     "price": "150",
     "saleprice": "199",
+    "packprice": "199",
     "total": "90 ชิ้น"
   },
   {
@@ -82,7 +83,49 @@ List<Map<String, dynamic>> productList = [
     "image": "assets/images/pos2.jpg",
     "price": "100",
     "saleprice": "299",
+    "packprice": "199",
     "total": "90 ชิ้น"
+  },
+];
+
+List<Map<String, dynamic>> pickupproduct = [
+  {
+    "id": "A001",
+    "date": "28/02/2023",
+    "form": "คลังสินค้าหลัก",
+    "to": "หน้าร้าน",
+    "status": "ยกเลิก",
+  },
+  {
+    "id": "A002",
+    "date": "28/02/2023",
+    "form": "คลังสินค้าหลัก",
+    "to": "หน้าร้าน",
+    "status": "สำเร็จ",
+  },
+];
+
+List<Map<String, dynamic>> pickupOrder = [
+  {
+    "id": "1",
+    "poid": "P0001",
+    "name": "เคสมือถือ 001",
+    "price": "200",
+    "amount": "30",
+  },
+  {
+    "id": "2",
+    "poid": "P0002",
+    "name": "เคสมือถือ 002",
+    "price": "200",
+    "amount": "30",
+  },
+  {
+    "id": "3",
+    "poid": "P0003",
+    "name": "เคสมือถือ 003",
+    "price": "200",
+    "amount": "30",
   },
 ];
 
