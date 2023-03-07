@@ -224,16 +224,23 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                             ///--------------------------\\\\
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: List.generate(checkListItems.length, (index) => SizedBox(
+                              children: List.generate(
+                                checkListItems.length,
+                                (index) => SizedBox(
                                   child: Row(
                                     children: [
                                       Radio(
-                                        value: int.parse(checkListItems[index]["id"].toString()),
+                                        value: int.parse(checkListItems[index]
+                                                ["id"]
+                                            .toString()),
                                         groupValue: id,
                                         onChanged: (val) {
                                           setState(() {
-                                            radioButtonItem = '${checkListItems[index]["title"]}';
-                                            id = int.parse(checkListItems[index]["id"].toString());
+                                            radioButtonItem =
+                                                '${checkListItems[index]["title"]}';
+                                            id = int.parse(checkListItems[index]
+                                                    ["id"]
+                                                .toString());
                                           });
                                         },
                                       ),
@@ -243,60 +250,16 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       ),
                                     ],
                                   ),
-                                ),),
+                                ),
+                              ),
                             ),
-                            Row(children: [
-                              // Wrap(
-                              //   direction: Axis.horizontal,
-                              //   children: List.generate(
-                              //     checkListItems.length,
-                              //     (index) => RadioListTile(
-                              //       title: Text("${checkListItems[index]["title"]}"),
-                              //       value: "${checkListItems[index]["title"]}",
-                              //       groupValue: gender,
-                              //       onChanged: (value) {
-                              //         setState(() {
-                              //           gender = value.toString();
-                              //         });
-                              //       },
-                              //     ),
-                              //   ),
-                              // ),
-                              // Wrap(
-                              //   direction: Axis.horizontal,
-                              //   children: List.generate(
-                              //     checkListItems.length,
-                              //     (index) => SizedBox(
-                              //       child: Row(
-                              //         children: [
-                              //           Checkbox(
-                              //             checkColor: Colors.white,
-                              //             value: checkListItems[index]["value"],
-                              //             onChanged: (value) {
 
-                              //               setState(() {
-                              //                 checkListItems[index]["value"] = value;
-                              //                 if (multipleSelected.contains(
-                              //                     checkListItems[index]["value"])) {
-                              //                   multipleSelected.remove(checkListItems[index]);
-                              //                 } else {
-                              //                   multipleSelected.clear();
-                              //                   multipleSelected.add(checkListItems[index]);
-                              //                 }
-                              //               });
-                              //             },
-                              //           ),
-                              //           Text('${checkListItems[index]["title"]}')
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ]),
                             /////////////////\\\\\\\\\\\\\
                             Container(
                               width: size.width * 0.68,
                               height: size.height * 0.35,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey)),
                               //color: Colors.amber,
                               child: SingleChildScrollView(
                                 child: SizedBox(

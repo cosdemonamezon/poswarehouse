@@ -14,31 +14,14 @@ class WareHousePageState extends State<WareHousePage> {
   final GlobalKey<FormState> warehouseFormKey = GlobalKey<FormState>();
   final TextEditingController? warehouseID = TextEditingController();
   final TextEditingController? warehouseName = TextEditingController();
-  
-  
+
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   List<Map<String, dynamic>> itemcell = [
-    {
-      "id": "W001",
-      "name": "คลังสินค้า 1",
-      "residualvalue": "3,000"
-    },
-    {
-      "id": "W002",
-      "name": "คลังสินค้า 2",
-      "residualvalue": "5,500"
-    },
-    {
-      "id": "W003",
-      "name": "คลังสินค้า 3",
-      "residualvalue": "63,000"
-    },
-    {
-      "id": "W004",
-      "name": "คลังสินค้า 4",
-      "residualvalue": "300,000"
-    }
+    {"id": "W001", "name": "คลังสินค้า 1", "residualvalue": "3,000"},
+    {"id": "W002", "name": "คลังสินค้า 2", "residualvalue": "5,500"},
+    {"id": "W003", "name": "คลังสินค้า 3", "residualvalue": "63,000"},
+    {"id": "W004", "name": "คลังสินค้า 4", "residualvalue": "300,000"}
   ];
   @override
   Widget build(BuildContext context) {
@@ -110,8 +93,10 @@ class WareHousePageState extends State<WareHousePage> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              SizedBox(
+              Container(
                 width: double.infinity,
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey)),
                 child: DataTable(
                     columns: <DataColumn>[
                       DataColumn(
@@ -145,7 +130,8 @@ class WareHousePageState extends State<WareHousePage> {
                               cells: <DataCell>[
                                 DataCell(Text('${itemcell[index]['id']}')),
                                 DataCell(Text('${itemcell[index]['name']}')),
-                                DataCell(Text('${itemcell[index]['residualvalue']}')),
+                                DataCell(Text(
+                                    '${itemcell[index]['residualvalue']}')),
                               ],
                               selected: selected[index],
                               onSelectChanged: (bool? value) {

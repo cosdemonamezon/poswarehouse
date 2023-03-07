@@ -86,8 +86,10 @@ class _CategoryPageState extends State<CategoryPage> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              SizedBox(
+              Container(
                 width: double.infinity,
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey)),
                 child: DataTable(
                     columns: <DataColumn>[
                       DataColumn(
@@ -119,13 +121,25 @@ class _CategoryPageState extends State<CategoryPage> {
                                 return null; // Use default value for other states and odd rows.
                               }),
                               cells: <DataCell>[
-                                DataCell(Text('${productType[index]['typeProduct']}')),
-                                DataCell(Text('${productType[index]['warehouseID']}')),
-                                DataCell(Row(children: [
-                                  Icon(Icons.remove_red_eye),
-                                  Icon(Icons.edit_calendar_sharp),
-                                  Icon(Icons.delete),
-                                ],)),
+                                DataCell(Text(
+                                    '${productType[index]['typeProduct']}')),
+                                DataCell(Text(
+                                    '${productType[index]['warehouseID']}')),
+                                DataCell(Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.remove_red_eye)),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.edit_calendar_sharp),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.delete),
+                                    ),
+                                  ],
+                                )),
                               ],
                               selected: selected[index],
                               onSelectChanged: (bool? value) {
