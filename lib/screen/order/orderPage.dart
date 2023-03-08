@@ -76,12 +76,7 @@ class _OrderPageState extends State<OrderPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: GestureDetector(
-                      onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreateOrderOffLine()));
-                      },
+                      onTap: () async {},
                       child: Container(
                         width: size.width * 0.1,
                         height: size.height * 0.08,

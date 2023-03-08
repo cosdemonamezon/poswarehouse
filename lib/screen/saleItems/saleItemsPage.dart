@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'package:poswarehouse/screen/order/createOrderOffline.dart';
 import 'package:poswarehouse/screen/saleItems/detailSaleItem.dart';
 
 class SaleItemsPage extends StatefulWidget {
@@ -77,7 +78,12 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: GestureDetector(
-                      onTap: () async {},
+                      onTap: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateOrderOffLine()));
+                      },
                       child: Container(
                         width: size.width * 0.2,
                         height: size.height * 0.08,

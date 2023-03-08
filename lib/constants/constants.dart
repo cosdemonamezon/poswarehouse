@@ -4,6 +4,8 @@ const kDisableColor = Color(0xFFB0BBC9);
 const kSecondaryColor = Color.fromARGB(255, 81, 120, 136);
 const kPrimaryColor = Color(0xFF01579B);
 
+const String publicUrl = 'asha-dev.com';
+
 List<Map<String, dynamic>> newitemcell = [
   {
     "id": "1",

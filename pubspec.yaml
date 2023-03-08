@@ -40,6 +40,9 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.52
   responsive_framework: ^0.2.0
   json_annotation: ^4.8.0
+  provider: ^6.0.3
+  collection: ^1.16.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
