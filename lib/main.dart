@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/loginPage.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ProductController()),
+        ChangeNotifierProvider(create: (context) => CategoryController()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

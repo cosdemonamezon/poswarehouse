@@ -21,6 +21,9 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: size.height * 0.08,
+            ),
             Center(
               child: SizedBox(
                   width: 300,

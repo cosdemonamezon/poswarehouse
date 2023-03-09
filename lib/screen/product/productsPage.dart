@@ -99,7 +99,9 @@ class _ProductsPageState extends State<ProductsPage> {
                           label: Center(child: Text('ชื่อสินค้า')),
                         ),
                         DataColumn(
-                          label: Center(child: Text('รูปภาพ',textAlign: TextAlign.center,)),
+                          label: SizedBox(
+                            width: size.width * 0.08,
+                            child: Center(child: Text('รูปภาพ',textAlign: TextAlign.center,))),
                         ),
                         DataColumn(
                           label: Center(child: Text('ราคาทุน')),
@@ -123,8 +125,11 @@ class _ProductsPageState extends State<ProductsPage> {
                                 cells: <DataCell>[
                                   DataCell(Text('${controller.products[index].id}')),
                                   DataCell(Text('${controller.products[index].name}')),
-                                  DataCell(Image.asset(
-                                      'assets/images/noimage.jpg')),
+                                  DataCell(SizedBox(
+                                    width: size.width * 0.08,
+                                    child: Image.asset(
+                                        'assets/images/noimage.jpg'),
+                                  )),
                                   DataCell(
                                       Center(child: Text('${controller.products[index].cost}'))),
                                   DataCell(

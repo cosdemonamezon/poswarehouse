@@ -6,10 +6,12 @@ class DialogOk extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.description,
-      required this.press, this.warehouseID, this.warehouseName})
+      required this.press, required this.pressSave,
+      this.warehouseID, this.warehouseName})
       : super(key: key);
   final String title, description;
   final VoidCallback press;
+  final VoidCallback pressSave;
   final TextEditingController? warehouseName;
   final TextEditingController? warehouseID;
 
@@ -51,6 +53,7 @@ class _DialogOkState extends State<DialogOk> {
                 child: Text('เพิ่มหมวดหมู่',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               ),
+              SizedBox(height: size.height * 0.04),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -69,7 +72,7 @@ class _DialogOkState extends State<DialogOk> {
                       SizedBox(height: size.height * 0.02),
                       SizedBox(
                         height: size.height * 0.08,
-                        width: size.width * 0.25,
+                        width: size.width * 0.45,
                         child: TextFormField(
                           controller: widget.warehouseName,
                           decoration: InputDecoration(
@@ -87,47 +90,47 @@ class _DialogOkState extends State<DialogOk> {
                       ),
                     ],
                   ),
-                  SizedBox(width: size.width * 0.02,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                          'พื้นที่จัดเก็บสินค้า',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      SizedBox(
-                        height: size.height * 0.08,
-                        width: size.width * 0.25,
-                        child: TextFormField(
-                          controller: widget.warehouseID,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // SizedBox(width: size.width * 0.02,),
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Padding(
+                  //       padding: EdgeInsets.symmetric(vertical: 2),
+                  //       child: Text(
+                  //         'พื้นที่จัดเก็บสินค้า',
+                  //         style: TextStyle(
+                  //             fontWeight: FontWeight.bold, fontSize: 18),
+                  //       ),
+                  //     ),
+                  //     SizedBox(height: size.height * 0.02),
+                  //     SizedBox(
+                  //       height: size.height * 0.08,
+                  //       width: size.width * 0.25,
+                  //       child: TextFormField(
+                  //         controller: widget.warehouseID,
+                  //         decoration: InputDecoration(
+                  //           contentPadding: EdgeInsets.symmetric(
+                  //               vertical: 20, horizontal: 10),
+                  //           filled: true,
+                  //           border: OutlineInputBorder(
+                  //             borderSide: BorderSide.none,
+                  //             borderRadius: BorderRadius.all(
+                  //               Radius.circular(10),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
               SizedBox(height: size.height * 0.05),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: GestureDetector(
-                  onTap: () async {},
+                  onTap: widget.pressSave,
                   child: Container(
                     width: size.width * 0.1,
                     height: size.height * 0.08,

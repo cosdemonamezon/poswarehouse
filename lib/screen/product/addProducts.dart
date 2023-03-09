@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'dart:io';
+import 'dart:async';
 
 class AddProducts extends StatefulWidget {
   AddProducts({Key? key}) : super(key: key);
@@ -16,6 +19,9 @@ class _AddProductsState extends State<AddProducts> {
   final TextEditingController originPrice = TextEditingController();
   final TextEditingController retailPrice = TextEditingController();
   final TextEditingController wholesalePrice = TextEditingController();
+
+  ImagePicker picker = ImagePicker();
+  XFile? image;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -68,19 +74,29 @@ class _AddProductsState extends State<AddProducts> {
                             height: size.height * 0.12,
                             child: Row(
                               children: [
-                                Container(
-                                  width: size.width * 0.12,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.add),
-                                      Text(
-                                        'เลือกรูปภาพ',
-                                        style: TextStyle(fontSize: 16.0),
-                                      ),
-                                    ],
+                                InkWell(
+                                  onTap: () async {
+                                    final img = await picker.pickImage(
+                                        source: ImageSource.gallery);
+                                    setState(() {
+                                      image = img;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.12,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey)),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.add),
+                                        Text(
+                                          'เลือกรูปภาพ',
+                                          style: TextStyle(fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(
