@@ -141,6 +141,9 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                               press: () {
                                 Navigator.pop(context);
                               },
+                              pressSelect: (){
+                                Navigator.pop(context);
+                              },
                             );
                           },
                         );

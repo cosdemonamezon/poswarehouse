@@ -4,13 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/models/allProduct.dart';
 import 'package:poswarehouse/models/parade.dart';
 import 'package:poswarehouse/models/product.dart';
 
 class ProductApi {
   const ProductApi();
 
-  static Future<List<Product>> getProducts() async {
+  static Future<AllProduct> getProducts() async {
     final url = Uri.https(publicUrl, '/pos-api/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -30,8 +31,7 @@ class ProductApi {
 
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
-      final list = data['data']['data'] as List;
-      return list.map((e) => Product.fromJson(e)).toList();
+      return AllProduct.fromJson(data['data']);
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);

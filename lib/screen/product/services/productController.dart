@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poswarehouse/models/allProduct.dart';
 import 'package:poswarehouse/models/parade.dart';
 import 'package:poswarehouse/models/product.dart';
 import 'package:poswarehouse/screen/product/services/productApi.dart';
@@ -10,10 +11,10 @@ class ProductController extends ChangeNotifier {
 
   List<Product> products = [];
   Parade? parade;
+  AllProduct? allProduct;
 
   getListProducts() async{
-    products.clear();
-    products = await ProductApi.getProducts();
+    allProduct = await ProductApi.getProducts();
     notifyListeners();
   }
 

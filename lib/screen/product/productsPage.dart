@@ -86,11 +86,13 @@ class _ProductsPageState extends State<ProductsPage> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Container(
+                controller.allProduct != null
+                ?Container(
                   decoration:
                     BoxDecoration(border: Border.all(color: Colors.grey)),
                   width: double.infinity,
-                  child: DataTable(
+                  child: controller.allProduct!.data!.isNotEmpty
+                  ?DataTable(
                       columns: <DataColumn>[
                         DataColumn(
                           label: Center(child: Text('รหัส')),
@@ -121,33 +123,33 @@ class _ProductsPageState extends State<ProductsPage> {
                         ),
                       ],
                       rows: List<DataRow>.generate(
-                          controller.products.length,
+                          controller.allProduct!.data!.length,
                           (index) => DataRow(
                                 cells: <DataCell>[
-                                  DataCell(Text('${controller.products[index].id}')),
-                                  DataCell(Text('${controller.products[index].name}')),
+                                  DataCell(Text('${controller.allProduct!.data![index].id}')),
+                                  DataCell(Text('${controller.allProduct!.data![index].name}')),
                                   DataCell(SizedBox(
                                     width: size.width * 0.08,
                                     height: size.height * 0.10,
-                                    child: controller.products[index].image != null
+                                    child: controller.allProduct!.data![index].image != null
                                     ?Image.network(
-                                        '${controller.products[index].image}',fit: BoxFit.fill)
+                                        '${controller.allProduct!.data![index].image}',fit: BoxFit.fill)
                                     :Image.asset(
                                         'assets/images/noimage.jpg',fit: BoxFit.fill,),
                                   )),
                                   DataCell(
-                                      Center(child: Text('${controller.products[index].cost}'))),
+                                      Center(child: Text('${controller.allProduct!.data![index].cost}'))),
                                   DataCell(
-                                      Center(child: Text('${controller.products[index].price_for_retail}'))),
+                                      Center(child: Text('${controller.allProduct!.data![index].price_for_retail}'))),
                                   DataCell(
-                                      Center(child: Text('${controller.products[index].price_for_wholesale}'))),
+                                      Center(child: Text('${controller.allProduct!.data![index].price_for_wholesale}'))),
                                   DataCell(
-                                      Center(child: Text('${controller.products[index].price_for_box}'))),
+                                      Center(child: Text('${controller.allProduct!.data![index].price_for_box}'))),
                                   DataCell(
-                                      Center(child: Text('${controller.products[index].remain}'))),
+                                      Center(child: Text('${controller.allProduct!.data![index].remain}'))),
                                 ],
-                              ))),
-                ),
+                              ))):SizedBox(),
+                ):SizedBox(),
                 SizedBox(
                   height: size.height * 0.01,
                 ),
