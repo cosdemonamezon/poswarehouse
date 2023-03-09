@@ -101,6 +101,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         DataColumn(
                           label: SizedBox(
                             width: size.width * 0.08,
+                            height: size.height * 0.10,
                             child: Center(child: Text('รูปภาพ',textAlign: TextAlign.center,))),
                         ),
                         DataColumn(
@@ -127,8 +128,12 @@ class _ProductsPageState extends State<ProductsPage> {
                                   DataCell(Text('${controller.products[index].name}')),
                                   DataCell(SizedBox(
                                     width: size.width * 0.08,
-                                    child: Image.asset(
-                                        'assets/images/noimage.jpg'),
+                                    height: size.height * 0.10,
+                                    child: controller.products[index].image != null
+                                    ?Image.network(
+                                        '${controller.products[index].image}',fit: BoxFit.fill)
+                                    :Image.asset(
+                                        'assets/images/noimage.jpg',fit: BoxFit.fill,),
                                   )),
                                   DataCell(
                                       Center(child: Text('${controller.products[index].cost}'))),

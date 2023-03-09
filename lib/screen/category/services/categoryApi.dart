@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/allTypeProduct.dart';
+import 'package:poswarehouse/models/typeProduct.dart';
 
 class CategoryApi {
   const CategoryApi();
@@ -35,4 +36,26 @@ class CategoryApi {
       throw Exception(data['message']);
     }
   }
+
+  //สร้างประเภทสินค้า
+  static Future<TypeProduct> crateCategorys(String name) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/category_product');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "name": name
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return TypeProduct.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
 }

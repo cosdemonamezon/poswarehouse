@@ -8,6 +8,7 @@ part 'product.g.dart';
 @JsonSerializable()
 class Product {
   final int id;
+  final String? image;
   final String? category_product_id;
   final String? sub_category_id;
   final String? unit_id;
@@ -31,6 +32,7 @@ class Product {
 
   Product(
     this.id,
+    this.image,
     this.category_product_id,
     this.sub_category_id,
     this.unit_id,

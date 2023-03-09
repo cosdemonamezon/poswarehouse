@@ -88,7 +88,14 @@ class _CategoryPageState extends State<CategoryPage> {
                             },
                           );
                           if (text != null) {
-                            inspect(text);
+                            //inspect(text);
+                            await context.read<CategoryController>().newCategoryCreate(text);
+                            if (controller.nameCategory != null) {
+                              print('object **** Success');
+                              _initialize();
+                            } else {
+                              print('object **** UnSuccess');
+                            }
                           } else {
                             print('object No Data');
                           }
@@ -125,7 +132,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             ? DataTable(
                                 columns: <DataColumn>[
                                     DataColumn(
-                                      label: Text('รหัส'),
+                                      label: Text('#รหัส'),
                                     ),
                                     DataColumn(
                                       label: Text('ประเภทสินค้า'),
@@ -137,24 +144,24 @@ class _CategoryPageState extends State<CategoryPage> {
                                 rows: List<DataRow>.generate(
                                     controller.allTypeProduct!.data!.length,
                                     (index) => DataRow(
-                                          color: MaterialStateProperty
-                                              .resolveWith<Color?>(
-                                                  (Set<MaterialState> states) {
-                                            // All rows will have the same selected color.
-                                            if (states.contains(
-                                                MaterialState.selected)) {
-                                              return Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                                  .withOpacity(0.08);
-                                            }
-                                            // Even rows will have a grey color.
-                                            if (index.isEven) {
-                                              return Colors.grey
-                                                  .withOpacity(0.3);
-                                            }
-                                            return null; // Use default value for other states and odd rows.
-                                          }),
+                                          // color: MaterialStateProperty
+                                          //     .resolveWith<Color?>(
+                                          //         (Set<MaterialState> states) {
+                                          //   // All rows will have the same selected color.
+                                          //   if (states.contains(
+                                          //       MaterialState.selected)) {
+                                          //     return Theme.of(context)
+                                          //         .colorScheme
+                                          //         .primary
+                                          //         .withOpacity(0.08);
+                                          //   }
+                                          //   // Even rows will have a grey color.
+                                          //   if (index.isEven) {
+                                          //     return Colors.grey
+                                          //         .withOpacity(0.3);
+                                          //   }
+                                          //   return null; // Use default value for other states and odd rows.
+                                          // }),
                                           cells: <DataCell>[
                                             DataCell(Text(
                                                 '${controller.allTypeProduct!.data![index].id}')),
@@ -178,12 +185,12 @@ class _CategoryPageState extends State<CategoryPage> {
                                               ],
                                             )),
                                           ],
-                                          selected: selected[index],
-                                          onSelectChanged: (bool? value) {
-                                            setState(() {
-                                              selected[index] = value!;
-                                            });
-                                          },
+                                          // selected: selected[index],
+                                          // onSelectChanged: (bool? value) {
+                                          //   setState(() {
+                                          //     selected[index] = value!;
+                                          //   });
+                                          // },
                                         )))
                             : SizedBox(),
                       )
