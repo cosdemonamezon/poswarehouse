@@ -190,7 +190,7 @@ class _AppTextFormEmailState extends State<AppTextFormEmail> {
 }
 
 class appTextFormField extends StatelessWidget {
-  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, required this.horizontal, required this.vertical, this.controller, this.validator});
+  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, required this.horizontal, required this.vertical, this.controller, this.validator,this.color});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
@@ -198,6 +198,7 @@ class appTextFormField extends StatelessWidget {
   final double horizontal;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  Color? color;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -206,6 +207,7 @@ class appTextFormField extends StatelessWidget {
           contentPadding:
               EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
           filled: true,
+          fillColor: color,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/order/createOrderOffline.dart';
+import 'package:poswarehouse/screen/order/createOrderProductPage.dart';
 import 'package:poswarehouse/screen/order/detailOrderPage.dart';
 
 class OrderPage extends StatefulWidget {
@@ -76,7 +77,9 @@ class _OrderPageState extends State<OrderPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: GestureDetector(
-                      onTap: () async {},
+                      onTap: () async {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateOrderProductPage()));
+                      },
                       child: Container(
                         width: size.width * 0.1,
                         height: size.height * 0.08,
