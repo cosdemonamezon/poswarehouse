@@ -10,6 +10,7 @@ class WareHouseController extends ChangeNotifier {
 
   AllWareHouses? allWareHouses;
   WareHouse? wareHouse;
+  WareHouse? editwareHouse;
 
   getListWareHouses() async {
     allWareHouses = await WareHouseApi.getSubCategorys();
@@ -18,6 +19,11 @@ class WareHouseController extends ChangeNotifier {
 
   createNewWareHouse(String category_product_id, String name) async {
     wareHouse = await WareHouseApi.createSubCategory(category_product_id, name);
+    notifyListeners();
+  }
+
+  editWareHouse(int id, String name) async{
+    editwareHouse = await WareHouseApi.editSubCategory(id, name);
     notifyListeners();
   }
 }

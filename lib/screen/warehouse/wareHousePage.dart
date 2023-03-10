@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'package:poswarehouse/screen/warehouse/services/wareHouseApi.dart';
 import 'package:poswarehouse/screen/warehouse/services/wareHouseController.dart';
+import 'package:poswarehouse/screen/warehouse/widgets/DialogEditWareHouse.dart';
 import 'package:poswarehouse/screen/warehouse/widgets/DialogWareHouse.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class WareHousePage extends StatefulWidget {
@@ -20,10 +23,12 @@ class WareHousePageState extends State<WareHousePage> {
   final GlobalKey<FormState> warehouseFormKey = GlobalKey<FormState>();
   final TextEditingController? categoryID = TextEditingController();
   final TextEditingController? warehouseName = TextEditingController();
+  final TextEditingController? editwarehouseId = TextEditingController();
+  final TextEditingController? editwarehouseName = TextEditingController();
 
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +38,6 @@ class WareHousePageState extends State<WareHousePage> {
 
   Future<void> categoryinitialize() async {
     await context.read<CategoryController>().getListCategorys();
-    
   }
 
   Future<void> wareHouseApiinitialize() async {
@@ -76,37 +80,39 @@ class WareHousePageState extends State<WareHousePage> {
                       child: GestureDetector(
                         onTap: () async {
                           final _select = await showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return DialogWareHouse(
-                                  warehouseID: categoryID,
-                                  warehouseName: warehouseName,
-                                  allCategory: categoryController.allTypeProduct!,
-                                  title: '',
-                                  description: '',
-                                  press: () {
-                                    Navigator.pop(context);
-                                  },
-                                );
-                              },
-                            );
-                            if (_select != null) {
-                              //inspect(_select.warehouseName);
-                              //inspect(_select.categoryId);
-                              LoadingDialog.open(context);
-                              await context.read<WareHouseController>().createNewWareHouse(_select.categoryId, _select.warehouseName);
-                              if (controller.wareHouse != null) {
-                                LoadingDialog.close(context);
-                                wareHouseApiinitialize();
-                              } else {
-                                LoadingDialog.close(context);
-                                print('object Error Api response');
-                              }
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return DialogWareHouse(
+                                warehouseID: categoryID,
+                                warehouseName: warehouseName,
+                                allCategory: categoryController.allTypeProduct!,
+                                title: '',
+                                description: '',
+                                press: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                          );
+                          if (_select != null) {
+                            //inspect(_select.warehouseName);
+                            //inspect(_select.categoryId);
+                            LoadingDialog.open(context);
+                            await context
+                                .read<WareHouseController>()
+                                .createNewWareHouse(
+                                    _select.categoryId, _select.warehouseName);
+                            if (controller.wareHouse != null) {
+                              LoadingDialog.close(context);
+                              wareHouseApiinitialize();
                             } else {
                               LoadingDialog.close(context);
-                              print('object Value not Select');
+                              print('object Error Api response');
                             }
+                          } else {
+                            print('object Value not Select');
+                          }
                         },
                         child: Container(
                           width: size.width * 0.1,
@@ -138,62 +144,170 @@ class WareHousePageState extends State<WareHousePage> {
                             border: Border.all(color: Colors.grey)),
                         child: controller.allWareHouses!.data!.isNotEmpty
                             ? DataTable(
+                                showCheckboxColumn: false,
                                 columns: <DataColumn>[
-                                    DataColumn(
-                                      label: Text('รหัส'),
+                                  DataColumn(
+                                    label: Container(
+                                        height: size.height * 0.07,
+                                        width: size.width * 0.04,
+                                        child: Center(child: Text('รหัส'))),
+                                  ),
+                                  DataColumn(
+                                    label: Container(
+                                        height: size.height * 0.07,
+                                        width: size.width * 0.20,
+                                        child: Center(
+                                            child: Text('ชื่อคลังสินค้า'))),
+                                  ),
+                                  DataColumn(
+                                    label: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                            height: size.height * 0.07,
+                                            width: size.width * 0.14,
+                                            child: Text('')),
+                                      ],
                                     ),
-                                    DataColumn(
-                                      label: Text('ชื่อคลังสินค้า'),
-                                    ),
-                                    DataColumn(
-                                      label: Text(''),
-                                    ),
-                                  ],
+                                  ),
+                                ],
                                 rows: List<DataRow>.generate(
                                     controller.allWareHouses!.data!.length,
                                     (index) => DataRow(
-                                          // color: MaterialStateProperty.resolveWith<Color?>(
-                                          //     (Set<MaterialState> states) {
-                                          //   // All rows will have the same selected color.
-                                          //   if (states.contains(MaterialState.selected)) {
-                                          //     return Theme.of(context)
-                                          //         .colorScheme
-                                          //         .primary
-                                          //         .withOpacity(0.08);
-                                          //   }
-                                          //   // Even rows will have a grey color.
-                                          //   if (index.isEven) {
-                                          //     return Colors.grey.withOpacity(0.3);
-                                          //   }
-                                          //   return null; // Use default value for other states and odd rows.
-                                          // }),
                                           cells: <DataCell>[
-                                            DataCell(Text(
-                                                '${controller.allWareHouses!.data![index].id}')),
-                                            DataCell(Text(
-                                                '${controller.allWareHouses!.data![index].name}')),
+                                            DataCell(Container(
+                                              height: size.height * 0.07,
+                                              width: size.width * 0.04,
+                                              child: Center(
+                                                child: Text(
+                                                    '${controller.allWareHouses!.data![index].id}'),
+                                              ),
+                                            )),
+                                            DataCell(Container(
+                                              height: size.height * 0.07,
+                                              width: size.width * 0.20,
+                                              child: Center(
+                                                child: Text(
+                                                    '${controller.allWareHouses!.data![index].name}'),
+                                              ),
+                                            )),
                                             DataCell(Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(Icons
-                                                        .remove_red_eye_outlined)),
-                                                IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () async{
+                                                      setState(() {
+                                                        editwarehouseId!.text = '${controller.allWareHouses!.data![index].id}';
+                                                        editwarehouseName!.text = '${controller.allWareHouses!.data![index].name}';
+                                                      });
+                                                      final _edit = await showDialog(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (BuildContext context) {
+                                                            return DialogEditWareHouse(
+                                                              editwarehouseId: editwarehouseId,
+                                                              editwarehouseName: editwarehouseName,
+                                                              allCategory: categoryController.allTypeProduct!,
+                                                              title: '',
+                                                              description: '',
+                                                              press: () {
+                                                                Navigator.pop(context);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                        if (_edit != null) {
+                                                          LoadingDialog.open(context);
+                                                          await context.read<WareHouseController>().editWareHouse(_edit.id, _edit.name);
+                                                          if (context.read<WareHouseController>().editwareHouse != null) {
+                                                            LoadingDialog.close(context);
+                                                            showDialog(
+                                                            context: context,
+                                                            barrierDismissible: false,
+                                                            builder: (BuildContext  context) {
+                                                              return AlertDialogYes(
+                                                                title: 'แก้ใขสำเร็จ',
+                                                                description: '',
+                                                                pressYes: () {
+                                                                   Navigator.pop(context);
+                                                                },
+                                                              );
+                                                            },
+                                                          );
+                                                          wareHouseApiinitialize();
+                                                          } else {
+                                                            LoadingDialog.close(context);
+                                                            print('Edit Error Api');
+                                                          }
+                                                        } else {
+                                                          print('Edit Error');
+                                                        }
+                                                    },
                                                     icon: Icon(Icons
                                                         .edit_calendar_outlined)),
                                                 IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () async {
+                                                      final _delete =
+                                                          await showDialog(
+                                                        context: context,
+                                                        barrierDismissible:
+                                                            false,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialogYesNo(
+                                                            title:
+                                                                'ยืนยันลบคลังสินค้า',
+                                                            description:
+                                                                'กด ตกลง หากต้องการลบคลังสินค้า',
+                                                            pressNo: () {
+                                                              Navigator.pop(
+                                                                  context,
+                                                                  false);
+                                                            },
+                                                            pressYes: () {
+                                                              Navigator.pop(
+                                                                  context,
+                                                                  true);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                      if (_delete == true) {
+                                                        //print(_delete);
+                                                        LoadingDialog.open(context);
+                                                        final delete = await WareHouseApi.deleteSubCategory(controller.allWareHouses!.data![index].id);
+                                                        if (delete == true) {
+                                                          LoadingDialog.close(context);
+                                                          showDialog(
+                                                            context: context,
+                                                            barrierDismissible: false,
+                                                            builder: (BuildContext  context) {
+                                                              return AlertDialogYes(
+                                                                title: 'ดำเนินการสำเร็จ',
+                                                                description: '',
+                                                                pressYes: () {
+                                                                   Navigator.pop(context);
+                                                                },
+                                                              );
+                                                            },
+                                                          );
+                                                          wareHouseApiinitialize();
+                                                        } else {
+                                                          LoadingDialog.open(
+                                                              context);
+                                                          print(delete);
+                                                        }
+                                                      } else {
+                                                        LoadingDialog.open(
+                                                            context);
+                                                        print(_delete);
+                                                      }
+                                                    },
                                                     icon: Icon(Icons.delete)),
                                               ],
                                             ))
                                           ],
-                                          // selected: selected[index],
-                                          // onSelectChanged: (bool? value) {
-                                          //   setState(() {
-                                          //     selected[index] = value!;
-                                          //   });
-                                          // },
                                         )))
                             : SizedBox(),
                       )

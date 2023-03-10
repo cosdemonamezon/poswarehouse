@@ -56,4 +56,42 @@ class WareHouseApi {
       throw Exception(data['message']);
     }
   }
+
+  //ลบคลังสินค้า
+  static deleteSubCategory(int id) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category/$id');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.delete(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 201) {
+      final data = convert.jsonDecode(response.body);
+      return (data['status']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  //แกใขชื่อคลังสินค้า
+  static Future<WareHouse> editSubCategory(
+      int id, String name) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category/$id');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.put(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({"name": name}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return WareHouse.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
 }

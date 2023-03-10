@@ -46,7 +46,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                      onPressed: widget.press,
+                      onPressed: ()async{Navigator.pop(context);},
                       icon: Icon(
                         Icons.cancel,
                         size: 30,
