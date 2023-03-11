@@ -25,10 +25,13 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   List<TextEditingController>? qtyController = [];
   DateTime dateTime = DateTime.now();
   List<Product> selectProducts = [];
-  static const int numItems = 10;
-  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  //static const int numItems = 10;
+  int numItems = 0;
+  List<bool> selected = [];
+  
   List<NewOrders> listneworder = [];
   NewOrders? order;
+  NewOrders emptyorder = new NewOrders('0', 0, 0);
 
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context.read<ProductController>().getListProducts();
+    await context.read<ProductController>().getListProducts();   
     LoadingDialog.close(context);
   }
 
@@ -136,8 +139,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             //inspect(_select);
                             setState(() {
                               selectProducts = _select;
+                              numItems = selectProducts.length;
+                              selected  = List<bool>.generate(numItems, (int index) => false);
                               for (var i = 0; i < selectProducts.length; i++) {
                                 qtyController!.add(TextEditingController(text: '0'));
+                                listneworder.add(emptyorder);
                               }
                               
                             });
@@ -219,7 +225,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                         }),
                                         cells: <DataCell>[
                                           DataCell(Text(
-                                              '${selectProducts[index].id}')),
+                                              '${selectProducts[index].No}')),
                                           DataCell(Text(
                                               '${selectProducts[index].name}')),
                                           DataCell(SizedBox(
@@ -248,15 +254,23 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                   height: size.height * 0.045,
                                                   child: appTextFormField(
                                                     controller: qtyController![index],
-                                                    readOnly: false,
+                                                    readOnly: selected[index] ? false : true,
                                                     sufPress: () async {},
                                                     onChanged: (newValue) async{
                                                       //print(newValue);
                                                       setState(() {
-                                                        qtyController![index].text = newValue.toString();
-                                                        order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));                                                        
-                                                        listneworder.insert(index, order!);
-                                                        listneworder.remove(index + 1);
+                                                        if (newValue == "") {
+                                                          qtyController![index].text = '';
+                                                          order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()));                                                        
+                                                          listneworder.insert(index, order!);
+                                                          listneworder.removeAt(index + 1);
+                                                        } else {
+                                                          qtyController![index].text = newValue.toString();
+                                                          order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));                                                        
+                                                          listneworder.insert(index, order!);
+                                                          listneworder.removeAt(index + 1);
+                                                        }
+                                                        
                                                       });
                                                       inspect(listneworder);
                                                     },
@@ -272,13 +286,17 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           setState(() {
                                             selected[index] = value!;
                                             if (qtyController!.isNotEmpty) {
-                                              //print('object true');
-                                              // if (qtyController![index].text != "") {
-                                              //   order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
-                                              //   listneworder.add(order!);
-                                              // }   
-                                              order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
-                                              listneworder.add(order!);                                        
+                                              if (selected[index] == true) {
+                                                order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
+                                                //listneworder.add(order!); 
+                                                listneworder.insert(index, order!);
+                                                listneworder.removeAt(index + 1);
+                                              } else {
+                                                //print(selectProducts[index].No);
+                                                listneworder.removeAt(index);
+                                                listneworder.insert(index, emptyorder);
+                                                //listneworder.clear();
+                                              }                                                                                     
                                               
                                               inspect(listneworder);
                                             }else {
@@ -331,11 +349,17 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
+                          setState(() {
+                            final list = listneworder.where((element) => element.product_id != '0').toList();
+                            listneworder.clear();
+                            listneworder = list;
+                          });
+                          //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
                             await context.read<OrdersController>().createNewOrder(datePick!.text, listneworder);
                             if (ordersController != null) {
                               print('object Create Success****');
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                             } else {
                               print('object Error Data');
                             }

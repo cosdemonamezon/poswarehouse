@@ -8,7 +8,7 @@ part of 'neworders.dart';
 
 NewOrders _$NewOrdersFromJson(Map<String, dynamic> json) => NewOrders(
       json['product_id'] as String,
-      json['qty'] as int,
+      json['qty'] as int?,
       json['price'] as int,
     );
 

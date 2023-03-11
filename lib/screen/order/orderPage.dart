@@ -6,6 +6,7 @@ import 'package:poswarehouse/screen/order/createOrderProductPage.dart';
 import 'package:poswarehouse/screen/order/detailOrderPage.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
@@ -93,11 +94,16 @@ class _OrderPageState extends State<OrderPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CreateOrderProductPage()));
+                          final go = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CreateOrderProductPage()));
+                          if (go == true) {
+                            _initialize();
+                          } else {
+                            print(go);
+                          }
                         },
                         child: Container(
                           width: size.width * 0.1,
@@ -209,6 +215,19 @@ class _OrderPageState extends State<OrderPage> {
                                               if (controller.purchase != null) {
                                                 LoadingDialog.close(context);
                                                 print('object Success');
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: false,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialogYes(
+                                                      title: 'แก้ใขสำเร็จ',
+                                                      description: '',
+                                                      pressYes: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    );
+                                                  },
+                                                );
                                                 _initialize();
                                               } else {
                                                 LoadingDialog.close(context);

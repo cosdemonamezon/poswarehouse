@@ -45,7 +45,12 @@ class _ProductDialogState extends State<ProductDialog> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                      onPressed: widget.press,
+                      onPressed: () async{
+                        setState(() {
+                          newSelectProducts = [];
+                        });
+                        Navigator.pop(context, newSelectProducts);
+                      },
                       icon: Icon(
                         Icons.cancel,
                         size: 30,

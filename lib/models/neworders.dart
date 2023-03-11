@@ -5,7 +5,7 @@ part 'neworders.g.dart';
 @JsonSerializable()
 class NewOrders {
   String product_id;
-  int qty;
+  int? qty;
   int price;
 
   NewOrders(

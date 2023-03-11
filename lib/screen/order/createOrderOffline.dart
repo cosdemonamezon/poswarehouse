@@ -209,9 +209,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 allProduct:
                                                     controller.allProduct,
                                                 selectProducts: selectProducts,
-                                                press: () {
-                                                  Navigator.pop(context);
-                                                },
+                                                press: () {},
                                                 pressSelect: () async {},
                                               );
                                             },
@@ -331,27 +329,45 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   selectProducts.length,
                                                   (index) => DataRow(
                                                         cells: <DataCell>[
-                                                            DataCell(Text('${selectProducts[index].id}')),
-                                                            DataCell(Text('${selectProducts[index].name}')),
-                                                            DataCell(SizedBox(
-                                                              width: size.width * 0.08,
-                                                              height: size.height * 0.10,
-                                                              child: selectProducts[index].image != null
-                                                              ?Image.network(
-                                                                  '${selectProducts[index].image}',fit: BoxFit.fill)
-                                                              :Image.asset(
-                                                                  'assets/images/noimage.jpg',fit: BoxFit.fill,),
-                                                            )),
-                                                            DataCell(
-                                                                Center(child: Text('${selectProducts[index].cost}'))),
-                                                            DataCell(
-                                                                Center(child: Text('${selectProducts[index].price_for_retail}'))),
-                                                            DataCell(
-                                                                Center(child: Text('${selectProducts[index].price_for_wholesale}'))),
-                                                            DataCell(
-                                                                Center(child: Text('${selectProducts[index].price_for_box}'))),
-                                                            DataCell(
-                                                                Center(child: Text('${selectProducts[index].remain}'))),
+                                                          DataCell(Text(
+                                                              '${selectProducts[index].id}')),
+                                                          DataCell(Text(
+                                                              '${selectProducts[index].name}')),
+                                                          DataCell(SizedBox(
+                                                            width: size.width *
+                                                                0.08,
+                                                            height:
+                                                                size.height *
+                                                                    0.10,
+                                                            child: selectProducts[
+                                                                            index]
+                                                                        .image !=
+                                                                    null
+                                                                ? Image.network(
+                                                                    '${selectProducts[index].image}',
+                                                                    fit: BoxFit
+                                                                        .fill)
+                                                                : Image.asset(
+                                                                    'assets/images/noimage.jpg',
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                  ),
+                                                          )),
+                                                          DataCell(Center(
+                                                              child: Text(
+                                                                  '${selectProducts[index].cost}'))),
+                                                          DataCell(Center(
+                                                              child: Text(
+                                                                  '${selectProducts[index].price_for_retail}'))),
+                                                          DataCell(Center(
+                                                              child: Text(
+                                                                  '${selectProducts[index].price_for_wholesale}'))),
+                                                          DataCell(Center(
+                                                              child: Text(
+                                                                  '${selectProducts[index].price_for_box}'))),
+                                                          DataCell(Center(
+                                                              child: Text(
+                                                                  '${selectProducts[index].remain}'))),
                                                         ],
                                                       ))),
                                         )
