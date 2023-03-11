@@ -48,6 +48,7 @@ dependencies:
   path_provider: ^2.0.11
   dio: ^4.0.6
   intl: ^0.18.0
+  number_paginator: ^0.2.3
 
 dev_dependencies:
   flutter_test:
