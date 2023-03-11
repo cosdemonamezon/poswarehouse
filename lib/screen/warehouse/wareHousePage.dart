@@ -32,8 +32,7 @@ class WareHousePageState extends State<WareHousePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => {wareHouseApiinitialize(), categoryinitialize()});
+    WidgetsBinding.instance.addPostFrameCallback((_) => {wareHouseApiinitialize(), categoryinitialize()});
   }
 
   Future<void> categoryinitialize() async {
@@ -87,7 +86,7 @@ class WareHousePageState extends State<WareHousePage> {
                               return DialogWareHouse(
                                 warehouseID: categoryID,
                                 warehouseName: warehouseName,
-                                allCategory: categoryController.allTypeProduct!,
+                                allCategory: categoryController.allTypeProduct,
                                 title: '',
                                 description: '',
                                 press: () {
@@ -97,13 +96,12 @@ class WareHousePageState extends State<WareHousePage> {
                             },
                           );
                           if (_select != null) {
-                            //inspect(_select.warehouseName);
+                            // inspect(_select.warehouseName);
                             //inspect(_select.categoryId);
                             LoadingDialog.open(context);
                             await context
                                 .read<WareHouseController>()
-                                .createNewWareHouse(
-                                    _select.categoryId, _select.warehouseName);
+                                .createNewWareHouse(_select.categoryId, _select.warehouseName);
                             if (controller.wareHouse != null) {
                               LoadingDialog.close(context);
                               wareHouseApiinitialize();
@@ -118,16 +116,11 @@ class WareHousePageState extends State<WareHousePage> {
                         child: Container(
                           width: size.width * 0.1,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เพิ่มคลังสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -141,8 +134,7 @@ class WareHousePageState extends State<WareHousePage> {
                 controller.allWareHouses != null
                     ? Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)),
+                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                         child: controller.allWareHouses!.data!.isNotEmpty
                             ? DataTable(
                                 showCheckboxColumn: false,
@@ -157,17 +149,14 @@ class WareHousePageState extends State<WareHousePage> {
                                     label: Container(
                                         height: size.height * 0.07,
                                         width: size.width * 0.20,
-                                        child: Center(
-                                            child: Text('ชื่อคลังสินค้า'))),
+                                        child: Center(child: Text('ชื่อคลังสินค้า'))),
                                   ),
                                   DataColumn(
                                     label: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Container(
-                                            height: size.height * 0.07,
-                                            width: size.width * 0.14,
-                                            child: Text('')),
+                                            height: size.height * 0.07, width: size.width * 0.14, child: Text('')),
                                       ],
                                     ),
                                   ),
@@ -180,96 +169,87 @@ class WareHousePageState extends State<WareHousePage> {
                                               height: size.height * 0.07,
                                               width: size.width * 0.04,
                                               child: Center(
-                                                child: Text(
-                                                    '${controller.allWareHouses!.data![index].id}'),
+                                                child: Text('${controller.allWareHouses!.data![index].id}'),
                                               ),
                                             )),
                                             DataCell(Container(
                                               height: size.height * 0.07,
                                               width: size.width * 0.20,
                                               child: Center(
-                                                child: Text(
-                                                    '${controller.allWareHouses!.data![index].name}'),
+                                                child: Text('${controller.allWareHouses!.data![index].name}'),
                                               ),
                                             )),
                                             DataCell(Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 IconButton(
-                                                    onPressed: () async{
+                                                    onPressed: () async {
                                                       setState(() {
-                                                        editwarehouseId!.text = '${controller.allWareHouses!.data![index].id}';
-                                                        editwarehouseName!.text = '${controller.allWareHouses!.data![index].name}';
+                                                        editwarehouseId!.text =
+                                                            '${controller.allWareHouses!.data![index].id}';
+                                                        editwarehouseName!.text =
+                                                            '${controller.allWareHouses!.data![index].name}';
                                                       });
                                                       final _edit = await showDialog(
-                                                          context: context,
-                                                          barrierDismissible: false,
-                                                          builder: (BuildContext context) {
-                                                            return DialogEditWareHouse(
-                                                              editwarehouseId: editwarehouseId,
-                                                              editwarehouseName: editwarehouseName,
-                                                              allCategory: categoryController.allTypeProduct!,
-                                                              title: '',
-                                                              description: '',
-                                                              press: () {
-                                                                Navigator.pop(context);
-                                                              },
-                                                            );
-                                                          },
-                                                        );
-                                                        if (_edit != null) {
-                                                          LoadingDialog.open(context);
-                                                          await context.read<WareHouseController>().editWareHouse(_edit.id, _edit.name);
-                                                          if (context.read<WareHouseController>().editwareHouse != null) {
-                                                            LoadingDialog.close(context);
-                                                            showDialog(
+                                                        context: context,
+                                                        barrierDismissible: false,
+                                                        builder: (BuildContext context) {
+                                                          return DialogEditWareHouse(
+                                                            editwarehouseId: editwarehouseId,
+                                                            editwarehouseName: editwarehouseName,
+                                                            allCategory: categoryController.allTypeProduct,
+                                                            title: '',
+                                                            description: '',
+                                                            press: () {
+                                                              Navigator.pop(context);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                      if (_edit != null) {
+                                                        LoadingDialog.open(context);
+                                                        await context
+                                                            .read<WareHouseController>()
+                                                            .editWareHouse(_edit.id, _edit.name);
+                                                        if (context.read<WareHouseController>().editwareHouse != null) {
+                                                          LoadingDialog.close(context);
+                                                          showDialog(
                                                             context: context,
                                                             barrierDismissible: false,
-                                                            builder: (BuildContext  context) {
+                                                            builder: (BuildContext context) {
                                                               return AlertDialogYes(
                                                                 title: 'แก้ใขสำเร็จ',
                                                                 description: '',
                                                                 pressYes: () {
-                                                                   Navigator.pop(context);
+                                                                  Navigator.pop(context);
                                                                 },
                                                               );
                                                             },
                                                           );
                                                           wareHouseApiinitialize();
-                                                          } else {
-                                                            LoadingDialog.close(context);
-                                                            print('Edit Error Api');
-                                                          }
                                                         } else {
-                                                          print('Edit Error');
+                                                          LoadingDialog.close(context);
+                                                          print('Edit Error Api');
                                                         }
+                                                      } else {
+                                                        print('Edit Error');
+                                                      }
                                                     },
-                                                    icon: Icon(Icons
-                                                        .edit_calendar_outlined)),
+                                                    icon: Icon(Icons.edit_calendar_outlined)),
                                                 IconButton(
                                                     onPressed: () async {
-                                                      final _delete =
-                                                          await showDialog(
+                                                      final _delete = await showDialog(
                                                         context: context,
-                                                        barrierDismissible:
-                                                            false,
-                                                        builder: (BuildContext
-                                                            context) {
+                                                        barrierDismissible: false,
+                                                        builder: (BuildContext context) {
                                                           return AlertDialogYesNo(
-                                                            title:
-                                                                'ยืนยันลบคลังสินค้า',
-                                                            description:
-                                                                'กด ตกลง หากต้องการลบคลังสินค้า',
+                                                            title: 'ยืนยันลบคลังสินค้า',
+                                                            description: 'กด ตกลง หากต้องการลบคลังสินค้า',
                                                             pressNo: () {
-                                                              Navigator.pop(
-                                                                  context,
-                                                                  false);
+                                                              Navigator.pop(context, false);
                                                             },
                                                             pressYes: () {
-                                                              Navigator.pop(
-                                                                  context,
-                                                                  true);
+                                                              Navigator.pop(context, true);
                                                             },
                                                           );
                                                         },
@@ -277,31 +257,30 @@ class WareHousePageState extends State<WareHousePage> {
                                                       if (_delete == true) {
                                                         //print(_delete);
                                                         LoadingDialog.open(context);
-                                                        final delete = await WareHouseApi.deleteSubCategory(controller.allWareHouses!.data![index].id);
+                                                        final delete = await WareHouseApi.deleteSubCategory(
+                                                            controller.allWareHouses!.data![index].id);
                                                         if (delete == true) {
                                                           LoadingDialog.close(context);
                                                           showDialog(
                                                             context: context,
                                                             barrierDismissible: false,
-                                                            builder: (BuildContext  context) {
+                                                            builder: (BuildContext context) {
                                                               return AlertDialogYes(
                                                                 title: 'ดำเนินการสำเร็จ',
                                                                 description: '',
                                                                 pressYes: () {
-                                                                   Navigator.pop(context);
+                                                                  Navigator.pop(context);
                                                                 },
                                                               );
                                                             },
                                                           );
                                                           wareHouseApiinitialize();
                                                         } else {
-                                                          LoadingDialog.open(
-                                                              context);
+                                                          LoadingDialog.open(context);
                                                           print(delete);
                                                         }
                                                       } else {
-                                                        LoadingDialog.open(
-                                                            context);
+                                                        LoadingDialog.open(context);
                                                         print(_delete);
                                                       }
                                                     },

@@ -3,6 +3,7 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/allTypeProduct.dart';
 import 'package:poswarehouse/models/newwarehouse.dart';
 import 'package:poswarehouse/models/typeProduct.dart';
+
 class DialogWareHouse extends StatefulWidget {
   DialogWareHouse(
       {Key? key,
@@ -17,7 +18,7 @@ class DialogWareHouse extends StatefulWidget {
   final VoidCallback press;
   final TextEditingController? warehouseName;
   final TextEditingController? warehouseID;
-  final AllTypeProduct allCategory;
+  final List<TypeProduct>? allCategory;
 
   @override
   State<DialogWareHouse> createState() => _DialogWareHouseState();
@@ -46,7 +47,9 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                      onPressed: ()async{Navigator.pop(context);},
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
                       icon: Icon(
                         Icons.cancel,
                         size: 30,
@@ -56,9 +59,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
               ),
               SizedBox(height: size.height * 0.02),
               Center(
-                child: Text('เพิ่มคลังสินค้า',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: Text('เพิ่มคลังสินค้า', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,8 +72,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
                           'ชื่อคลังสินค้า',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
@@ -82,8 +82,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                         child: TextFormField(
                           controller: widget.warehouseName,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                             filled: true,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -107,8 +106,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
                           'ประเภทสินค้า',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
@@ -116,8 +114,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                         height: size.height * 0.08,
                         width: size.width * 0.25,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 238)),
+                            border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
                             color: Color.fromARGB(255, 238, 238, 238),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
@@ -144,9 +141,7 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                                 categoryValue = typeValue;
                               });
                             },
-                            items: widget.allCategory.data!
-                                .map<DropdownMenuItem<TypeProduct>>(
-                                    (TypeProduct typeValue) {
+                            items: widget.allCategory!.map<DropdownMenuItem<TypeProduct>>((TypeProduct typeValue) {
                               return DropdownMenuItem<TypeProduct>(
                                 value: typeValue,
                                 child: Padding(
@@ -180,16 +175,11 @@ class _DialogWareHouseState extends State<DialogWareHouse> {
                   child: Container(
                     width: size.width * 0.1,
                     height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                     child: Center(
                       child: Text(
                         'บันทึก',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                   ),
