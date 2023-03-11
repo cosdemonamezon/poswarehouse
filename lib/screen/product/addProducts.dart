@@ -195,10 +195,17 @@ class _AddProductsState extends State<AddProducts> {
                                               height: 2,
                                               color: Colors.deepPurpleAccent,
                                             ),
-                                            onChanged: (TypeProduct? typeValue) {
+                                            onChanged: (TypeProduct? typeValue) async {
                                               // This is called when the user selects an item.
+                                              await context.read<CategoryController>().getCategoryById(typeValue!.id);
                                               setState(() {
                                                 categoryValue = typeValue;
+                                                if (context.read<CategoryController>().getCategoryId!.isNotEmpty) {
+                                                  categoryDetail = context.read<CategoryController>().getCategoryId![0];
+                                                }
+                                                {
+                                                  return;
+                                                }
                                               });
                                             },
                                             items: controllerCategory.allTypeProduct!
