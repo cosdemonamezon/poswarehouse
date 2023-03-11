@@ -3,6 +3,7 @@ import 'package:poswarehouse/screen/category/categoryPage.dart';
 import 'package:poswarehouse/screen/order/orderPage.dart';
 import 'package:poswarehouse/screen/pickupProduct/pickupProductPage.dart';
 import 'package:poswarehouse/screen/product/productsPage.dart';
+import 'package:poswarehouse/screen/returnproduct/returnProductPage.dart';
 import 'package:poswarehouse/screen/saleItems/saleItemsPage.dart';
 import 'package:poswarehouse/screen/warehouse/wareHousePage.dart';
 
@@ -35,22 +36,12 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             ],
           ),
           SizedBox(
-            height: size.height * 0.02,
+            height: size.height * 0.01,
           ),
           Center(
             child: Text('ADMIN',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-          ),
+          ),          
           
-          ListTile(
-            title:
-                Center(child: Text("เช็คสต็อกสินค้า", style: TextStyle(fontSize: 16))),
-            leading: Icon(Icons.output),
-            trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          Divider(),
           ListTile(
             title: Center(
                 child: Text("รายการขาย", style: TextStyle(fontSize: 16))),
@@ -61,7 +52,7 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             },
           ),
           Divider(),
-          ListTile(
+           ListTile(
             title: Center(
                 child: Text("คำสั่งซื้อ", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.file_open_rounded),
@@ -69,7 +60,8 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
             },
-          ),
+          ),         
+          
           Divider(),
           ListTile(
             title:
@@ -78,6 +70,17 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsPage()));
+            },
+          ),          
+         
+          Divider(),
+          ListTile(
+            title:
+                Center(child: Text("เช็คสินค้าคงเหลือ", style: TextStyle(fontSize: 16))),
+            leading: Icon(Icons.output),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pop(context);
             },
           ),
           Divider(),
@@ -108,6 +111,16 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>PickupProductPage()));
+            },
+          ),
+          Divider(),
+          ListTile(
+            title:
+                Center(child: Text("คืนสินค้า", style: TextStyle(fontSize: 16))),
+            leading: Icon(Icons.settings),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ReturnProductPage()));
             },
           ),
           Divider(),

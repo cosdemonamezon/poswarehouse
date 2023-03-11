@@ -17,38 +17,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  static const int numItems = 10;
-  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  List<Map<String, dynamic>> itemcell = [
-    {
-      "id": "1",
-      "ponum": "PO-02245",
-      "name": "ร้าน TT Phone",
-      "date": "28/2/2566",
-      "status": "รออนุมัติ"
-    },
-    {
-      "id": "2",
-      "ponum": "PO-02246",
-      "name": "ร้าน TT Phone",
-      "date": "2/3/2566",
-      "status": "ไม่อนุมัติ"
-    },
-    {
-      "id": "3",
-      "ponum": "PO-02247",
-      "name": "ร้าน TT Phone",
-      "date": "28/2/2566",
-      "status": "อนุมัติ"
-    },
-    {
-      "id": "4",
-      "ponum": "PO-02248",
-      "name": "ร้าน TT Phone",
-      "date": "2/2/2566",
-      "status": "ยกเลิก"
-    }
-  ];
+  
   @override
   void initState() {
     super.initState();

@@ -61,10 +61,15 @@ class _ProductsPageState extends State<ProductsPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => AddProducts()));
+                          final addpro = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddProducts()));
+                          if (addpro == true) {
+                            _initialize();
+                          } else {
+                            print('object No data');
+                          }
                         },
                         child: Container(
-                          width: size.width * 0.1,
+                          width: size.width * 0.2,
                           height: size.height * 0.08,
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
@@ -89,7 +94,7 @@ class _ProductsPageState extends State<ProductsPage> {
                             ? DataTable(
                                 columns: <DataColumn>[
                                     DataColumn(
-                                      label: Center(child: Text('รหัส')),
+                                      label: Center(child: Text('#')),
                                     ),
                                     DataColumn(
                                       label: Center(child: Text('ชื่อสินค้า')),
@@ -127,7 +132,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                     controller.allProduct!.data!.length,
                                     (index) => DataRow(
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.allProduct!.data![index].id}')),
+                                            DataCell(Text('${controller.allProduct!.data![index].No}')),
                                             DataCell(Text('${controller.allProduct!.data![index].name}')),
                                             DataCell(SizedBox(
                                               width: size.width * 0.08,
