@@ -82,6 +82,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -98,6 +99,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -114,6 +116,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -130,6 +133,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -153,6 +157,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -169,6 +174,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -185,6 +191,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -201,6 +208,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),

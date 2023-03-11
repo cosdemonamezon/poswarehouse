@@ -107,6 +107,7 @@ class _AddProductsState extends State<AddProducts> {
                                 child: appTextFormField(
                                   controller: productId,
                                   sufPress: () {},
+                                  readOnly: false,
                                   vertical: 25.0,
                                   horizontal: 10.0,
                                 )),
@@ -124,6 +125,7 @@ class _AddProductsState extends State<AddProducts> {
                                 child: appTextFormField(
                                   controller: pricePerCarton,
                                   sufPress: () {},
+                                  readOnly: false,
                                   vertical: 25.0,
                                   horizontal: 10.0,
                                   validator: (val) {
@@ -147,6 +149,7 @@ class _AddProductsState extends State<AddProducts> {
                                 child: appTextFormField(
                                   controller: originPrice,
                                   sufPress: () {},
+                                  readOnly: false,
                                   vertical: 25.0,
                                   horizontal: 10.0,
                                   validator: (val) {
@@ -254,6 +257,7 @@ class _AddProductsState extends State<AddProducts> {
                                 child: appTextFormField(
                                   controller: productName,
                                   sufPress: () {},
+                                  readOnly: false,
                                   vertical: 25.0,
                                   horizontal: 10.0,
                                   validator: (val) {
@@ -277,6 +281,7 @@ class _AddProductsState extends State<AddProducts> {
                                 child: appTextFormField(
                                   controller: retailPrice,
                                   sufPress: () {},
+                                  readOnly: false,
                                   vertical: 25.0,
                                   horizontal: 10.0,
                                   validator: (val) {
@@ -300,6 +305,7 @@ class _AddProductsState extends State<AddProducts> {
                                 child: appTextFormField(
                                   controller: wholesalePrice,
                                   sufPress: () {},
+                                  readOnly: false,
                                   vertical: 25.0,
                                   horizontal: 10.0,
                                   validator: (val) {

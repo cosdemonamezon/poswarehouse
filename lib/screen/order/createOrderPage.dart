@@ -102,6 +102,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),
@@ -119,6 +120,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),
@@ -145,6 +147,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             sufIcon: Icons.calendar_month,
                             vertical: 20.0,
                             horizontal: 10.0,
@@ -163,6 +166,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),
@@ -237,6 +241,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),
@@ -254,6 +259,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),
@@ -280,6 +286,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),
@@ -297,6 +304,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               vertical: size.height * 0.01),
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 20.0,
                             horizontal: 10.0,
                           ),

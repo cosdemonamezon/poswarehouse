@@ -74,6 +74,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -90,6 +91,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -113,6 +115,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -129,6 +132,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),

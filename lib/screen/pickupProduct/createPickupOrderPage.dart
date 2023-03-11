@@ -49,6 +49,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -65,6 +66,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -88,6 +90,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -104,6 +107,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           width: size.width * 0.45,
                           child: appTextFormField(
                             sufPress: () {},
+                            readOnly: false,
                             vertical: 25.0,
                             horizontal: 10.0,
                           )),
@@ -226,6 +230,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                       height: size.height * 0.05,
                                       child: appTextFormField(
                                         sufPress: () {},
+                                        readOnly: false,
                                         vertical: 0.0,
                                         horizontal: 0.0,
                                       )),

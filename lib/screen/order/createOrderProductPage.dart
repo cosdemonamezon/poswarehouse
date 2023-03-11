@@ -77,6 +77,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                     width: size.width * 0.45,
                     child: appTextFormField(
                       controller: datePick,
+                      readOnly: false,
                       sufPress: () async {
                         final _pick = await pickDate();
                         setState(() {
@@ -135,7 +136,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             //inspect(_select);
                             setState(() {
                               selectProducts = _select;
-                              qtyController!.add(TextEditingController());
+                              for (var i = 0; i < selectProducts.length; i++) {
+                                qtyController!.add(TextEditingController());
+                              }
+                              
                             });
                             inspect(selectProducts);
                           } else {
@@ -243,8 +247,8 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                               child: SizedBox(
                                                   height: size.height * 0.045,
                                                   child: appTextFormField(
-                                                    controller:
-                                                        qtyController![index],
+                                                    controller: qtyController![index],
+                                                    readOnly: selected[index] ? true : false,
                                                     sufPress: () async {},
                                                     vertical: 0.0,
                                                     horizontal: 0.0,
@@ -257,11 +261,13 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                         onSelectChanged: (bool? value) {
                                           setState(() {
                                             selected[index] = value!;
-                                            if (qtyController != null) {
-                                              print('object true');
-                                              final _order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
+                                            if (qtyController!.isNotEmpty) {
+                                              //print('object true');
+                                              if (qtyController![index].text != "") {
+                                                final _order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
+                                                listneworder.add(_order);
+                                              }                                           
                                               
-                                              listneworder.add(_order);
                                               inspect(listneworder);
                                             }else {
                                               print('object No add QTY');

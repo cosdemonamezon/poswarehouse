@@ -71,6 +71,7 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                       height: size.height * 0.08,
                       child: appTextFormField(
                         sufPress: () {},
+                        readOnly: false,
                         preIcon: Icons.search,
                         vertical: 25.0,
                         horizontal: 10.0,
