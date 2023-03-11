@@ -14,6 +14,9 @@ TypeProduct _$TypeProductFromJson(Map<String, dynamic> json) => TypeProduct(
       json['created_at'] as String?,
       json['deleted_at'] as String?,
       json['No'] as int?,
+      (json['sub_categorys'] as List<dynamic>?)
+          ?.map((e) => SubCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$TypeProductToJson(TypeProduct instance) =>
@@ -25,4 +28,5 @@ Map<String, dynamic> _$TypeProductToJson(TypeProduct instance) =>
       'created_at': instance.created_at,
       'deleted_at': instance.deleted_at,
       'No': instance.No,
+      'sub_categorys': instance.sub_categorys,
     };

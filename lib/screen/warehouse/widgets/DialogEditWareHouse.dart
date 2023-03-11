@@ -18,7 +18,7 @@ class DialogEditWareHouse extends StatefulWidget {
   final VoidCallback press;
   final TextEditingController? editwarehouseName;
   final TextEditingController? editwarehouseId;
-  final AllTypeProduct allCategory;
+  final List<TypeProduct>? allCategory;
 
   @override
   State<DialogEditWareHouse> createState() => _DialogEditWareHouseState();
@@ -56,9 +56,7 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
               ),
               SizedBox(height: size.height * 0.02),
               Center(
-                child: Text('เพิ่มคลังสินค้า',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: Text('เพิ่มคลังสินค้า', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,8 +69,7 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
                           'รหัสคลังสินค้า',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
@@ -83,8 +80,7 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
                           controller: widget.editwarehouseId,
                           readOnly: true,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                             filled: true,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -108,8 +104,7 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
                           'ชื่อคลังสินค้า',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
@@ -119,8 +114,7 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
                         child: TextFormField(
                           controller: widget.editwarehouseName,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                             filled: true,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -143,7 +137,8 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
                     if (widget.editwarehouseId != null && widget.editwarehouseName != null) {
                       print('object Value allrady');
                       setState(() {
-                        editWareHouse = new EditWareHouse(int.parse(widget.editwarehouseId!.text) , widget.editwarehouseName!.text);
+                        editWareHouse =
+                            new EditWareHouse(int.parse(widget.editwarehouseId!.text), widget.editwarehouseName!.text);
                       });
                       Navigator.pop(context, editWareHouse);
                     } else {
@@ -153,16 +148,11 @@ class _DialogEditWareHouseState extends State<DialogEditWareHouse> {
                   child: Container(
                     width: size.width * 0.1,
                     height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                     child: Center(
                       child: Text(
                         'บันทึก',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/screen/category/services/categoryApi.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
@@ -21,6 +22,7 @@ class _CategoryPageState extends State<CategoryPage> {
   final GlobalKey<FormState> warehouseFormKey = GlobalKey<FormState>();
   final TextEditingController? warehouseID = TextEditingController();
   final TextEditingController? warehouseName = TextEditingController();
+  final TextEditingController? editTitle = TextEditingController();
 
   @override
   void initState() {
@@ -75,8 +77,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                 warehouseID: warehouseID,
                                 warehouseName: warehouseName,
                                 title: 'รอตรวจสอบ',
-                                description:
-                                    'รายการนี้กำลังรอ ทีมแอดมินตรวจสอบ',
+                                description: 'รายการนี้กำลังรอ ทีมแอดมินตรวจสอบ',
                                 press: () {
                                   Navigator.pop(context);
                                 },
@@ -104,16 +105,11 @@ class _CategoryPageState extends State<CategoryPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'สร้างประเภทสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -127,9 +123,8 @@ class _CategoryPageState extends State<CategoryPage> {
                 controller.allTypeProduct != null
                     ? Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)),
-                        child: controller.allTypeProduct!.data!.isNotEmpty
+                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                        child: controller.allTypeProduct!.isNotEmpty
                             ? DataTable(
                                 columns: <DataColumn>[
                                     DataColumn(
@@ -143,7 +138,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                     ),
                                   ],
                                 rows: List<DataRow>.generate(
-                                    controller.allTypeProduct!.data!.length,
+                                    controller.allTypeProduct!.length,
                                     (index) => DataRow(
                                           // color: MaterialStateProperty
                                           //     .resolveWith<Color?>(
@@ -164,23 +159,99 @@ class _CategoryPageState extends State<CategoryPage> {
                                           //   return null; // Use default value for other states and odd rows.
                                           // }),
                                           cells: <DataCell>[
-                                            DataCell(Text(
-                                                '${controller.allTypeProduct!.data![index].id}')),
-                                            DataCell(Text(
-                                                '${controller.allTypeProduct!.data![index].name}')),
+                                            DataCell(Text('${controller.allTypeProduct![index].id}')),
+                                            DataCell(Text('${controller.allTypeProduct![index].name}')),
                                             DataCell(Row(
                                               children: [
+                                                IconButton(onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
                                                 IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(
-                                                        Icons.remove_red_eye)),
-                                                IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(Icons
-                                                      .edit_calendar_sharp),
+                                                  onPressed: () {
+                                                    showDialog<String>(
+                                                      context: context,
+                                                      builder: (BuildContext context) => AlertDialog(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15.0),
+                                                        ),
+                                                        // backgroundColor: Color.fromARGB(255, 95, 9, 3),
+                                                        title: const Text('แก้ไขหัวข้อ'),
+                                                        content: appTextFormField(
+                                                          controller: editTitle,
+                                                          sufPress: () {},
+                                                          readOnly: false,
+                                                          vertical: 0.0,
+                                                          horizontal: 0.0,
+                                                          validator: (val) {
+                                                            if (val == null || val.isEmpty) {
+                                                              return 'กรุณากรอกข้อความ';
+                                                            }
+                                                            return null;
+                                                          },
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(context, 'Cancel');
+                                                              editTitle!.clear();
+                                                            },
+                                                            child: const Text('ยกเลิก'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () async {
+                                                              LoadingDialog.open(context);
+                                                              await CategoryApi().changeTitleCatagory(editTitle!.text,
+                                                                  controller.allTypeProduct![index].id);
+                                                              if (mounted) {
+                                                                LoadingDialog.close(context);
+                                                                editTitle!.clear();
+                                                                Navigator.pop(context);
+                                                                await context
+                                                                    .read<CategoryController>()
+                                                                    .getListCategorys();
+                                                              }
+                                                            },
+                                                            child: const Text('แกไข้'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: Icon(Icons.edit_calendar_sharp),
                                                 ),
                                                 IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    showDialog<String>(
+                                                      context: context,
+                                                      builder: (BuildContext context) => AlertDialog(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15.0),
+                                                        ),
+                                                        // backgroundColor: Color.fromARGB(255, 95, 9, 3),
+                                                        title: const Text('ยืนยัน'),
+                                                        content: const Text('ต้องการลบสินค้า'),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                                                            child: const Text('ยกเลิก'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () async {
+                                                              LoadingDialog.open(context);
+                                                              await CategoryApi().deleteCatagory(
+                                                                  catagoryId: controller.allTypeProduct![index].id);
+                                                              if (mounted) {
+                                                                LoadingDialog.close(context);
+                                                                Navigator.pop(context);
+                                                                await context
+                                                                    .read<CategoryController>()
+                                                                    .getListCategorys();
+                                                              }
+                                                            },
+                                                            child: const Text('ตกลง'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
                                                   icon: Icon(Icons.delete),
                                                 ),
                                               ],

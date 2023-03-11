@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -73,6 +74,7 @@ class ProductApi {
     required String category_product_id,
     required String sub_category_id,
     required String name,
+    required String detial,
     required String cost,
     required String price_for_retail,
     required String price_for_wholesale,
@@ -84,7 +86,7 @@ class ProductApi {
         'sub_category_id': sub_category_id,
         'unit_id': 1,
         'name': name,
-        'detail': name,
+        'detail': detial,
         'cost': cost,
         'price_for_retail': price_for_retail,
         'price_for_wholesale': price_for_wholesale,
@@ -96,13 +98,52 @@ class ProductApi {
       },
     );
 
-    final res = await Dio()
-        .post('https://asha-dev.com/pos-api/public/api/product', data: formData);
+    final res = await Dio().post('https://asha-dev.com/pos-api/public/api/product', data: formData);
 
     if (res.statusCode == 200 || res.statusCode == 201) {
       return Product.fromJson(res.data['data']);
     } else {
       throw Exception('อัพโหดลไฟล์ล้มเหลว');
+    }
+  }
+
+  // ลบประเภทสินค้า
+  Future<void> deleteSubCatagory({
+    required int catagoryId,
+  }) async {
+    // SharedPreferences pref = await SharedPreferences.getInstance();
+    // final token = pref.getString('token');
+    final url = Uri.https(
+      publicUrl,
+      '/pos-api/public/api/sub_category/$catagoryId',
+    );
+
+    final response = await http.delete(url, headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 201) {
+    } else {
+      final data = jsonDecode(response.body);
+      throw data['message'];
+    }
+  }
+
+// แก้ประเภทสินค้า
+  Future<bool> changeTitleSubCatagory(
+    String title,
+    int catagoryId,
+  ) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
+
+    final response = await http.put(url,
+        body: jsonEncode({
+          "name": title,
+        }),
+        headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
