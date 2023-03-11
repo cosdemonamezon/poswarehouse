@@ -63,7 +63,7 @@ class OrdersApi {
   //รับสินค้าเข้าคลัง
   static Future<Purchase> pickupOrders(
       String stock_purchase_no) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_purchase');
+    final url = Uri.https(publicUrl, '/pos-api/public/api/receive_stock_purchase');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,

@@ -137,7 +137,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             setState(() {
                               selectProducts = _select;
                               for (var i = 0; i < selectProducts.length; i++) {
-                                qtyController!.add(TextEditingController());
+                                qtyController!.add(TextEditingController(text: '0'));
                               }
                               
                             });
@@ -248,8 +248,18 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                   height: size.height * 0.045,
                                                   child: appTextFormField(
                                                     controller: qtyController![index],
-                                                    readOnly: selected[index] ? true : false,
+                                                    readOnly: false,
                                                     sufPress: () async {},
+                                                    onChanged: (newValue) async{
+                                                      //print(newValue);
+                                                      setState(() {
+                                                        qtyController![index].text = newValue.toString();
+                                                        order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));                                                        
+                                                        listneworder.insert(index, order!);
+                                                        listneworder.remove(index + 1);
+                                                      });
+                                                      inspect(listneworder);
+                                                    },
                                                     vertical: 0.0,
                                                     horizontal: 0.0,
                                                     color: Color.fromARGB(255, 245, 245, 245),
@@ -263,10 +273,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                             selected[index] = value!;
                                             if (qtyController!.isNotEmpty) {
                                               //print('object true');
-                                              if (qtyController![index].text != "") {
-                                                final _order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
-                                                listneworder.add(_order);
-                                              }                                           
+                                              // if (qtyController![index].text != "") {
+                                              //   order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
+                                              //   listneworder.add(order!);
+                                              // }   
+                                              order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
+                                              listneworder.add(order!);                                        
                                               
                                               inspect(listneworder);
                                             }else {

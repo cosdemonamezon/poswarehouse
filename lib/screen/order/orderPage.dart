@@ -209,6 +209,7 @@ class _OrderPageState extends State<OrderPage> {
                                               if (controller.purchase != null) {
                                                 LoadingDialog.close(context);
                                                 print('object Success');
+                                                _initialize();
                                               } else {
                                                 LoadingDialog.close(context);
                                                 print('object  Already Receive');
