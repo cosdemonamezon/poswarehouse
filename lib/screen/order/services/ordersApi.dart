@@ -2,6 +2,7 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/purchase.dart';
 import 'package:poswarehouse/models/purchaseProduct.dart';
+import 'package:poswarehouse/models/purchaseorders.dart';
 import 'package:poswarehouse/models/stockpurchase.dart';
 import 'dart:convert' as convert;
 
@@ -76,6 +77,25 @@ class OrdersApi {
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
       return Purchase.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  // Get By Id สินค้า
+  static Future<PurchaseOrders> getOrderById(
+      String stock_purchase_no) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/get_stock_purchase_line/$stock_purchase_no');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.get(
+      url,
+      headers: headers,      
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return PurchaseOrders.fromJson(data['data']);
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);

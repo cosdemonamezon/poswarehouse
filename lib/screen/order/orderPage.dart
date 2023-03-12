@@ -104,6 +104,7 @@ class _OrderPageState extends State<OrderPage> {
                   width: double.infinity,
                   child: controller.purchaseProduct!.data!.isNotEmpty
                   ?DataTable(
+                    dataRowHeight: size.height * 0.08,
                       columns: <DataColumn>[
                         DataColumn(
                           label: Container(
@@ -153,6 +154,8 @@ class _OrderPageState extends State<OrderPage> {
                                   DataCell(Chip(
                                       labelPadding: EdgeInsets.all(2.0),
                                       elevation: 6.0,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                      labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
                                       shadowColor: Colors.grey[60],
                                       backgroundColor: controller.purchaseProduct!.data![index].status ==
                                               'Ordered'
@@ -172,7 +175,7 @@ class _OrderPageState extends State<OrderPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        DetailOrderPage()));
+                                                        DetailOrderPage(stock_purchase_no: '${controller.purchaseProduct!.data![index].stock_purchase_no}')));
                                           },
                                           icon: Icon(
                                               Icons.remove_red_eye_outlined)),
