@@ -2,12 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/models/printer.dart';
 import 'package:poswarehouse/models/product.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'package:poswarehouse/screen/printer/printerService.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:poswarehouse/widgets/productDialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sunmi_printer_plus/enums.dart';
+import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
 
 class CreateOrderOffLine extends StatefulWidget {
   CreateOrderOffLine({Key? key}) : super(key: key);
@@ -28,11 +32,17 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   String radioButtonItem = 'ONE';
   int id = 1;
   List<Product> selectProducts = [];
+  bool printBinded = false;
+  int paperSize = 0;
+  String serialNumber = "";
+  String printerVersion = "";
+  Printer? printer;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
+    _printerInitail();
     textPriceController.text = '0.00';
     setState(() {
       radioButtonItem = checkListItems[0]['title'];
@@ -44,6 +54,35 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
     LoadingDialog.close(context);
+  }
+
+  void _printerInitail() {
+    _bindingPrinter().then((bool? isBind) async {
+      final size = await SunmiPrinter.paperSize();
+      final version = await SunmiPrinter.printerVersion();
+      final serial = await SunmiPrinter.serialNumber();
+      final printer = await SunmiPrinter.getPrinterStatus();
+
+      setState(() {
+        printBinded = isBind!;
+        serialNumber = serial;
+        printerVersion = version;
+        paperSize = size;
+      });
+      if (printer != PrinterStatus.NORMAL) {
+        _printerInitail();
+      }
+      print('printBinded : $printBinded');
+      print('serialNumber : $serialNumber');
+      print('printerVersion : $printerVersion');
+      print('paperSize : $paperSize');
+      print('printer : $printer');
+    });
+  }
+
+  Future<bool?> _bindingPrinter() async {
+    final bool? result = await SunmiPrinter.bindingPrinter();
+    return result;
   }
 
   @override
@@ -599,10 +638,14 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                   child: GestureDetector(
                                     onTap: () async {
                                       setState(() {
-                                        if (textPriceController.text != '') {
-                                          changPrice = textPriceController.text;
-                                        }
+                                        printer = new Printer('name1', '12/03/2023', '06.55', '16', '100.00', '100.00');
                                       });
+                                      await PrinterService().print(printer!);
+                                      // setState(() {
+                                      //   if (textPriceController.text != '') {
+                                      //     changPrice = textPriceController.text;
+                                      //   }
+                                      // });
                                     },
                                     child: Container(
                                       width: size.width * 0.1,
