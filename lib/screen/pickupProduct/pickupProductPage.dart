@@ -75,21 +75,22 @@ class _PickupProductPageState extends State<PickupProductPage> {
                     BoxDecoration(border: Border.all(color: Colors.grey)),
                 width: double.infinity,
                 child: DataTable(
+                  dataRowHeight: size.height * 0.08,
                     columns: <DataColumn>[
                       DataColumn(
-                        label: Text('รหัส'),
+                        label: Text('รหัส', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                       ),
                       DataColumn(
-                        label: Text('วันที่'),
+                        label: Text('วันที่', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                       ),
                       DataColumn(
-                        label: Text('จาก'),
+                        label: Text('จาก', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                       ),
                       DataColumn(
-                        label: Text('ไปยัง'),
+                        label: Text('ไปยัง', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                       ),
                       DataColumn(
-                        label: Text('สถานะ'),
+                        label: Text('สถานะ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                       ),
                       DataColumn(
                         label: Text(''),
@@ -123,6 +124,8 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                     Text('${pickupproduct[index]['to']}')),
                                 DataCell(Chip(
                                     labelPadding: EdgeInsets.all(2.0),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                    labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
                                     elevation: 6.0,
                                     shadowColor: Colors.grey[60],
                                     backgroundColor: pickupproduct[index]

@@ -162,6 +162,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                             DataCell(Text('${controller.allTypeProduct![index].id}')),
                                             DataCell(Text('${controller.allTypeProduct![index].name}')),
                                             DataCell(Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 IconButton(onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
                                                 IconButton(

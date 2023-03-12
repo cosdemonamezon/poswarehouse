@@ -111,24 +111,25 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                   width: double.infinity,
                   child: itemcell.isNotEmpty
                   ?DataTable(
+                    dataRowHeight: size.height * 0.08,
                       columns: <DataColumn>[
                         DataColumn(
-                          label: Text('#'),
+                          label: Text('#', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                         ),
                         DataColumn(
-                          label: Text('วันที่'),
+                          label: Text('วันที่', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                         ),
                         DataColumn(
-                          label: Text('หมายเลข'),
+                          label: Text('หมายเลข', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                         ),
                         DataColumn(
-                          label: Text('ชื่อร้านค้า'),
+                          label: Text('ชื่อร้านค้า', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                         ),
                         DataColumn(
-                          label: Text('มูลค่า'),
+                          label: Text('มูลค่า', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                         ),
                         DataColumn(
-                          label: Text('สถานะ'),
+                          label: Text('สถานะ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                         ),
                         DataColumn(
                           label: Text(''),
@@ -158,7 +159,10 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                   DataCell(Text('${itemcell[index]['name']}')),
                                   DataCell(Text('${itemcell[index]['price']}')),
                                   DataCell(Chip(
-                                      labelPadding: EdgeInsets.all(2.0),
+                                      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(20),bottomRight: Radius.circular(20))),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                      labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
+                                      labelPadding: EdgeInsets.all(5.0),
                                       elevation: 6.0,
                                       shadowColor: Colors.grey[60],
                                       backgroundColor: itemcell[index]['status'] ==
