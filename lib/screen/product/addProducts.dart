@@ -117,7 +117,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: productId,
@@ -134,7 +134,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: pricePerCarton,
@@ -157,7 +157,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: originPrice,
@@ -183,7 +183,7 @@ class _AddProductsState extends State<AddProducts> {
                           controllerCategory.allTypeProduct != null
                               ? controllerCategory.allTypeProduct!.isNotEmpty
                                   ? Container(
-                                      height: size.height * 0.08,
+                                      height: size.height * 0.07,
                                       width: size.width * 0.45,
                                       decoration: BoxDecoration(
                                           border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
@@ -231,7 +231,7 @@ class _AddProductsState extends State<AddProducts> {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
-                              'ราคาขายส่ง',
+                              'คลังสินค้า',
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
@@ -239,7 +239,7 @@ class _AddProductsState extends State<AddProducts> {
                               ? controllerCategory.getCategoryId!.isNotEmpty
                                   ? context.read<CategoryController>().getCategoryId!.isNotEmpty
                                       ? Container(
-                                          height: size.height * 0.08,
+                                          height: size.height * 0.07,
                                           width: size.width * 0.45,
                                           decoration: BoxDecoration(
                                               border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
@@ -301,7 +301,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: productName,
@@ -324,7 +324,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: detailProduct,
@@ -347,7 +347,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: retailPrice,
@@ -370,7 +370,7 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                           ),
                           SizedBox(
-                              height: size.height * 0.08,
+                              height: size.height * 0.07,
                               width: size.width * 0.45,
                               child: appTextFormField(
                                 controller: wholesalePrice,
@@ -385,6 +385,7 @@ class _AddProductsState extends State<AddProducts> {
                                   return null;
                                 },
                               )),
+                          SizedBox(height: size.height * 0.094,),
                           
                         ],
                       ),
@@ -418,7 +419,7 @@ class _AddProductsState extends State<AddProducts> {
                                     });
                                   },
                                 ),
-                                Text('${controller.units!.data![index].name}'),
+                                Text('${controller.units!.data![index].name}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                               ],
                             ),
                           ),),
@@ -433,7 +434,7 @@ class _AddProductsState extends State<AddProducts> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      height: size.height * 0.12,
+                      height: size.height * 0.18,
                       width: size.width * 0.45,
                       child: SizedBox(
                         height: size.height * 0.12,
