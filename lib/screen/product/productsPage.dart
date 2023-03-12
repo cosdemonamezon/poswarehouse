@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/product/addProducts.dart';
@@ -16,6 +17,7 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   final TextEditingController? editSubTitle = TextEditingController();
+  int start = 0;
   @override
   void initState() {
     super.initState();
@@ -263,6 +265,23 @@ class _ProductsPageState extends State<ProductsPage> {
                 SizedBox(
                   height: size.height * 0.01,
                 ),
+                controller.allProduct != null
+                    ? NumberPaginator(
+                        numberPages: controller.allProduct!.last_page!,
+                        onPageChange: (p0) async {
+                          LoadingDialog.open(context);
+                          setState(() {
+                            start = ((p0 - 1) * start) + 10;
+                            print(start);
+                          });
+                          await context.read<ProductController>().getListProducts(start: start);
+                          if (!mounted) {
+                            return;
+                          }
+                          LoadingDialog.close(context);
+                        },
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),

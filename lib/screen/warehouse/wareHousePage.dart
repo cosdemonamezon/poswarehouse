@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
@@ -25,6 +26,7 @@ class WareHousePageState extends State<WareHousePage> {
   final TextEditingController? warehouseName = TextEditingController();
   final TextEditingController? editwarehouseId = TextEditingController();
   final TextEditingController? editwarehouseName = TextEditingController();
+  int start = 0;
 
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
@@ -292,6 +294,26 @@ class WareHousePageState extends State<WareHousePage> {
                             : SizedBox(),
                       )
                     : SizedBox(),
+                controller.allWareHouses != null
+                    ? NumberPaginator(
+                        numberPages: controller.allWareHouses!.last_page!,
+                        // config: NumberPaginatorUIConfig(
+                        //   mode: ContentDisplayMode.hidden,
+                        // ),
+                        onPageChange: (p0) async {
+                          LoadingDialog.open(context);
+                          setState(() {
+                            start = ((p0 - 1) * start) + 10;
+                            print(start);
+                          });
+                          await context.read<WareHouseController>().getListWareHouses(start: start);
+                          if (!mounted) {
+                            return;
+                          }
+                          LoadingDialog.close(context);
+                        },
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),

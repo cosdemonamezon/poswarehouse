@@ -12,8 +12,7 @@ import 'package:http/http.dart' as http;
 class OrdersApi {
   const OrdersApi();
 
-  static Future<StockPurchase> createOrders(
-      String date, List<NewOrders> orders) async {
+  static Future<StockPurchase> createOrders(String date, List<NewOrders> orders) async {
     final url = Uri.https(publicUrl, '/pos-api/public/api/stock_purchase');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -35,7 +34,10 @@ class OrdersApi {
   }
 
   //// Get คำสั่งซื้อทั้งหมด
-  static Future<PurchaseProduct> getOrders() async {
+  static Future<PurchaseProduct> getOrders({
+    int start = 0,
+    int length = 10,
+  }) async {
     final url = Uri.https(publicUrl, '/pos-api/public/api/stock_purchase_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -46,8 +48,8 @@ class OrdersApi {
         "order": [
           {"column": 0, "dir": "asc"}
         ],
-        "start": 0,
-        "length": 10,
+        "start": start,
+        "length": length,
         "search": {"value": "", "regex": false}
       }),
     );
@@ -62,8 +64,7 @@ class OrdersApi {
   }
 
   //รับสินค้าเข้าคลัง
-  static Future<Purchase> pickupOrders(
-      String stock_purchase_no) async {
+  static Future<Purchase> pickupOrders(String stock_purchase_no) async {
     final url = Uri.https(publicUrl, '/pos-api/public/api/receive_stock_purchase');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(

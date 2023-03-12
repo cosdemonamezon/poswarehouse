@@ -13,7 +13,10 @@ import 'package:poswarehouse/models/units.dart';
 class ProductApi {
   const ProductApi();
 
-  static Future<AllProduct> getProducts() async {
+  static Future<AllProduct> getProducts({
+    int start = 0,
+    int length = 10,
+  }) async {
     final url = Uri.https(publicUrl, '/pos-api/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -25,8 +28,8 @@ class ProductApi {
         "order": [
           {"column": 0, "dir": "asc"}
         ],
-        "start": 0,
-        "length": 10,
+        "start": start,
+        "length": length,
         "search": {"value": "", "regex": false}
       }),
     );
