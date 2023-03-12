@@ -17,38 +17,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  static const int numItems = 10;
-  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  List<Map<String, dynamic>> itemcell = [
-    {
-      "id": "1",
-      "ponum": "PO-02245",
-      "name": "ร้าน TT Phone",
-      "date": "28/2/2566",
-      "status": "รออนุมัติ"
-    },
-    {
-      "id": "2",
-      "ponum": "PO-02246",
-      "name": "ร้าน TT Phone",
-      "date": "2/3/2566",
-      "status": "ไม่อนุมัติ"
-    },
-    {
-      "id": "3",
-      "ponum": "PO-02247",
-      "name": "ร้าน TT Phone",
-      "date": "28/2/2566",
-      "status": "อนุมัติ"
-    },
-    {
-      "id": "4",
-      "ponum": "PO-02248",
-      "name": "ร้าน TT Phone",
-      "date": "2/2/2566",
-      "status": "ยกเลิก"
-    }
-  ];
+  
   @override
   void initState() {
     super.initState();
@@ -137,16 +106,24 @@ class _OrderPageState extends State<OrderPage> {
                   ?DataTable(
                       columns: <DataColumn>[
                         DataColumn(
-                          label: Text('#'),
+                          label: Container(
+                            width: size.width *0.04,
+                            child: Text('#', style: TextStyle(fontWeight: FontWeight.bold),)),
                         ),
                         DataColumn(
-                          label: Text('เลขคำสั่งซื้อ'),
+                          label: Container(
+                            width: size.width *0.30,
+                            child: Text('เลขคำสั่งซื้อ', style: TextStyle(fontWeight: FontWeight.bold),)),
                         ),
                         DataColumn(
-                          label: Text('วันที่'),
+                          label: Container(
+                            width: size.width *0.10,
+                            child: Text('วันที่', style: TextStyle(fontWeight: FontWeight.bold),)),
                         ),
                         DataColumn(
-                          label: Text('สถานะ'),
+                          label: Container(
+                            width: size.width *0.10,
+                            child: Text('สถานะ', style: TextStyle(fontWeight: FontWeight.bold),)),
                         ),
                         DataColumn(
                           label: Text(''),
@@ -199,13 +176,7 @@ class _OrderPageState extends State<OrderPage> {
                                           },
                                           icon: Icon(
                                               Icons.remove_red_eye_outlined)),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                              Icons.edit_calendar_outlined)),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.delete)),
+                                      
                                       IconButton(
                                           onPressed: () async{
                                             if (controller.purchaseProduct!.data![index].status != 'Receive') 
@@ -220,7 +191,7 @@ class _OrderPageState extends State<OrderPage> {
                                                   barrierDismissible: false,
                                                   builder: (BuildContext context) {
                                                     return AlertDialogYes(
-                                                      title: 'แก้ใขสำเร็จ',
+                                                      title: 'รับสินค้าสำเร็จ',
                                                       description: '',
                                                       pressYes: () {
                                                         Navigator.pop(context);

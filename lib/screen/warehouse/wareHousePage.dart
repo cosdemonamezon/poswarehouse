@@ -169,7 +169,7 @@ class WareHousePageState extends State<WareHousePage> {
                                               height: size.height * 0.07,
                                               width: size.width * 0.04,
                                               child: Center(
-                                                child: Text('${controller.allWareHouses!.data![index].id}'),
+                                                child: Text('${controller.allWareHouses!.data![index].No}'),
                                               ),
                                             )),
                                             DataCell(Container(
