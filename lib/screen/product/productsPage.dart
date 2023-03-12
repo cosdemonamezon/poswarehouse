@@ -48,8 +48,8 @@ class _ProductsPageState extends State<ProductsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                        width: size.width * 0.64,
-                        height: size.height * 0.08,
+                        width: size.width * 0.60,
+                        height: size.height * 0.07,
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
@@ -92,6 +92,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         width: double.infinity,
                         child: controller.allProduct!.data!.isNotEmpty
                             ? DataTable(
+                              dataRowHeight: size.height * 0.10,
                                 columns: <DataColumn>[
                                     DataColumn(
                                       label: Center(child: Text('#')),
@@ -101,13 +102,14 @@ class _ProductsPageState extends State<ProductsPage> {
                                     ),
                                     DataColumn(
                                       label: SizedBox(
-                                          width: size.width * 0.08,
-                                          height: size.height * 0.10,
-                                          child: Center(
-                                              child: Text(
+                                        width: size.width * 0.06,
+                                        child: Center(
+                                          child: Text(
                                             'รูปภาพ',
                                             textAlign: TextAlign.center,
-                                          ))),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                     DataColumn(
                                       label: Center(child: Text('ราคาทุน')),
@@ -135,8 +137,8 @@ class _ProductsPageState extends State<ProductsPage> {
                                             DataCell(Text('${controller.allProduct!.data![index].No}')),
                                             DataCell(Text('${controller.allProduct!.data![index].name}')),
                                             DataCell(SizedBox(
-                                              width: size.width * 0.08,
-                                              height: size.height * 0.10,
+                                              width: size.width * 0.06,
+                                              height: size.height * 0.08,
                                               child: controller.allProduct!.data![index].image != null
                                                   ? Image.network('${controller.allProduct!.data![index].image}',
                                                       fit: BoxFit.fill)
