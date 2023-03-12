@@ -13,12 +13,18 @@ class ProductController extends ChangeNotifier {
   Parade? parade;
   AllProduct? allProduct;
 
-  getListProducts() async{
-    allProduct = await ProductApi.getProducts();
+  getListProducts({
+    int start = 0,
+    int length = 10,
+  }) async {
+    allProduct = await ProductApi.getProducts(
+      start: start,
+      length: length,
+    );
     notifyListeners();
   }
 
-  getListParade() async{
+  getListParade() async {
     parade = await ProductApi.getParades();
     notifyListeners();
   }
