@@ -3,6 +3,7 @@ import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/pickupProduct/createPickupOrderPage.dart';
+import 'package:poswarehouse/screen/pickupProduct/detailPickProducts.dart';
 
 import '../../widgets/LoadingDialog.dart';
 
@@ -139,7 +140,9 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                     label: Text('${pickupproduct[index]['status']}'))),
                                 DataCell(Row(
                                   children: [
-                                    IconButton(onPressed: () {}, icon: Icon(Icons.remove_red_eye_outlined)),
+                                    IconButton(onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPickProducts()));
+                                    }, icon: Icon(Icons.remove_red_eye_outlined)),
                                     IconButton(onPressed: () {}, icon: Icon(Icons.edit_calendar_outlined)),
                                     IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
                                   ],

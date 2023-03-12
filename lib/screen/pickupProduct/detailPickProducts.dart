@@ -216,8 +216,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                                   children: [
                                     IconButton(
                                         onPressed: () {},
-                                        icon: Icon(
-                                            Icons.more_vert)),
+                                        icon: Icon(Icons.more_vert)),
                                   ],
                                 ))
                               ],
@@ -231,6 +230,63 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
               ),
               SizedBox(
                 height: size.height * 0.08,
+              ),
+              SizedBox(
+                width: size.width * 0.42,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: GestureDetector(
+                        onTap: () async {
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: size.width * 0.1,
+                          height: size.height * 0.06,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey)),
+                          child: Center(
+                            child: Text(
+                              'ไม่อนุมัติ',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: GestureDetector(
+                        onTap: () async {
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: size.width * 0.1,
+                          height: size.height * 0.06,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: kPrimaryColor),
+                          child: Center(
+                            child: Text(
+                              'อนุมัติ',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
