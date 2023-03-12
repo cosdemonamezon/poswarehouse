@@ -12,8 +12,14 @@ class WareHouseController extends ChangeNotifier {
   WareHouse? wareHouse;
   WareHouse? editwareHouse;
 
-  getListWareHouses() async {
-    allWareHouses = await WareHouseApi.getSubCategorys();
+  getListWareHouses({
+    int start = 0,
+    int length = 10,
+  }) async {
+    allWareHouses = await WareHouseApi.getSubCategorys(
+      start: start,
+      length: length,
+    );
     notifyListeners();
   }
 
@@ -22,7 +28,7 @@ class WareHouseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  editWareHouse(int id, String name) async{
+  editWareHouse(int id, String name) async {
     editwareHouse = await WareHouseApi.editSubCategory(id, name);
     notifyListeners();
   }
