@@ -42,7 +42,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
-    _printerInitail();
+    //_printerInitail();
     textPriceController.text = '0.00';
     setState(() {
       radioButtonItem = checkListItems[0]['title'];
