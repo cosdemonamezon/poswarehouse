@@ -154,21 +154,29 @@ class _PickupProductPageState extends State<PickupProductPage> {
                             ))),
               ),
               // controller.allProduct != null
-              NumberPaginator(
-                // numberPages: controller.allProduct!.last_page!,
-                numberPages: 1,
-                onPageChange: (p0) async {
-                  LoadingDialog.open(context);
-                  setState(() {
-                    start = ((p0 - 1) * start) + 10;
-                    print(start);
-                  });
-                  // await context.read<ProductController>().getListProducts(start: start);
-                  if (!mounted) {
-                    return;
-                  }
-                  LoadingDialog.close(context);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: size.width * 0.22,
+                    child: NumberPaginator(
+                      // numberPages: controller.allProduct!.last_page!,
+                      numberPages: 1,
+                      onPageChange: (p0) async {
+                        LoadingDialog.open(context);
+                        setState(() {
+                          start = ((p0 - 1) * start) + 10;
+                          print(start);
+                        });
+                        // await context.read<ProductController>().getListProducts(start: start);
+                        if (!mounted) {
+                          return;
+                        }
+                        LoadingDialog.close(context);
+                      },
+                    ),
+                  ),
+                ],
               ),
               // : SizedBox.shrink(),
             ],
