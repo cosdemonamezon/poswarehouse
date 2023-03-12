@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
@@ -27,6 +29,7 @@ class _ProductsPageState extends State<ProductsPage> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
+    
     LoadingDialog.close(context);
   }
 
