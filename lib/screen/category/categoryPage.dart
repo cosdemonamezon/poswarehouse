@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/category/services/categoryApi.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
@@ -17,6 +18,7 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  int start = 0;
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   final GlobalKey<FormState> warehouseFormKey = GlobalKey<FormState>();
@@ -268,6 +270,24 @@ class _CategoryPageState extends State<CategoryPage> {
                             : SizedBox(),
                       )
                     : SizedBox(),
+                // controller.allProduct != null
+                NumberPaginator(
+                  // numberPages: controller.allProduct!.last_page!,
+                  numberPages: 1,
+                  onPageChange: (p0) async {
+                    LoadingDialog.open(context);
+                    setState(() {
+                      start = ((p0 - 1) * start) + 10;
+                      print(start);
+                    });
+                    // await context.read<ProductController>().getListProducts(start: start);
+                    if (!mounted) {
+                      return;
+                    }
+                    LoadingDialog.close(context);
+                  },
+                ),
+                // : SizedBox.shrink(),
               ],
             ),
           ),

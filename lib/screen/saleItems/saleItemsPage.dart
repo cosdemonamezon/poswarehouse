@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/order/createOrderOffline.dart';
 import 'package:poswarehouse/screen/saleItems/detailSaleItem.dart';
+
+import '../../widgets/LoadingDialog.dart';
 
 class SaleItemsPage extends StatefulWidget {
   SaleItemsPage({Key? key}) : super(key: key);
@@ -12,41 +15,14 @@ class SaleItemsPage extends StatefulWidget {
 }
 
 class _SaleItemsPageState extends State<SaleItemsPage> {
+  int start = 0;
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   List<Map<String, dynamic>> itemcell = [
-    {
-      "id": "1",
-      "date": "28/2/2566",
-      "number": "SO-02245",
-      "name": "Mr.suthap",
-      "price": "200",
-      "status": "สำเร็จ"
-    },
-    {
-      "id": "2",
-      "date": "10/2/2566",
-      "number": "SO-02245",
-      "name": "Mr.suthap",
-      "price": "200",
-      "status": "สำเร็จ"
-    },
-    {
-      "id": "3",
-      "date": "18/2/2566",
-      "number": "SO-02245",
-      "name": "Mr.suthap",
-      "price": "200",
-      "status": "สำเร็จ"
-    },
-    {
-      "id": "4",
-      "date": "29/2/2566",
-      "number": "SO-02249",
-      "name": "Mr.suthap 2",
-      "price": "500",
-      "status": "ยกเลิก"
-    },
+    {"id": "1", "date": "28/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
+    {"id": "2", "date": "10/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
+    {"id": "3", "date": "18/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
+    {"id": "4", "date": "29/2/2566", "number": "SO-02249", "name": "Mr.suthap 2", "price": "500", "status": "ยกเลิก"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -80,24 +56,16 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: GestureDetector(
                       onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreateOrderOffLine()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateOrderOffLine()));
                       },
                       child: Container(
                         width: size.width * 0.2,
                         height: size.height * 0.08,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: kPrimaryColor),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                         child: Center(
                           child: Text(
                             'สร้างรายการขาย',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ),
                       ),
@@ -137,14 +105,10 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                     rows: List<DataRow>.generate(
                         4,
                         (index) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
+                              color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                 // All rows will have the same selected color.
                                 if (states.contains(MaterialState.selected)) {
-                                  return Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.08);
+                                  return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                 }
                                 // Even rows will have a grey color.
                                 if (index.isEven) {
@@ -162,19 +126,12 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                                     labelPadding: EdgeInsets.all(2.0),
                                     elevation: 6.0,
                                     shadowColor: Colors.grey[60],
-                                    backgroundColor:
-                                        itemcell[index]['status'] == 'สำเร็จ'
-                                            ? Colors.green
-                                            : Colors.red,
-                                    label:
-                                        Text('${itemcell[index]['status']}'))),
+                                    backgroundColor: itemcell[index]['status'] == 'สำเร็จ' ? Colors.green : Colors.red,
+                                    label: Text('${itemcell[index]['status']}'))),
                                 DataCell(IconButton(
                                     onPressed: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailSaleItem()));
+                                          context, MaterialPageRoute(builder: (context) => DetailSaleItem()));
                                     },
                                     icon: Icon(Icons.more_vert)))
                               ],
@@ -186,6 +143,24 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                               },
                             ))),
               ),
+              // controller.allProduct != null
+              NumberPaginator(
+                // numberPages: controller.allProduct!.last_page!,
+                numberPages: 1,
+                onPageChange: (p0) async {
+                  LoadingDialog.open(context);
+                  setState(() {
+                    start = ((p0 - 1) * start) + 10;
+                    print(start);
+                  });
+                  // await context.read<ProductController>().getListProducts(start: start);
+                  if (!mounted) {
+                    return;
+                  }
+                  LoadingDialog.close(context);
+                },
+              ),
+              // : SizedBox.shrink(),
             ],
           ),
         ),
