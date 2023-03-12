@@ -640,7 +640,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       setState(() {
                                         printer = new Printer('name1', '12/03/2023', '06.55', '16', '100.00', '100.00');
                                       });
-                                      await PrinterService().print(printer!);
+                                      //await PrinterService().print(printer!);
                                       // setState(() {
                                       //   if (textPriceController.text != '') {
                                       //     changPrice = textPriceController.text;
