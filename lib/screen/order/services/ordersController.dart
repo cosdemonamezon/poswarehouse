@@ -15,19 +15,21 @@ class OrdersController extends ChangeNotifier {
   PurchaseProduct? purchaseProduct;
   Purchase? purchase;
 
-  createNewOrder(String date, List<NewOrders> orders) async{
+  createNewOrder(String date, List<NewOrders> orders) async {
     stockPurchase = await OrdersApi.createOrders(date, orders);
     notifyListeners();
   }
 
-  getListOrders() async{
+  getListOrders({
+    int start = 0,
+    int length = 10,
+  }) async {
     purchaseProduct = await OrdersApi.getOrders();
     notifyListeners();
   }
 
-  pickupNewOrders(String stock_purchase_no) async{
+  pickupNewOrders(String stock_purchase_no) async {
     purchase = await OrdersApi.pickupOrders(stock_purchase_no);
     notifyListeners();
   }
-  
 }
