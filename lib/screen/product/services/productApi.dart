@@ -101,7 +101,7 @@ class ProductApi {
 
   ///Create Product
 
-  static Future<Product> createProduct({    
+  static Future<Product> createProduct({
     required String category_product_id,
     required String sub_category_id,
     required String name,
@@ -114,6 +114,7 @@ class ProductApi {
     required String code,
     required String units,
   }) async {
+    final headers = {'Authorization': 'Bearer', 'Content-Type': 'multipart/form-data'};
     var formData = FormData.fromMap(
       {
         'category_product_id': category_product_id,
@@ -133,14 +134,27 @@ class ProductApi {
         'units': units,
       },
     );
+    try {
+      final response = await Dio().post(
+        'https://asha-dev.com/pos-api/public/api/product',
+        data: formData,
+        options: Options(headers: headers),
+      );
 
-    final res = await Dio().post('https://asha-dev.com/pos-api/public/api/product', data: formData);
-
-    if (res.statusCode == 200 || res.statusCode == 201) {
-      return Product.fromJson(res.data['data']);
-    } else {
-      throw Exception('อัพโหดลไฟล์ล้มเหลว');
+      return Product.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw (e.response?.data['message']);
     }
+
+//  final res = await Dio().post(
+//         'https://asha-dev.com/pos-api/public/api/product',
+//         data: formData,
+//       );
+    // if (res.statusCode == 200 || res.statusCode == 201) {
+    //   return Product.fromJson(res.data['data']);
+    // } else {
+    //   throw Exception('อัพโหดลไฟล์ล้มเหลว');
+    // }
   }
 
   // ลบประเภทสินค้า

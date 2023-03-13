@@ -14,6 +14,7 @@ class PickupProductController extends ChangeNotifier {
 
   ReceivingGoods? receivingGoods;
   StockPurchase? stockPurchase;
+  ReceivingGoods? returnProduct;
 
   getListPickupProducts({
     int start = 0,
@@ -23,13 +24,18 @@ class PickupProductController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getDetail(String stock_purchase_no)async{
+  getDetail(String stock_purchase_no) async {
     receivingGoods = await PickupProductApi.getPickupsById(stock_purchase_no);
     notifyListeners();
   }
 
   createNewOrder(String date, List<NewOrders> orders) async {
     stockPurchase = await PickupProductApi.createOrders(date, orders);
+    notifyListeners();
+  }
+
+  getDetailReturnProduct(String stock_purchase_no) async {
+    returnProduct = await PickupProductApi.getReturnProduct(stock_purchase_no);
     notifyListeners();
   }
 }
