@@ -66,27 +66,22 @@ class _PickupProductPageState extends State<PickupProductPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          final go = await Navigator.push(context, MaterialPageRoute(builder: (context) => CeatePickupOrderPage()));
+                          final go = await Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => CeatePickupOrderPage()));
                           if (go == true) {
                             _initialize();
                           } else {
                             print(go);
                           }
-                          
                         },
                         child: Container(
                           width: size.width * 0.1,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เบิกสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -99,8 +94,7 @@ class _PickupProductPageState extends State<PickupProductPage> {
                 ),
                 controller.allReceiving != null
                     ? Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)),
+                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                         width: double.infinity,
                         child: controller.allReceiving!.data!.isNotEmpty
                             ? DataTable(
@@ -109,33 +103,25 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                   DataColumn(
                                     label: Text(
                                       '#',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'รหัส',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'วันที่',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'สถานะ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                   ),
                                   DataColumn(
@@ -145,49 +131,34 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                 rows: List<DataRow>.generate(
                                     pickupproduct.length,
                                     (index) => DataRow(
-                                          color: MaterialStateProperty
-                                              .resolveWith<Color?>(
-                                                  (Set<MaterialState> states) {
+                                          color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                             // All rows will have the same selected color.
-                                            if (states.contains(
-                                                MaterialState.selected)) {
-                                              return Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                                  .withOpacity(0.08);
+                                            if (states.contains(MaterialState.selected)) {
+                                              return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                             }
                                             // Even rows will have a grey color.
                                             if (index.isEven) {
-                                              return Colors.grey
-                                                  .withOpacity(0.3);
+                                              return Colors.grey.withOpacity(0.3);
                                             }
                                             return null; // Use default value for other states and odd rows.
                                           }),
                                           cells: <DataCell>[
-                                            DataCell(Text(
-                                                '${controller.allReceiving!.data![index].No}')),
-                                            DataCell(Text(
-                                                '${controller.allReceiving!.data![index].stock_purchase_no}')),
-                                            DataCell(Text(
-                                                '${controller.allReceiving!.data![index].purchase_date}')),
+                                            DataCell(Text('${controller.allReceiving!.data![index].No}')),
+                                            DataCell(
+                                                Text('${controller.allReceiving!.data![index].stock_purchase_no}')),
+                                            DataCell(Text('${controller.allReceiving!.data![index].purchase_date}')),
                                             DataCell(Chip(
-                                                labelPadding:
-                                                    EdgeInsets.all(2.0),
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.w300,
-                                                    fontSize: 16),
+                                                labelPadding: EdgeInsets.all(2.0),
+                                                shape:
+                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                                labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
                                                 elevation: 6.0,
                                                 shadowColor: Colors.grey[60],
                                                 backgroundColor:
                                                     controller.allReceiving!.data![index].status == 'Receive'
                                                         ? Colors.green
                                                         : Colors.red,
-                                                label: Text(
-                                                    '${controller.allReceiving!.data![index].status}'))),
+                                                label: Text('${controller.allReceiving!.data![index].status}'))),
                                             DataCell(Row(
                                               children: [
                                                 IconButton(
@@ -195,18 +166,14 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                                       Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  DetailPickProducts(stock_purchase_no: '${controller.allReceiving!.data![index].stock_purchase_no}',)));
+                                                              builder: (context) => DetailPickProducts(
+                                                                    stock_purchase_no:
+                                                                        '${controller.allReceiving!.data![index].stock_purchase_no}',
+                                                                  )));
                                                     },
-                                                    icon: Icon(Icons
-                                                        .remove_red_eye_outlined)),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(Icons
-                                                        .edit_calendar_outlined)),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(Icons.delete)),
+                                                    icon: Icon(Icons.remove_red_eye_outlined)),
+                                                IconButton(onPressed: () {}, icon: Icon(Icons.edit_calendar_outlined)),
+                                                IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
                                               ],
                                             ))
                                           ],
@@ -228,6 +195,7 @@ class _PickupProductPageState extends State<PickupProductPage> {
                       width: size.width * 0.22,
                       child: NumberPaginator(
                         // numberPages: controller.allProduct!.last_page!,
+                        config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                         numberPages: 1,
                         onPageChange: (p0) async {
                           LoadingDialog.open(context);

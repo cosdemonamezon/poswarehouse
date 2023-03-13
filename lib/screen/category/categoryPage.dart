@@ -280,6 +280,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       width: size.width * 0.22,
                       child: NumberPaginator(
                         numberPages: controller.allTypeProduct2?.last_page ?? 1,
+                        config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                         onPageChange: (p0) async {
                           LoadingDialog.open(context);
                           setState(() {

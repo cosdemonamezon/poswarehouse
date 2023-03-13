@@ -230,9 +230,7 @@ class _OrderPageState extends State<OrderPage> {
                             width: size.width * 0.22,
                             child: NumberPaginator(
                               numberPages: controller.purchaseProduct!.last_page!,
-                              // config: NumberPaginatorUIConfig(
-                              //   mode: ContentDisplayMode.hidden,
-                              // ),
+                              config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
                                 setState(() {

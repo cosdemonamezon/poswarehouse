@@ -28,7 +28,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   //static const int numItems = 10;
   int numItems = 0;
   List<bool> selected = [];
-  
+
   List<NewOrders> listneworder = [];
   NewOrders? order;
   NewOrders emptyorder = new NewOrders('0', 0, 0, 0);
@@ -44,15 +44,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context.read<ProductController>().getListProducts();   
+    await context.read<ProductController>().getListProducts();
     LoadingDialog.close(context);
   }
 
-  Future<DateTime?> pickDate() => showDatePicker(
-      context: context,
-      initialDate: dateTime,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100));
+  Future<DateTime?> pickDate() =>
+      showDatePicker(context: context, initialDate: dateTime, firstDate: DateTime(1900), lastDate: DateTime(2100));
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -110,8 +107,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         Icon(Icons.shopify_outlined),
                         Text(
                           "สินค้า",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -140,12 +136,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             setState(() {
                               selectProducts = _select;
                               numItems = selectProducts.length;
-                              selected  = List<bool>.generate(numItems, (int index) => false);
+                              selected = List<bool>.generate(numItems, (int index) => false);
                               for (var i = 0; i < selectProducts.length; i++) {
                                 qtyController!.add(TextEditingController(text: '0'));
                                 listneworder.add(emptyorder);
                               }
-                              
                             });
                             inspect(selectProducts);
                           } else {
@@ -155,16 +150,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เพิ่มสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -178,8 +168,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                 Container(
                   width: double.infinity,
                   height: size.height * 0.40,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
                   child: selectProducts.isNotEmpty
                       ? SingleChildScrollView(
@@ -206,16 +195,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                               rows: List<DataRow>.generate(
                                   selectProducts.length,
                                   (index) => DataRow(
-                                        color: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
+                                        color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                           // All rows will have the same selected color.
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                                .withOpacity(0.08);
+                                          if (states.contains(MaterialState.selected)) {
+                                            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                           }
                                           // Even rows will have a grey color.
                                           if (index.isEven) {
@@ -224,29 +207,21 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           return null; // Use default value for other states and odd rows.
                                         }),
                                         cells: <DataCell>[
-                                          DataCell(Text(
-                                              '${selectProducts[index].No}')),
-                                          DataCell(Text(
-                                              '${selectProducts[index].name}')),
+                                          DataCell(Text('${selectProducts[index].No}')),
+                                          DataCell(Text('${selectProducts[index].name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
-                                            child: selectProducts[index]
-                                                        .image !=
-                                                    null
-                                                ? Image.network(
-                                                    '${selectProducts[index].image}',
-                                                    fit: BoxFit.fill)
+                                            child: selectProducts[index].image != null
+                                                ? Image.network('${selectProducts[index].image}', fit: BoxFit.fill)
                                                 : Image.asset(
                                                     'assets/images/noimage.jpg',
                                                     fit: BoxFit.fill,
                                                   ),
                                           )),
-                                          
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
-                                            child: Text(
-                                                '${selectProducts[index].price_for_retail}'),
+                                            child: Text('${selectProducts[index].price_for_retail}'),
                                           )),
                                           DataCell(
                                             Center(
@@ -256,21 +231,30 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                     controller: qtyController![index],
                                                     readOnly: selected[index] ? false : true,
                                                     sufPress: () async {},
-                                                    onChanged: (newValue) async{
+                                                    onChanged: (newValue) async {
                                                       //print(newValue);
                                                       setState(() {
                                                         if (newValue == "") {
                                                           qtyController![index].text = '';
-                                                          order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
+                                                          order = new NewOrders(
+                                                              selectProducts[index].id.toString(),
+                                                              0,
+                                                              int.parse(
+                                                                  selectProducts[index].price_for_retail.toString()),
+                                                              selectProducts[index].unit!.id);
                                                           listneworder.insert(index, order!);
                                                           listneworder.removeAt(index + 1);
                                                         } else {
                                                           qtyController![index].text = newValue.toString();
-                                                          order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
+                                                          order = new NewOrders(
+                                                              selectProducts[index].id.toString(),
+                                                              int.parse(qtyController![index].text),
+                                                              int.parse(
+                                                                  selectProducts[index].price_for_retail.toString()),
+                                                              selectProducts[index].unit!.id);
                                                           listneworder.insert(index, order!);
                                                           listneworder.removeAt(index + 1);
                                                         }
-                                                        
                                                       });
                                                       inspect(listneworder);
                                                     },
@@ -287,8 +271,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                             selected[index] = value!;
                                             if (qtyController!.isNotEmpty) {
                                               if (selected[index] == true) {
-                                                order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
-                                                //listneworder.add(order!); 
+                                                order = new NewOrders(
+                                                    selectProducts[index].id.toString(),
+                                                    int.parse(qtyController![index].text),
+                                                    int.parse(selectProducts[index].price_for_retail.toString()),
+                                                    selectProducts[index].unit!.id);
+                                                //listneworder.add(order!);
                                                 listneworder.insert(index, order!);
                                                 listneworder.removeAt(index + 1);
                                               } else {
@@ -296,10 +284,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 listneworder.removeAt(index);
                                                 listneworder.insert(index, emptyorder);
                                                 //listneworder.clear();
-                                              }                                                                                     
-                                              
+                                              }
+
                                               inspect(listneworder);
-                                            }else {
+                                            } else {
                                               print('object No add QTY');
                                               listneworder.clear();
                                             }
@@ -333,10 +321,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           child: Center(
                             child: Text(
                               'ยกเลิก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                             ),
                           ),
                         ),
@@ -366,21 +351,15 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           } else {
                             print('object No Select Data');
                           }
-                          
                         },
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'บันทึก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),

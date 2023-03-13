@@ -36,7 +36,8 @@ class _ProductsPageState extends State<ProductsPage> {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
     setState(() {
-      images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length, (index) => context.read<ProductController>().allProduct!.data![index].image!);
+      images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length,
+          (index) => context.read<ProductController>().allProduct!.data![index].image!);
       //images.add(context.read<ProductController>().allProduct.data);
     });
     LoadingDialog.close(context);
@@ -75,7 +76,8 @@ class _ProductsPageState extends State<ProductsPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          final addpro = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddProducts()));
+                          final addpro =
+                              await Navigator.push(context, MaterialPageRoute(builder: (context) => AddProducts()));
                           if (addpro == true) {
                             _initialize();
                           } else {
@@ -106,44 +108,44 @@ class _ProductsPageState extends State<ProductsPage> {
                         width: double.infinity,
                         child: controller.allProduct!.data!.isNotEmpty
                             ? DataTable(
-                              dataRowHeight: size.height * 0.10,
+                                dataRowHeight: size.height * 0.10,
                                 columns: <DataColumn>[
-                                    DataColumn(
-                                      label: Center(child: Text('#')),
-                                    ),
-                                    DataColumn(
-                                      label: Center(child: Text('ชื่อสินค้า')),
-                                    ),
-                                    DataColumn(
-                                      label: SizedBox(
-                                        width: size.width * 0.06,
-                                        child: Center(
-                                          child: Text(
-                                            'รูปภาพ',
-                                            textAlign: TextAlign.center,
-                                          ),
+                                  DataColumn(
+                                    label: Center(child: Text('#')),
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('ชื่อสินค้า')),
+                                  ),
+                                  DataColumn(
+                                    label: SizedBox(
+                                      width: size.width * 0.06,
+                                      child: Center(
+                                        child: Text(
+                                          'รูปภาพ',
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
-                                    DataColumn(
-                                      label: Center(child: Text('ราคาทุน')),
-                                    ),
-                                    DataColumn(
-                                      label: Center(child: Text('ราคาขายส่ง')),
-                                    ),
-                                    DataColumn(
-                                      label: Center(child: Text('ราคาขายปลีก')),
-                                    ),
-                                    DataColumn(
-                                      label: Center(child: Text('ราคายกลัง')),
-                                    ),
-                                    DataColumn(
-                                      label: Center(child: Text('คงเหลือ')),
-                                    ),
-                                    DataColumn(
-                                      label: Center(child: Text('')),
-                                    ),
-                                  ],
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('ราคาทุน')),
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('ราคาขายส่ง')),
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('ราคาขายปลีก')),
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('ราคายกลัง')),
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('คงเหลือ')),
+                                  ),
+                                  DataColumn(
+                                    label: Center(child: Text('')),
+                                  ),
+                                ],
                                 rows: List<DataRow>.generate(
                                     controller.allProduct!.data!.length,
                                     (index) => DataRow(
@@ -155,27 +157,29 @@ class _ProductsPageState extends State<ProductsPage> {
                                               height: size.height * 0.08,
                                               child: controller.allProduct!.data![index].image != null
                                                   ? InkWell(
-                                                      onTap: (){
+                                                      onTap: () {
                                                         Navigator.of(context).push(MaterialPageRoute(
-                                                        builder: (_) => GalleryWidget(
-                                                              urlimage: '${controller.allProduct!.data![index].image}',
-                                                            )));
+                                                            builder: (_) => GalleryWidget(
+                                                                  urlimage:
+                                                                      '${controller.allProduct!.data![index].image}',
+                                                                )));
                                                       },
-                                                      child: Image.network('${controller.allProduct!.data![index].image}',
+                                                      child: Image.network(
+                                                          '${controller.allProduct!.data![index].image}',
                                                           fit: BoxFit.fill),
                                                     )
                                                   : InkWell(
-                                                      onTap: (){
+                                                      onTap: () {
                                                         Navigator.of(context).push(MaterialPageRoute(
-                                                        builder: (_) => GalleryWidget(
-                                                              urlimage: 'assets/images/noimage.jpg',
-                                                            )));
+                                                            builder: (_) => GalleryWidget(
+                                                                  urlimage: 'assets/images/noimage.jpg',
+                                                                )));
                                                       },
                                                       child: Image.asset(
-                                                          'assets/images/noimage.jpg',
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                  ),
+                                                        'assets/images/noimage.jpg',
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    ),
                                             )),
                                             DataCell(
                                                 Center(child: Text('${controller.allProduct!.data![index].cost}'))),
@@ -295,11 +299,12 @@ class _ProductsPageState extends State<ProductsPage> {
                 ),
                 controller.allProduct != null
                     ? SizedBox(
-                      width: size.width * 0.22,
-                      child: Wrap(
-                        children: [
-                          NumberPaginator(
+                        width: size.width * 0.22,
+                        child: Wrap(
+                          children: [
+                            NumberPaginator(
                               numberPages: controller.allProduct!.last_page!,
+                              config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
                                 setState(() {
@@ -313,9 +318,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                 LoadingDialog.close(context);
                               },
                             ),
-                        ],
-                      ),
-                    )
+                          ],
+                        ),
+                      )
                     : SizedBox.shrink(),
               ],
             ),
