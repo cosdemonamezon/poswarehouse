@@ -40,7 +40,7 @@ class _AddProductsState extends State<AddProducts> {
   Parades? dropdownValue;
   TypeProduct? categoryValue;
   SubCategory? categoryDetail;
-  
+
   ImagePicker picker = ImagePicker();
   XFile? image;
   List<bool> selected = [];
@@ -59,7 +59,7 @@ class _AddProductsState extends State<AddProducts> {
     setState(() {
       dropdownValue = context.read<ProductController>().parade!.data![0];
     });
-    LoadingDialog.close(context);    
+    LoadingDialog.close(context);
   }
 
   Future<void> categoryinitialize() async {
@@ -76,13 +76,11 @@ class _AddProductsState extends State<AddProducts> {
     await context.read<ProductController>().getListUnits();
     numItems = await context.read<ProductController>().units!.data!.length;
     selected.clear();
-    setState(() {      
+    setState(() {
       selected = List<bool>.generate(numItems, (int index) => false);
       list = List<String>.generate(numItems, (int index) => '0');
     });
-    
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -207,10 +205,17 @@ class _AddProductsState extends State<AddProducts> {
                                             height: 2,
                                             color: Colors.deepPurpleAccent,
                                           ),
-                                          onChanged: (TypeProduct? typeValue) {
+                                          onChanged: (TypeProduct? typeValue) async {
                                             // This is called when the user selects an item.
+                                            await context.read<CategoryController>().getCategoryById(typeValue!.id);
                                             setState(() {
                                               categoryValue = typeValue;
+                                              if (context.read<CategoryController>().getCategoryId!.isNotEmpty) {
+                                                categoryDetail = context.read<CategoryController>().getCategoryId![0];
+                                              }
+                                              {
+                                                return;
+                                              }
                                             });
                                           },
                                           items: controllerCategory.allTypeProduct!
@@ -284,7 +289,7 @@ class _AddProductsState extends State<AddProducts> {
                                         )
                                       : SizedBox.shrink()
                                   : SizedBox.shrink()
-                              : SizedBox.shrink(),                            
+                              : SizedBox.shrink(),
                         ],
                       ),
 
@@ -385,50 +390,50 @@ class _AddProductsState extends State<AddProducts> {
                                   return null;
                                 },
                               )),
-                          
                         ],
                       ),
                     ],
                   ),
-                ),   
+                ),
                 controller.units != null
-                ?SizedBox(
-                  child: controller.units!.data!.isNotEmpty && selected.isNotEmpty
-                  ?Wrap(
-                    children: [
-                      Row(
-                        children: List.generate(
-                          controller.units!.data!.length, 
-                          (index) => SizedBox(
-                            child: Row(
-                              children: [
-                                Checkbox(
-                                  checkColor: Colors.white,
-                                  value: selected[index],
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      selected[index] = value!;
-                                      if (selected[index] == true) {
-                                        list.insert(index, '${controller.units!.data![index].id}');
-                                        list.removeAt(index + 1);
-                                      } else {
-                                        list.removeAt(index);
-                                        list.insert(index, '0');
-                                      }
-                                    });
-                                  },
-                                ),
-                                Text('${controller.units!.data![index].name}'),
-                              ],
-                            ),
-                          ),),
-                      ),
-                    ],
-                  ):SizedBox(),
-                ):SizedBox(),
-                
+                    ? SizedBox(
+                        child: controller.units!.data!.isNotEmpty && selected.isNotEmpty
+                            ? Wrap(
+                                children: [
+                                  Row(
+                                    children: List.generate(
+                                      controller.units!.data!.length,
+                                      (index) => SizedBox(
+                                        child: Row(
+                                          children: [
+                                            Checkbox(
+                                              checkColor: Colors.white,
+                                              value: selected[index],
+                                              onChanged: (bool? value) {
+                                                setState(() {
+                                                  selected[index] = value!;
+                                                  if (selected[index] == true) {
+                                                    list.insert(index, '${controller.units!.data![index].id}');
+                                                    list.removeAt(index + 1);
+                                                  } else {
+                                                    list.removeAt(index);
+                                                    list.insert(index, '0');
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                            Text('${controller.units!.data![index].name}'),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
+                      )
+                    : SizedBox(),
                 Divider(),
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -483,7 +488,7 @@ class _AddProductsState extends State<AddProducts> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
-                        onTap: () async {                          
+                        onTap: () async {
                           setState(() {
                             final add = list.where((element) => element != '0').toList();
                             for (var i = 0; i < add.length; i++) {
@@ -506,7 +511,7 @@ class _AddProductsState extends State<AddProducts> {
                               price_for_box: pricePerCarton.text,
                               file: image!,
                               code: productId.text,
-                              units: selectlist,                              
+                              units: selectlist,
                             );
                             if (_create != null) {
                               LoadingDialog.close(context);
