@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
@@ -5,8 +7,10 @@ import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/product/addProducts.dart';
 import 'package:poswarehouse/screen/product/services/productApi.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
+import 'package:poswarehouse/widgets/GalleryWidget.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class ProductsPage extends StatefulWidget {
   ProductsPage({Key? key}) : super(key: key);
@@ -18,6 +22,10 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   final TextEditingController? editSubTitle = TextEditingController();
   int start = 0;
+  List<String> images = [];
+  static const int numItems = 10;
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  //List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
   void initState() {
     super.initState();
@@ -27,6 +35,10 @@ class _ProductsPageState extends State<ProductsPage> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
+    setState(() {
+      images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length, (index) => context.read<ProductController>().allProduct!.data![index].image!);
+      //images.add(context.read<ProductController>().allProduct.data);
+    });
     LoadingDialog.close(context);
   }
 
@@ -142,12 +154,28 @@ class _ProductsPageState extends State<ProductsPage> {
                                               width: size.width * 0.06,
                                               height: size.height * 0.08,
                                               child: controller.allProduct!.data![index].image != null
-                                                  ? Image.network('${controller.allProduct!.data![index].image}',
-                                                      fit: BoxFit.fill)
-                                                  : Image.asset(
-                                                      'assets/images/noimage.jpg',
-                                                      fit: BoxFit.fill,
-                                                    ),
+                                                  ? InkWell(
+                                                      onTap: (){
+                                                        Navigator.of(context).push(MaterialPageRoute(
+                                                        builder: (_) => GalleryWidget(
+                                                              urlimage: '${controller.allProduct!.data![index].image}',
+                                                            )));
+                                                      },
+                                                      child: Image.network('${controller.allProduct!.data![index].image}',
+                                                          fit: BoxFit.fill),
+                                                    )
+                                                  : InkWell(
+                                                      onTap: (){
+                                                        Navigator.of(context).push(MaterialPageRoute(
+                                                        builder: (_) => GalleryWidget(
+                                                              urlimage: 'assets/images/noimage.jpg',
+                                                            )));
+                                                      },
+                                                      child: Image.asset(
+                                                          'assets/images/noimage.jpg',
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                  ),
                                             )),
                                             DataCell(
                                                 Center(child: Text('${controller.allProduct!.data![index].cost}'))),
@@ -266,21 +294,28 @@ class _ProductsPageState extends State<ProductsPage> {
                   height: size.height * 0.01,
                 ),
                 controller.allProduct != null
-                    ? NumberPaginator(
-                        numberPages: controller.allProduct!.last_page!,
-                        onPageChange: (p0) async {
-                          LoadingDialog.open(context);
-                          setState(() {
-                            start = ((p0 - 1) * start) + 10;
-                            print(start);
-                          });
-                          await context.read<ProductController>().getListProducts(start: start);
-                          if (!mounted) {
-                            return;
-                          }
-                          LoadingDialog.close(context);
-                        },
-                      )
+                    ? SizedBox(
+                      width: size.width * 0.22,
+                      child: Wrap(
+                        children: [
+                          NumberPaginator(
+                              numberPages: controller.allProduct!.last_page!,
+                              onPageChange: (p0) async {
+                                LoadingDialog.open(context);
+                                setState(() {
+                                  start = ((p0 - 1) * start) + 10;
+                                  print(start);
+                                });
+                                await context.read<ProductController>().getListProducts(start: start);
+                                if (!mounted) {
+                                  return;
+                                }
+                                LoadingDialog.close(context);
+                              },
+                            ),
+                        ],
+                      ),
+                    )
                     : SizedBox.shrink(),
               ],
             ),

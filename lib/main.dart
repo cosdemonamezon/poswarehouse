@@ -3,6 +3,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/loginPage.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
+import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:poswarehouse/screen/warehouse/services/wareHouseController.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CategoryController()),
         ChangeNotifierProvider(create: (context) => OrdersController()),
         ChangeNotifierProvider(create: (context) => WareHouseController()),
+        ChangeNotifierProvider(create: (context) => PickupProductController()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

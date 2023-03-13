@@ -1,241 +1,320 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
+import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:provider/provider.dart';
 
 class DetailPickProducts extends StatefulWidget {
-  DetailPickProducts({Key? key}) : super(key: key);
-
+  DetailPickProducts({Key? key, required this.stock_purchase_no}) : super(key: key);
+  String stock_purchase_no;
   @override
   State<DetailPickProducts> createState() => _DetailPickProductsState();
 }
 
 class _DetailPickProductsState extends State<DetailPickProducts> {
+  final TextEditingController purchaseId = TextEditingController();
+  final TextEditingController date = TextEditingController();
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
+  }
+
+  Future<void> _initialize() async {
+    LoadingDialog.open(context);
+    await context.read<PickupProductController>().getDetail(widget.stock_purchase_no);
+    purchaseId.text = await context.read<PickupProductController>().receivingGoods!.stock_purchase_no!;
+    date.text = await context.read<PickupProductController>().receivingGoods!.purchase_date!;
+    LoadingDialog.close(context);
+  }
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('รายละเอียดการเบิกสินค้า'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "สถานะ",
+    return Consumer<PickupProductController>(builder: (context, controller, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('รายละเอียดการเบิกสินค้า'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: controller.receivingGoods != null
+            ?Column(
+              children: [
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "สถานะ",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                        Chip(
+                          labelPadding: EdgeInsets.all(2.0),
+                          elevation: 6.0,
+                          shadowColor: Colors.grey[60],
+                          backgroundColor: Colors.green,
+                          label: Text('${controller.receivingGoods!.status}'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                            'รหัส',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(
+                            height: size.height * 0.06,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              sufPress: () {},
+                              controller: purchaseId,
+                              readOnly: true,
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                            'โอนจาก',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(
+                            height: size.height * 0.06,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              sufPress: () {},
+                              readOnly: true,
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
+                      ],
+                    ),
+                    //------------------
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                            'วันที่',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(
+                            height: size.height * 0.06,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              sufPress: () {},
+                              controller: date,
+                              readOnly: true,
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                            'ไปยัง',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(
+                            height: size.height * 0.06,
+                            width: size.width * 0.45,
+                            child: appTextFormField(
+                              sufPress: () {},
+                              readOnly: true,
+                              vertical: 25.0,
+                              horizontal: 10.0,
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.shopify_sharp),
+                        Text(
+                          "สินค้า",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w300),
                         ),
-                      ),
-                      Chip(
-                        labelPadding: EdgeInsets.all(2.0),
-                        elevation: 6.0,
-                        shadowColor: Colors.grey[60],
-                        backgroundColor: Colors.green,
-                        label: Text('สำเร็จ'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                Container(
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  width: double.infinity,
+                  child: controller.receivingGoods!.orders!.isNotEmpty
+                  ?DataTable(
+                      columns: <DataColumn>[
+                        DataColumn(
+                          label: Text('#'),
+                        ),
+                        DataColumn(
+                          label: Text('รหัส'),
+                        ),
+                        DataColumn(
+                          label: Text('รหัสสินค้า'),
+                        ),
+                        DataColumn(
+                          label: Text('ราคา'),
+                        ),
+                        DataColumn(
+                          label: Text('จำนวน'),
+                        ),
+                        DataColumn(
+                          label: Text(''),
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                          controller.receivingGoods!.orders!.length,
+                          (index) => DataRow(
+                                color: MaterialStateProperty.resolveWith<Color?>(
+                                    (Set<MaterialState> states) {
+                                  // All rows will have the same selected color.
+                                  if (states.contains(MaterialState.selected)) {
+                                    return Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.08);
+                                  }
+                                  // Even rows will have a grey color.
+                                  if (index.isEven) {
+                                    return Colors.grey.withOpacity(0.3);
+                                  }
+                                  return null; // Use default value for other states and odd rows.
+                                }),
+                                cells: <DataCell>[
+                                  DataCell(Text('${controller.receivingGoods!.orders![index].id}')),
+                                  DataCell(Text('${controller.receivingGoods!.orders![index].stock_purchase_no}')),
+                                  DataCell(Text('${controller.receivingGoods!.orders![index].product_id}')),
+                                  DataCell(
+                                      Text('${controller.receivingGoods!.orders![index].price}')),
+                                  DataCell(
+                                      Text('${controller.receivingGoods!.orders![index].qty}')),
+                                  DataCell(Row(
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.more_vert)),
+                                    ],
+                                  ))
+                                ],
+                                // selected: selected[index],
+                                // onSelectChanged: (bool? value) {
+                                //   setState(() {
+                                //     selected[index] = value!;
+                                //   });
+                                // },
+                              ))):SizedBox.shrink(),
+                ),
+                SizedBox(
+                  height: size.height * 0.08,
+                ),
+                SizedBox(
+                  width: size.width * 0.42,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                          'รหัส',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            setState(() {});
+                          },
+                          child: Container(
+                            width: size.width * 0.1,
+                            height: size.height * 0.06,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                'ไม่อนุมัติ',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: appTextFormField(
-                            sufPress: () {},
-                            readOnly: false,
-                            vertical: 25.0,
-                            horizontal: 10.0,
-                          )),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                          'โอนจาก',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            setState(() {});
+                          },
+                          child: Container(
+                            width: size.width * 0.1,
+                            height: size.height * 0.06,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: kPrimaryColor),
+                            child: Center(
+                              child: Text(
+                                'อนุมัติ',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: appTextFormField(
-                            sufPress: () {},
-                            readOnly: false,
-                            vertical: 25.0,
-                            horizontal: 10.0,
-                          )),
-                    ],
-                  ),
-                  //------------------
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                          'วันที่',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: appTextFormField(
-                            sufPress: () {},
-                            readOnly: false,
-                            vertical: 25.0,
-                            horizontal: 10.0,
-                          )),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                          'ไปยัง',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                          height: size.height * 0.06,
-                          width: size.width * 0.45,
-                          child: appTextFormField(
-                            sufPress: () {},
-                            readOnly: false,
-                            vertical: 25.0,
-                            horizontal: 10.0,
-                          )),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.shopify_sharp),
-                      Text(
-                        "สินค้า",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w300),
                       ),
                     ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.grey)),
-                width: double.infinity,
-                child: DataTable(
-                    columns: <DataColumn>[
-                      DataColumn(
-                        label: Text('#'),
-                      ),
-                      DataColumn(
-                        label: Text('รหัส'),
-                      ),
-                      DataColumn(
-                        label: Text('ชื่อสินค้า'),
-                      ),
-                      DataColumn(
-                        label: Text('ราคาทุน'),
-                      ),
-                      DataColumn(
-                        label: Text('จำนวน'),
-                      ),
-                      DataColumn(
-                        label: Text(''),
-                      ),
-                    ],
-                    rows: List<DataRow>.generate(
-                        pickupOrder.length,
-                        (index) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                                // All rows will have the same selected color.
-                                if (states.contains(MaterialState.selected)) {
-                                  return Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.08);
-                                }
-                                // Even rows will have a grey color.
-                                if (index.isEven) {
-                                  return Colors.grey.withOpacity(0.3);
-                                }
-                                return null; // Use default value for other states and odd rows.
-                              }),
-                              cells: <DataCell>[
-                                DataCell(Text('${pickupOrder[index]['id']}')),
-                                DataCell(Text('${pickupOrder[index]['poid']}')),
-                                DataCell(Text('${pickupOrder[index]['name']}')),
-                                DataCell(
-                                    Text('${pickupOrder[index]['price']}')),
-                                DataCell(
-                                    Text('${pickupOrder[index]['amount']}')),
-                                DataCell(Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                            Icons.more_vert)),
-                                  ],
-                                ))
-                              ],
-                              selected: selected[index],
-                              onSelectChanged: (bool? value) {
-                                setState(() {
-                                  selected[index] = value!;
-                                });
-                              },
-                            ))),
-              ),
-              SizedBox(
-                height: size.height * 0.08,
-              ),
-            ],
+                ),
+              ],
+            ):SizedBox(),
           ),
         ),
-      ),
-    );
-  }
+      );
+  });}
 }

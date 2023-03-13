@@ -295,24 +295,32 @@ class WareHousePageState extends State<WareHousePage> {
                       )
                     : SizedBox(),
                 controller.allWareHouses != null
-                    ? NumberPaginator(
-                        numberPages: controller.allWareHouses!.last_page!,
-                        // config: NumberPaginatorUIConfig(
-                        //   mode: ContentDisplayMode.hidden,
-                        // ),
-                        onPageChange: (p0) async {
-                          LoadingDialog.open(context);
-                          setState(() {
-                            start = ((p0 - 1) * start) + 10;
-                            print(start);
-                          });
-                          await context.read<WareHouseController>().getListWareHouses(start: start);
-                          if (!mounted) {
-                            return;
-                          }
-                          LoadingDialog.close(context);
-                        },
-                      )
+                    ? Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.22,
+                          child: NumberPaginator(
+                              numberPages: controller.allWareHouses!.last_page!,
+                              // config: NumberPaginatorUIConfig(
+                              //   mode: ContentDisplayMode.hidden,
+                              // ),
+                              onPageChange: (p0) async {
+                                LoadingDialog.open(context);
+                                setState(() {
+                                  start = ((p0 - 1) * start) + 10;
+                                  print(start);
+                                });
+                                await context.read<WareHouseController>().getListWareHouses(start: start);
+                                if (!mounted) {
+                                  return;
+                                }
+                                LoadingDialog.close(context);
+                              },
+                            ),
+                        ),
+                      ],
+                    )
                     : SizedBox.shrink(),
               ],
             ),

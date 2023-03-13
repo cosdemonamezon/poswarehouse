@@ -239,11 +239,11 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                   children: [
                                     IconButton(
                                         onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailPickProducts()));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             DetailPickProducts()));
                                         },
                                         icon: Icon(
                                             Icons.remove_red_eye_outlined)),
