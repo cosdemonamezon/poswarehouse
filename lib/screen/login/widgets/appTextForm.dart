@@ -254,10 +254,11 @@ class appTextTowFormField extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          prefixIcon: Icon(preIcon),
-          suffixIcon: IconButton(
+          prefixIcon: preIcon != null ? Icon(preIcon) :null,
+          suffixIcon: sufPress != null
+          ?IconButton(
             onPressed: sufPress,
-            icon: Icon(sufIcon))),
+            icon: Icon(sufIcon)):null),
     );
   }
 }

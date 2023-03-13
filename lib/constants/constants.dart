@@ -159,15 +159,21 @@ List checkListItems = [
     "id": 1,
     "value": false,
     "title": "ราคาขายปลีก",
+    "valuetitle": "retail",
+     "cost": 15
   },
   {
     "id": 2,
     "value": false,
     "title": "ราคาขายส่ง",
+    "valuetitle": "wholesale",
+     "cost": 13
   },
   {
     "id": 3,
     "value": false,
-    "title": "ราคาขายยกคลัง",
+    "title": "ราคาขายยกลัง",
+    "valuetitle": "box",
+    "cost": 14
   }
 ];

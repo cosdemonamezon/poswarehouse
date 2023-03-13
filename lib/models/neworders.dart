@@ -8,7 +8,8 @@ part 'neworders.g.dart';
 class NewOrders {
   String product_id;
   int? qty;
-  int price;
+  int? price_per_unit;
+  int? cost;
   int unit_id;
   Unit? unit;
   Product? product;
@@ -17,7 +18,8 @@ class NewOrders {
   NewOrders(
     this.product_id,
     this.qty,
-    this.price,
+    this.cost,
+    this.price_per_unit,
     this.unit_id,
     this.unit,
     this.product,
