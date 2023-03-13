@@ -5,7 +5,9 @@ import 'dart:convert' as convert;
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/receivinggoods.dart';
+import 'package:poswarehouse/models/stockpurchase.dart';
 
 class PickupProductApi {
   const PickupProductApi();
@@ -53,6 +55,28 @@ class PickupProductApi {
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
       return ReceivingGoods.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  //Create
+  static Future<StockPurchase> createOrders(String date, List<NewOrders> orders) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_purchase');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "purchase_date": date,
+        "orders": orders,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return StockPurchase.fromJson(data['data']);
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);

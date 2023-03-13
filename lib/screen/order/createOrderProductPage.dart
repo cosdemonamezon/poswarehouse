@@ -31,7 +31,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   
   List<NewOrders> listneworder = [];
   NewOrders? order;
-  NewOrders emptyorder = new NewOrders('0', 0, 0);
+  NewOrders emptyorder = new NewOrders('0', 0, 0, 0);
 
   @override
   void initState() {
@@ -261,12 +261,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                       setState(() {
                                                         if (newValue == "") {
                                                           qtyController![index].text = '';
-                                                          order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()));                                                        
+                                                          order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
                                                           listneworder.insert(index, order!);
                                                           listneworder.removeAt(index + 1);
                                                         } else {
                                                           qtyController![index].text = newValue.toString();
-                                                          order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));                                                        
+                                                          order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
                                                           listneworder.insert(index, order!);
                                                           listneworder.removeAt(index + 1);
                                                         }
@@ -287,7 +287,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                             selected[index] = value!;
                                             if (qtyController!.isNotEmpty) {
                                               if (selected[index] == true) {
-                                                order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()));
+                                                order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
                                                 //listneworder.add(order!); 
                                                 listneworder.insert(index, order!);
                                                 listneworder.removeAt(index + 1);

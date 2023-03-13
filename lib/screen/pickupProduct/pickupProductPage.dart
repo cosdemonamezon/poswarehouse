@@ -66,11 +66,13 @@ class _PickupProductPageState extends State<PickupProductPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CeatePickupOrderPage()));
+                          final go = await Navigator.push(context, MaterialPageRoute(builder: (context) => CeatePickupOrderPage()));
+                          if (go == true) {
+                            _initialize();
+                          } else {
+                            print(go);
+                          }
+                          
                         },
                         child: Container(
                           width: size.width * 0.1,

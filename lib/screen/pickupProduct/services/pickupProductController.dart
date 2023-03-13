@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/models/allReceiving.dart';
+import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/receivinggoods.dart';
+import 'package:poswarehouse/models/stockpurchase.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductApi.dart';
 
 class PickupProductController extends ChangeNotifier {
@@ -11,6 +13,7 @@ class PickupProductController extends ChangeNotifier {
   AllReceiving? allReceiving;
 
   ReceivingGoods? receivingGoods;
+  StockPurchase? stockPurchase;
 
   getListPickupProducts({
     int start = 0,
@@ -22,6 +25,11 @@ class PickupProductController extends ChangeNotifier {
 
   getDetail(String stock_purchase_no)async{
     receivingGoods = await PickupProductApi.getPickupsById(stock_purchase_no);
+    notifyListeners();
+  }
+
+  createNewOrder(String date, List<NewOrders> orders) async {
+    stockPurchase = await PickupProductApi.createOrders(date, orders);
     notifyListeners();
   }
 }
