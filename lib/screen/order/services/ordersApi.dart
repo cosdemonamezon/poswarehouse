@@ -34,6 +34,27 @@ class OrdersApi {
     }
   }
 
+  static Future<StockPurchase> createPickOutOrders(String date, List<NewOrders> orders) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_pickout');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "purchase_date": date,
+        "orders": orders,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return StockPurchase.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
   //// Get คำสั่งซื้อทั้งหมด
   static Future<PurchaseProduct> getOrders({
     int start = 0,

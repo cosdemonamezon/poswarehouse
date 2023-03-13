@@ -13,6 +13,7 @@ class OrdersController extends ChangeNotifier {
   OrdersApi api;
 
   StockPurchase? stockPurchase;
+  
 
   PurchaseProduct? purchaseProduct;
   Purchase? purchase;
@@ -22,6 +23,8 @@ class OrdersController extends ChangeNotifier {
     stockPurchase = await OrdersApi.createOrders(date, orders);
     notifyListeners();
   }
+
+  
 
   getListOrders({
     int start = 0,

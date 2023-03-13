@@ -6,7 +6,9 @@ part 'order.g.dart';
 class Order {
   final int? id;
   final String? stock_purchase_no;
+  final String? stock_pick_out_no;
   final String? product_id;
+  final String? unit_id;
   final String? price;
   final String? qty;
   final String? created_at;
@@ -19,7 +21,9 @@ class Order {
   Order(    
     this.id,
     this.stock_purchase_no,
+    this.stock_pick_out_no,
     this.product_id,
+    this.unit_id,
     this.price,
     this.qty,
     this.created_at,

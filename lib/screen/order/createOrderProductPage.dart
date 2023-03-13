@@ -8,6 +8,7 @@ import 'package:poswarehouse/models/product.dart';
 import 'package:poswarehouse/models/unit.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
+import 'package:poswarehouse/screen/pickupProduct/detailPickProducts.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:poswarehouse/widgets/inputNumberDialog.dart';
@@ -26,10 +27,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   final GlobalKey<FormState> orderFormKey = GlobalKey<FormState>();
   final TextEditingController? datePick = TextEditingController();
   List<TextEditingController>? qtyController = [];
-  List<TextEditingController>? unitController = [];
-  List<TextEditingController>? qtyunitController = [];
   DateTime dateTime = DateTime.now();
-  List<String> qtyText = [];
   int numItems = 0;
   List<bool> selected = [];
 
@@ -397,9 +395,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
                             await context.read<OrdersController>().createNewOrder(datePick!.text, listneworder);
-                            if (ordersController != null) {
+                            if (ordersController.stockPurchase != null) {
                               print('object Create Success****');
                               Navigator.pop(context, true);
+                               
                             } else {
                               print('object Error Data');
                             }

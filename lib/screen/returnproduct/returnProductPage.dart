@@ -151,8 +151,8 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.allReceiving!.data![index].No}')),
                                             DataCell(
-                                                Text('${controller.allReceiving!.data![index].stock_purchase_no}')),
-                                            DataCell(Text('${controller.allReceiving!.data![index].purchase_date}')),
+                                                Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
+                                            DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
                                             DataCell(Chip(
                                                 labelPadding: EdgeInsets.all(2.0),
                                                 shape:
@@ -174,7 +174,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                           MaterialPageRoute(
                                                               builder: (context) => DetailReturnProduct(
                                                                     stock_purchase_no:
-                                                                        '${controller.allReceiving!.data![index].stock_purchase_no}',
+                                                                        '${controller.allReceiving!.data![index].stock_pick_out_no}',
                                                                   )));
                                                     },
                                                     icon: Icon(Icons.remove_red_eye_outlined)),

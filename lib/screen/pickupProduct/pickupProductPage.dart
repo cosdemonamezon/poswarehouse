@@ -119,17 +119,11 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text(
-                                      'สถานะ',
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                    ),
-                                  ),
-                                  DataColumn(
                                     label: Text(''),
                                   ),
                                 ],
                                 rows: List<DataRow>.generate(
-                                    pickupproduct.length,
+                                    controller.allReceiving!.data!.length,
                                     (index) => DataRow(
                                           color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                             // All rows will have the same selected color.
@@ -145,20 +139,9 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.allReceiving!.data![index].No}')),
                                             DataCell(
-                                                Text('${controller.allReceiving!.data![index].stock_purchase_no}')),
-                                            DataCell(Text('${controller.allReceiving!.data![index].purchase_date}')),
-                                            DataCell(Chip(
-                                                labelPadding: EdgeInsets.all(2.0),
-                                                shape:
-                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                                labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
-                                                elevation: 6.0,
-                                                shadowColor: Colors.grey[60],
-                                                backgroundColor:
-                                                    controller.allReceiving!.data![index].status == 'Receive'
-                                                        ? Colors.green
-                                                        : Colors.red,
-                                                label: Text('${controller.allReceiving!.data![index].status}'))),
+                                                Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
+                                            DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
+                                            
                                             DataCell(Row(
                                               children: [
                                                 IconButton(
@@ -168,12 +151,12 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                                           MaterialPageRoute(
                                                               builder: (context) => DetailPickProducts(
                                                                     stock_purchase_no:
-                                                                        '${controller.allReceiving!.data![index].stock_purchase_no}',
+                                                                        '${controller.allReceiving!.data![index].stock_pick_out_no}',
                                                                   )));
                                                     },
                                                     icon: Icon(Icons.remove_red_eye_outlined)),
-                                                IconButton(onPressed: () {}, icon: Icon(Icons.edit_calendar_outlined)),
-                                                IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                                                // IconButton(onPressed: () {}, icon: Icon(Icons.edit_calendar_outlined)),
+                                                // IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
                                               ],
                                             ))
                                           ],
