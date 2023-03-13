@@ -238,30 +238,30 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                           EdgeInsets.fromLTRB(20, 0, 20, 0),
                                       child: GestureDetector(
                                         onTap: () async {
-                                          final _select = await showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (BuildContext context) {
-                                              return ProductDialog(
-                                                title: '',
-                                                description: '',
-                                                allProduct:
-                                                    controller.allProduct,
-                                                selectProducts: selectProducts,
-                                                press: () {},
-                                                pressSelect: () async {},
-                                              );
-                                            },
-                                          );
-                                          if (_select.isNotEmpty) {
-                                            //inspect(_select);
-                                            setState(() {
-                                              selectProducts = _select;
-                                            });
-                                            inspect(selectProducts);
-                                          } else {
-                                            print('object Na data of Select');
-                                          }
+                                          // final _select = await showDialog(
+                                          //   context: context,
+                                          //   barrierDismissible: false,
+                                          //   builder: (BuildContext context) {
+                                          //     return ProductDialog(
+                                          //       title: '',
+                                          //       description: '',
+                                          //       allProduct:
+                                          //           controller.allProduct,
+                                          //       selectProducts: selectProducts,
+                                          //       press: () {},
+                                          //       pressSelect: () async {},
+                                          //     );
+                                          //   },
+                                          // );
+                                          // if (_select.isNotEmpty) {
+                                          //   //inspect(_select);
+                                          //   setState(() {
+                                          //     selectProducts = _select;
+                                          //   });
+                                          //   inspect(selectProducts);
+                                          // } else {
+                                          //   print('object Na data of Select');
+                                          // }
                                         },
                                         child: Container(
                                           width: size.width * 0.1,

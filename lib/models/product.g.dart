@@ -38,6 +38,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       json['unit'] == null
           ? null
           : Unit.fromJson(json['unit'] as Map<String, dynamic>),
+      json['selected'] as bool?,
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -63,4 +64,5 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'category_product': instance.category_product,
       'sub_category': instance.sub_category,
       'unit': instance.unit,
+      'selected': instance.selected,
     };

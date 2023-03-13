@@ -29,7 +29,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
 
   List<NewOrders> listneworder = [];
   NewOrders? order;
-  NewOrders emptyorder = new NewOrders('0', 0, 0, 0);
+  //NewOrders emptyorder = new NewOrders('0', 0, 0, 0);
   //List<bool> selected = List<bool>.generate(numItems, (int index) => false);
 
   @override
@@ -218,38 +218,38 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          final _select = await showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return ProductDialog(
-                                title: '',
-                                description: '',
-                                allProduct: controller.allProduct,
-                                selectProducts: selectProducts,
-                                press: () {
-                                  Navigator.pop(context);
-                                },
-                                pressSelect: () async {},
-                              );
-                            },
-                          );
-                          if (_select.isNotEmpty) {
-                            //inspect(_select);
-                            setState(() {
-                              selectProducts = _select;
-                              numItems = selectProducts.length;
-                              selected  = List<bool>.generate(numItems, (int index) => false);
-                              for (var i = 0; i < selectProducts.length; i++) {
-                                qtyController!.add(TextEditingController(text: '0'));
-                                listneworder.add(emptyorder);
-                              }
+                          // final _select = await showDialog(
+                          //   context: context,
+                          //   barrierDismissible: false,
+                          //   builder: (BuildContext context) {
+                          //     return ProductDialog(
+                          //       title: '',
+                          //       description: '',
+                          //       allProduct: controller.allProduct,
+                          //       selectProducts: selectProducts,
+                          //       press: () {
+                          //         Navigator.pop(context);
+                          //       },
+                          //       pressSelect: () async {},
+                          //     );
+                          //   },
+                          // );
+                          // if (_select.isNotEmpty) {
+                          //   //inspect(_select);
+                          //   setState(() {
+                          //     selectProducts = _select;
+                          //     numItems = selectProducts.length;
+                          //     selected  = List<bool>.generate(numItems, (int index) => false);
+                          //     for (var i = 0; i < selectProducts.length; i++) {
+                          //       qtyController!.add(TextEditingController(text: '0'));
+                          //       //listneworder.add(emptyorder);
+                          //     }
                               
-                            });
-                            inspect(selectProducts);
-                          } else {
-                            print('object Na data of Select');
-                          }
+                          //   });
+                          //   inspect(selectProducts);
+                          // } else {
+                          //   print('object Na data of Select');
+                          // }
                         },
                         child: Container(
                           width: size.width * 0.2,
@@ -358,17 +358,17 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                                     onChanged: (newValue) async{
                                                       //print(newValue);
                                                       setState(() {
-                                                        if (newValue == "") {
-                                                          qtyController![index].text = '';
-                                                          order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
-                                                          listneworder.insert(index, order!);
-                                                          listneworder.removeAt(index + 1);
-                                                        } else {
-                                                          qtyController![index].text = newValue.toString();
-                                                          order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
-                                                          listneworder.insert(index, order!);
-                                                          listneworder.removeAt(index + 1);
-                                                        }
+                                                        // if (newValue == "") {
+                                                        //   qtyController![index].text = '';
+                                                        //   order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
+                                                        //   listneworder.insert(index, order!);
+                                                        //   listneworder.removeAt(index + 1);
+                                                        // } else {
+                                                        //   qtyController![index].text = newValue.toString();
+                                                        //   order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
+                                                        //   listneworder.insert(index, order!);
+                                                        //   listneworder.removeAt(index + 1);
+                                                        // }
                                                         
                                                       });
                                                       inspect(listneworder);
@@ -386,14 +386,14 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                             selected[index] = value!;
                                             if (qtyController!.isNotEmpty) {
                                               if (selected[index] == true) {
-                                                order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
+                                                //order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
                                                 //listneworder.add(order!); 
                                                 listneworder.insert(index, order!);
                                                 listneworder.removeAt(index + 1);
                                               } else {
                                                 //print(selectProducts[index].No);
                                                 listneworder.removeAt(index);
-                                                listneworder.insert(index, emptyorder);
+                                                //listneworder.insert(index, emptyorder);
                                                 //listneworder.clear();
                                               }   
                                               inspect(listneworder);

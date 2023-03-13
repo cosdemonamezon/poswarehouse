@@ -29,6 +29,7 @@ class Product {
   final CategoryProduct? category_product;
   final SubCategory? sub_category;
   final Unit? unit;
+  bool? selected;
 
   Product(
     this.id,
@@ -52,7 +53,8 @@ class Product {
     this.No,
     this.category_product,
     this.sub_category,
-    this.unit
+    this.unit,
+    this.selected
   );
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);

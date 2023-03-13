@@ -11,6 +11,13 @@ NewOrders _$NewOrdersFromJson(Map<String, dynamic> json) => NewOrders(
       json['qty'] as int?,
       json['price'] as int,
       json['unit_id'] as int,
+      json['unit'] == null
+          ? null
+          : Unit.fromJson(json['unit'] as Map<String, dynamic>),
+      json['product'] == null
+          ? null
+          : Product.fromJson(json['product'] as Map<String, dynamic>),
+      json['selected'] as bool,
     );
 
 Map<String, dynamic> _$NewOrdersToJson(NewOrders instance) => <String, dynamic>{
@@ -18,4 +25,7 @@ Map<String, dynamic> _$NewOrdersToJson(NewOrders instance) => <String, dynamic>{
       'qty': instance.qty,
       'price': instance.price,
       'unit_id': instance.unit_id,
+      'unit': instance.unit,
+      'product': instance.product,
+      'selected': instance.selected,
     };
