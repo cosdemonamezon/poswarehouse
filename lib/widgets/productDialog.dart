@@ -73,9 +73,7 @@ class _ProductDialogState extends State<ProductDialog> {
               ),
               SizedBox(height: size.height * 0.02),
               Center(
-                child: Text('เลือกสินค้า',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: Text('เลือกสินค้า', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               ),
               Container(
                 //color: Colors.blue,
@@ -187,16 +185,11 @@ class _ProductDialogState extends State<ProductDialog> {
                   child: Container(
                     width: size.width * 0.1,
                     height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                     child: Center(
                       child: Text(
                         'เลือก',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                   ),

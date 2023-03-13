@@ -32,7 +32,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   List<String> qtyText = [];
   int numItems = 0;
   List<bool> selected = [];
-  
+
   List<NewOrders> listneworder = [];
   NewOrders? order;
   //NewOrders emptyorder = new NewOrders('0', 0, 0, 0);
@@ -49,7 +49,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context.read<ProductController>().getListProducts();   
+    await context.read<ProductController>().getListProducts();
     LoadingDialog.close(context);
   }
 
@@ -119,8 +119,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         Icon(Icons.shopify_outlined),
                         Text(
                           "สินค้า",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -176,16 +175,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เพิ่มสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -199,8 +193,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                 Container(
                   width: double.infinity,
                   height: size.height * 0.40,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
                   child: listneworder.isNotEmpty
                       ? SingleChildScrollView(
@@ -234,16 +227,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                               rows: List<DataRow>.generate(
                                   listneworder.length,
                                   (index) => DataRow(
-                                        color: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
+                                        color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                           // All rows will have the same selected color.
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                                .withOpacity(0.08);
+                                          if (states.contains(MaterialState.selected)) {
+                                            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                           }
                                           // Even rows will have a grey color.
                                           if (index.isEven) {
@@ -269,7 +256,6 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 : Image.asset('assets/images/noimage.jpg', fit: BoxFit.fill,
                                                   ),
                                           )),
-                                          
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
                                             child: Text('${listneworder[index].product!.price_for_retail}'),
@@ -394,10 +380,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           child: Center(
                             child: Text(
                               'ยกเลิก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                             ),
                           ),
                         ),
@@ -423,21 +406,15 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           } else {
                             print('object No Select Data');
                           }
-                          
                         },
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'บันทึก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),

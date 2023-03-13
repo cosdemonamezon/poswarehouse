@@ -296,15 +296,13 @@ class WareHousePageState extends State<WareHousePage> {
                     : SizedBox(),
                 controller.allWareHouses != null
                     ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.22,
-                          child: NumberPaginator(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: size.width * 0.22,
+                            child: NumberPaginator(
                               numberPages: controller.allWareHouses!.last_page!,
-                              // config: NumberPaginatorUIConfig(
-                              //   mode: ContentDisplayMode.hidden,
-                              // ),
+                              config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
                                 setState(() {
@@ -318,9 +316,9 @@ class WareHousePageState extends State<WareHousePage> {
                                 LoadingDialog.close(context);
                               },
                             ),
-                        ),
-                      ],
-                    )
+                          ),
+                        ],
+                      )
                     : SizedBox.shrink(),
               ],
             ),

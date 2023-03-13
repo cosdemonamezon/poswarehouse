@@ -201,6 +201,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                       width: size.width * 0.22,
                       child: NumberPaginator(
                         // numberPages: controller.allProduct!.last_page!,
+                        config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                         numberPages: 1,
                         onPageChange: (p0) async {
                           LoadingDialog.open(context);
