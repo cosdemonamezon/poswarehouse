@@ -12,6 +12,7 @@ import 'package:poswarehouse/screen/pickupProduct/services/pickupProductControll
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:poswarehouse/widgets/inputNumberDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:poswarehouse/widgets/productDialog.dart';
 import 'package:poswarehouse/widgets/unitDialog.dart';
 import 'package:provider/provider.dart';
@@ -364,18 +365,35 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           });
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
-                            await context.read<PickupProductController>().creatOrderPickOut(datePick!.text, listneworder);
-                            if (pickupController.pickOutStockPurchase != null) {
-                              print('object Create Success****');
-                              //Navigator.pop(context, true);
-                              Navigator.push(
-                                  context, MaterialPageRoute(
-                                    builder: (context) => DetailPickProducts(
-                                          stock_purchase_no: '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
-                                )));
-                            } else {
-                              print('object Error Data');
+                            try {
+                              await context.read<PickupProductController>().creatOrderPickOut(datePick!.text, listneworder);
+                              if (pickupController.pickOutStockPurchase != null) {
+                                print('object Create Success****');
+                                //Navigator.pop(context, true);
+                                Navigator.push(
+                                    context, MaterialPageRoute(
+                                      builder: (context) => DetailPickProducts(
+                                            stock_purchase_no: '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
+                                  )));
+                              } else {
+                                print('object Error Data');
+                              }
+                            } on Exception catch (e) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: e.toString(),
+                                    pressYes: (){
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
                             }
+                            
                           } else {
                             print('object No Select Data');
                           }

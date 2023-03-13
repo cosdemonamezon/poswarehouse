@@ -160,12 +160,12 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                               ],
                                             ))
                                           ],
-                                          selected: selected[index],
-                                          onSelectChanged: (bool? value) {
-                                            setState(() {
-                                              selected[index] = value!;
-                                            });
-                                          },
+                                          // selected: selected[index],
+                                          // onSelectChanged: (bool? value) {
+                                          //   setState(() {
+                                          //     selected[index] = value!;
+                                          //   });
+                                          // },
                                         )))
                             : SizedBox(),
                       )

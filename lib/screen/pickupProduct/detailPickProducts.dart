@@ -3,6 +3,7 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class DetailPickProducts extends StatefulWidget {
@@ -253,12 +254,30 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: GestureDetector(
                           onTap: () async {
-                            LoadingDialog.open(context);
-                            await context.read<PickupProductController>().receiveStockPickout(purchaseId.text);
-                                                  
-                            LoadingDialog.close(context);
-                            setState(() {});
-                            Navigator.of(context)..pop()..pop();
+                            try {
+                              LoadingDialog.open(context);
+                              await context.read<PickupProductController>().receiveStockPickout(purchaseId.text);
+                                                    
+                              LoadingDialog.close(context);
+                              setState(() {});
+                              Navigator.of(context)..pop()..pop();
+                            } on Exception catch (e) {
+                              LoadingDialog.close(context);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: e.toString(),
+                                    pressYes: (){
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
+                            }
+                            
                           },
                           child: Container(
                             width: size.width * 0.1,
