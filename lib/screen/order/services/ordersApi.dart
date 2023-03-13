@@ -1,4 +1,5 @@
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/models/damageds.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/purchase.dart';
 import 'package:poswarehouse/models/purchaseProduct.dart';
@@ -64,7 +65,7 @@ class OrdersApi {
   }
 
   //รับสินค้าเข้าคลัง
-  static Future<Purchase> pickupOrders(String stock_purchase_no) async {
+  static Future<Purchase> pickupOrders(String stock_purchase_no, List<Damageds> damageds) async {
     final url = Uri.https(publicUrl, '/pos-api/public/api/receive_stock_purchase');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -72,6 +73,7 @@ class OrdersApi {
       headers: headers,
       body: convert.jsonEncode({
         "stock_purchase_no": stock_purchase_no,
+        "damageds": damageds,
       }),
     );
 

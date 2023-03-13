@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:poswarehouse/models/product.dart';
 
 part 'order.g.dart';
 

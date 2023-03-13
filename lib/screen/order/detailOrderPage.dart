@@ -1,13 +1,20 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/models/damageds.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/inputNumberDialog.dart';
+import 'package:poswarehouse/widgets/inputTextDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class DetailOrderPage extends StatefulWidget {
-  DetailOrderPage({Key? key, required this.stock_purchase_no}) : super(key: key);
+  DetailOrderPage({Key? key, required this.stock_purchase_no})
+      : super(key: key);
   final String stock_purchase_no;
 
   @override
@@ -17,15 +24,11 @@ class DetailOrderPage extends StatefulWidget {
 class _DetailOrderPageState extends State<DetailOrderPage> {
   final GlobalKey<FormState> addProductFormKey = GlobalKey<FormState>();
   final TextEditingController orderId = TextEditingController();
-  final TextEditingController ordername = TextEditingController();
-  final TextEditingController orderType = TextEditingController();
-  final TextEditingController orderAddress = TextEditingController();
-  final TextEditingController orderTel = TextEditingController();
   final TextEditingController orderDate = TextEditingController();
-  final TextEditingController orderTypeProduct = TextEditingController();
-  final TextEditingController orderStock = TextEditingController();
   List<int> amounts = [];
   List<int> prices = [];
+  List<Damageds>? damageds = [];
+  //Damageds? damaged;
   int amount = 0;
   int price = 0;
   int sum = 0;
@@ -37,13 +40,41 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context.read<OrdersController>().getDetailPurchase(widget.stock_purchase_no);
-    orderId.text = await context.read<OrdersController>().purchaseOrders!.stock_purchase_no!;
-    orderDate.text = await context.read<OrdersController>().purchaseOrders!.purchase_date!;
+    await context
+        .read<OrdersController>()
+        .getDetailPurchase(widget.stock_purchase_no);
+    orderId.text = await context
+        .read<OrdersController>()
+        .purchaseOrders!
+        .stock_purchase_no!;
+    orderDate.text =
+        await context.read<OrdersController>().purchaseOrders!.purchase_date!;
     setState(() {
-      for (var i = 0; i < context.read<OrdersController>().purchaseOrders!.orders!.length; i++) {
-        amounts.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].qty.toString()));
-        prices.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].price.toString()));
+      for (var i = 0;
+          i < context.read<OrdersController>().purchaseOrders!.orders!.length;
+          i++) {
+        amounts.add(int.parse(context
+            .read<OrdersController>()
+            .purchaseOrders!
+            .orders![i]
+            .qty
+            .toString()));
+        prices.add(int.parse(context
+            .read<OrdersController>()
+            .purchaseOrders!
+            .orders![i]
+            .price
+            .toString()));
+        final damaged = new Damageds(
+            int.parse(context
+                .read<OrdersController>()
+                .purchaseOrders!
+                .orders![i]
+                .id
+                .toString()),
+            '');
+
+        damageds!.add(damaged);
       }
       amount = amounts.sum;
       price = prices.sum;
@@ -77,7 +108,8 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         Icon(Icons.list_alt_rounded),
                         Text(
                           "ข้อมูล",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -87,7 +119,8 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             "สถานะ",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w300),
                           ),
                         ),
                         Chip(
@@ -95,7 +128,9 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           elevation: 6.0,
                           shadowColor: Colors.grey[60],
                           backgroundColor:
-                              controller.purchaseOrders?.status == 'Receive' ? Colors.green : Colors.orangeAccent,
+                              controller.purchaseOrders?.status == 'Receive'
+                                  ? Colors.green
+                                  : Colors.orangeAccent,
                           label: Text('${controller.purchaseOrders?.status}'),
                         ),
                       ],
@@ -116,7 +151,8 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
                             'รหัสคำสั่งซื้อ',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
@@ -125,58 +161,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                             child: appTextFormField(
                               controller: orderId,
                               sufPress: () {},
-                              readOnly: false,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'ประเภท',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              controller: orderType,
-                              sufPress: () {},
-                              readOnly: false,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'เบอร์โทร',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              controller: orderTel,
-                              sufPress: () {},
-                              readOnly: false,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'ประเภทสินค้า',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              controller: orderTypeProduct,
-                              sufPress: () {},
-                              readOnly: false,
+                              readOnly: true,
                               vertical: 25.0,
                               horizontal: 10.0,
                             )),
@@ -190,42 +175,9 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'ชื่อร้านค้า',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              controller: ordername,
-                              sufPress: () {},
-                              readOnly: false,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'ที่อยู่',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              controller: orderAddress,
-                              sufPress: () {},
-                              readOnly: false,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
                             'วันที่รับ',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
@@ -234,24 +186,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                             child: appTextFormField(
                               controller: orderDate,
                               sufPress: () {},
-                              readOnly: false,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'พื้นที่จัดเก็บสินค้า',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              controller: orderStock,
-                              sufPress: () {},
-                              readOnly: false,
+                              readOnly: true,
                               vertical: 25.0,
                               horizontal: 10.0,
                             )),
@@ -267,13 +202,15 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                     Icon(Icons.shopify_sharp),
                     Text(
                       "สินค้า",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
                   ],
                 ),
                 controller.purchaseOrders != null
                     ? Container(
-                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey)),
                         width: double.infinity,
                         child: controller.purchaseOrders!.orders!.isNotEmpty
                             ? DataTable(
@@ -282,31 +219,43 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                   DataColumn(
                                     label: Text(
                                       '#',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'รหัส PO',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'รหัสสินค้า',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'จำนวน',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'ราคา',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'หมายเหตุ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ],
@@ -314,12 +263,43 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                     controller.purchaseOrders!.orders!.length,
                                     (index) => DataRow(
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.purchaseOrders!.orders![index].id}')),
+                                            DataCell(Text(
+                                                '${controller.purchaseOrders!.orders![index].id}')),
+                                            DataCell(Text(
+                                                '${controller.purchaseOrders!.orders![index].stock_purchase_no}')),
+                                            DataCell(Text(
+                                                '${controller.purchaseOrders!.orders![index].product_id}')),
+                                            DataCell(Text(
+                                                '${controller.purchaseOrders!.orders![index].qty}')),
+                                            DataCell(Text(
+                                                '${controller.purchaseOrders!.orders![index].price}')),
                                             DataCell(
-                                                Text('${controller.purchaseOrders!.orders![index].stock_purchase_no}')),
-                                            DataCell(Text('${controller.purchaseOrders!.orders![index].product_id}')),
-                                            DataCell(Text('${controller.purchaseOrders!.orders![index].qty}')),
-                                            DataCell(Text('${controller.purchaseOrders!.orders![index].price}')),
+                                              InkWell(
+                                                onTap: () async {
+                                                  final selectText =
+                                                      await showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        InputTextDialog(),
+                                                  );
+                                                  if (selectText != null) {
+                                                    setState(() {
+                                                      damageds![index].remark =
+                                                          selectText;
+                                                    });
+                                                    inspect(damageds);
+                                                  } else {}
+                                                },
+                                                child: Container(
+                                                  width: size.width * 0.05,
+                                                  //child: Center(child: Text('${listneworder[index].qty}')),
+                                                  child: Center(
+                                                      child: Text(
+                                                          '${damageds![index].remark}')),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         )))
                             : SizedBox(),
@@ -356,49 +336,67 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                               child: Column(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'จำนวนทั้งหมด',
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           '${amount}',
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'รวม',
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           '${price}',
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'ภาษีมูลค่าเพิ่ม',
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           '%',
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
@@ -408,17 +406,23 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                       color: Color.fromARGB(255, 245, 250, 255),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             'รวมทั้งหมด',
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             '${sum}',
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
                                           )
                                         ],
                                       ),
@@ -438,7 +442,9 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    setState(() {});
+                                    setState(() {
+                                      Navigator.pop(context);
+                                    });
                                   },
                                   child: Container(
                                     width: size.width * 0.1,
@@ -450,8 +456,10 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                     child: Center(
                                       child: Text(
                                         'ไม่อนุมัติ',
-                                        style:
-                                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ),
@@ -461,18 +469,53 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    setState(() {});
+                                    if (controller.purchaseOrders?.status !=
+                                        'Receive') {
+                                      LoadingDialog.open(context);
+                                      await context
+                                          .read<OrdersController>()
+                                          .pickupNewOrders(
+                                              '${orderId.text}', damageds!);
+                                      if (controller.purchase != null) {
+                                        LoadingDialog.close(context);
+                                        print('object Success');
+                                        final _alert = await showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return AlertDialogYes(
+                                              title: 'รับสินค้าสำเร็จ',
+                                              description: '',
+                                              pressYes: () {
+                                                Navigator.pop(context, true);
+                                              },
+                                            );
+                                          },
+                                        );
+                                        if (_alert == true) {
+                                          Navigator.pop(context, true);
+                                        }
+                                      } else {
+                                        LoadingDialog.close(context);
+                                        print('object  Already Receive');
+                                      }
+                                    } else {
+                                      print('object status = Receive');
+                                    }
                                   },
                                   child: Container(
                                     width: size.width * 0.1,
                                     height: size.height * 0.06,
-                                    decoration:
-                                        BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: kPrimaryColor),
                                     child: Center(
                                       child: Text(
                                         'อนุมัติ',
-                                        style:
-                                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),

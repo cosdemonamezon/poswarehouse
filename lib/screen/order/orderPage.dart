@@ -166,49 +166,22 @@ class _OrderPageState extends State<OrderPage> {
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 IconButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
+                                                    onPressed: () async{
+                                                      final _recive = await Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) => DetailOrderPage(
                                                                     stock_purchase_no:
                                                                         '${controller.purchaseProduct!.data![index].stock_purchase_no}',
                                                                   )));
-                                                    },
-                                                    icon: Icon(Icons.remove_red_eye_outlined)),
-                                                IconButton(
-                                                    onPressed: () async {
-                                                      if (controller.purchaseProduct!.data![index].status !=
-                                                          'Receive') {
-                                                        LoadingDialog.open(context);
-                                                        await context.read<OrdersController>().pickupNewOrders(
-                                                            '${controller.purchaseProduct!.data![index].stock_purchase_no}');
-                                                        if (controller.purchase != null) {
-                                                          LoadingDialog.close(context);
-                                                          print('object Success');
-                                                          showDialog(
-                                                            context: context,
-                                                            barrierDismissible: false,
-                                                            builder: (BuildContext context) {
-                                                              return AlertDialogYes(
-                                                                title: 'รับสินค้าสำเร็จ',
-                                                                description: '',
-                                                                pressYes: () {
-                                                                  Navigator.pop(context);
-                                                                },
-                                                              );
-                                                            },
-                                                          );
-                                                          _initialize();
-                                                        } else {
-                                                          LoadingDialog.close(context);
-                                                          print('object  Already Receive');
-                                                        }
+                                                      if (_recive == true) {
+                                                        _initialize();
                                                       } else {
-                                                        print('object status = Receive');
+                                                        print('object no data');
                                                       }
                                                     },
-                                                    icon: Icon(Icons.redeem_sharp)),
+                                                    icon: Icon(Icons.remove_red_eye_outlined)),
+                                                
                                               ],
                                             ))
                                           ],
