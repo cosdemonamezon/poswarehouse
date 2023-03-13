@@ -10,16 +10,20 @@ class CategoryController extends ChangeNotifier {
 
   CategoryApi api;
 
-  // AllTypeProduct? allTypeProduct;
+  AllTypeProduct? allTypeProduct2;
   List<TypeProduct>? allTypeProduct;
   List<SubCategory>? getCategoryId;
   TypeProduct? nameCategory;
 
-  // getListCategorys() async {
-  //   // products = await ProductApi.getProducts();
-  //   allTypeProduct = await CategoryApi.getCategorys();
-  //   notifyListeners();
-  // }
+  getListCategorys2({
+    int start = 0,
+    int length = 10,
+  }) async {
+    // products = await ProductApi.getProducts();
+    allTypeProduct2 = await CategoryApi.getCategorys2(start: start, length: length);
+
+    notifyListeners();
+  }
 
   // ซื้อสินค้าผ่าน SCB และพร้มเพย์
   getListCategorys() async {

@@ -38,6 +38,37 @@ class CategoryApi {
     }
   }
 
+  static Future<AllTypeProduct> getCategorys2({
+    int start = 0,
+    int length = 10,
+  }) async {
+    final url = Uri.https(publicUrl, '/pos-api/public/api/category_product_page');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "draw": 1,
+        "type": "deposit",
+        "order": [
+          {"column": 0, "dir": "asc"}
+        ],
+        "start": start,
+        "length": length,
+        "search": {"value": "", "regex": false}
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      //final list = data['data']['data'] as List;
+      return AllTypeProduct.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
   //get array ย่อย Categorys
   static Future<TypeProduct> getCategorysById(int? idCategorys) async {
     // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();

@@ -167,8 +167,13 @@ class _OrderPageState extends State<OrderPage> {
                                               children: [
                                                 IconButton(
                                                     onPressed: () {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(builder: (context) => DetailOrderPage(stock_purchase_no: '${controller.purchaseProduct!.data![index].stock_purchase_no}',)));
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => DetailOrderPage(
+                                                                    stock_purchase_no:
+                                                                        '${controller.purchaseProduct!.data![index].stock_purchase_no}',
+                                                                  )));
                                                     },
                                                     icon: Icon(Icons.remove_red_eye_outlined)),
                                                 IconButton(
@@ -219,11 +224,11 @@ class _OrderPageState extends State<OrderPage> {
                     : SizedBox(),
                 controller.purchaseProduct != null
                     ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.22,
-                          child: NumberPaginator(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: size.width * 0.22,
+                            child: NumberPaginator(
                               numberPages: controller.purchaseProduct!.last_page!,
                               // config: NumberPaginatorUIConfig(
                               //   mode: ContentDisplayMode.hidden,
@@ -241,9 +246,9 @@ class _OrderPageState extends State<OrderPage> {
                                 LoadingDialog.close(context);
                               },
                             ),
-                        ),
-                      ],
-                    )
+                          ),
+                        ],
+                      )
                     : SizedBox.shrink(),
               ],
             ),

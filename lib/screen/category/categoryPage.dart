@@ -35,6 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<CategoryController>().getListCategorys();
+    await context.read<CategoryController>().getListCategorys2();
     LoadingDialog.close(context);
   }
 
@@ -122,11 +123,11 @@ class _CategoryPageState extends State<CategoryPage> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                controller.allTypeProduct != null
+                controller.allTypeProduct2?.data?.isNotEmpty ?? false
                     ? Container(
                         width: double.infinity,
                         decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                        child: controller.allTypeProduct!.isNotEmpty
+                        child: controller.allTypeProduct2!.data!.isNotEmpty
                             ? DataTable(
                                 columns: <DataColumn>[
                                     DataColumn(
@@ -140,7 +141,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                     ),
                                   ],
                                 rows: List<DataRow>.generate(
-                                    controller.allTypeProduct!.length,
+                                    controller.allTypeProduct2!.data!.length,
                                     (index) => DataRow(
                                           // color: MaterialStateProperty
                                           //     .resolveWith<Color?>(
@@ -161,8 +162,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                           //   return null; // Use default value for other states and odd rows.
                                           // }),
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.allTypeProduct![index].id}')),
-                                            DataCell(Text('${controller.allTypeProduct![index].name}')),
+                                            DataCell(Text('${controller.allTypeProduct2!.data![index].id}')),
+                                            DataCell(Text('${controller.allTypeProduct2!.data![index].name}')),
                                             DataCell(Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
@@ -202,7 +203,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                                             onPressed: () async {
                                                               LoadingDialog.open(context);
                                                               await CategoryApi().changeTitleCatagory(editTitle!.text,
-                                                                  controller.allTypeProduct![index].id);
+                                                                  controller.allTypeProduct2!.data![index].id);
                                                               if (mounted) {
                                                                 LoadingDialog.close(context);
                                                                 editTitle!.clear();
@@ -240,7 +241,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                                             onPressed: () async {
                                                               LoadingDialog.open(context);
                                                               await CategoryApi().deleteCatagory(
-                                                                  catagoryId: controller.allTypeProduct![index].id);
+                                                                  catagoryId:
+                                                                      controller.allTypeProduct2!.data![index].id);
                                                               if (mounted) {
                                                                 LoadingDialog.close(context);
                                                                 Navigator.pop(context);
@@ -277,15 +279,14 @@ class _CategoryPageState extends State<CategoryPage> {
                     SizedBox(
                       width: size.width * 0.22,
                       child: NumberPaginator(
-                        // numberPages: controller.allProduct!.last_page!,
-                        numberPages: 1,
+                        numberPages: controller.allTypeProduct2?.last_page ?? 1,
                         onPageChange: (p0) async {
                           LoadingDialog.open(context);
                           setState(() {
                             start = ((p0 - 1) * start) + 10;
                             print(start);
                           });
-                          // await context.read<ProductController>().getListProducts(start: start);
+                          await context.read<CategoryController>().getListCategorys2(start: start);
                           if (!mounted) {
                             return;
                           }

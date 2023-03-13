@@ -26,7 +26,10 @@ class OrdersController extends ChangeNotifier {
     int start = 0,
     int length = 10,
   }) async {
-    purchaseProduct = await OrdersApi.getOrders();
+    purchaseProduct = await OrdersApi.getOrders(
+      start: start,
+      length: length,
+    );
     notifyListeners();
   }
 
@@ -35,9 +38,8 @@ class OrdersController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getDetailPurchase(String stock_purchase_no)async{
+  getDetailPurchase(String stock_purchase_no) async {
     purchaseOrders = await OrdersApi.getOrderById(stock_purchase_no);
     notifyListeners();
   }
-  
 }
