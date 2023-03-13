@@ -520,6 +520,10 @@ class _AddProductsState extends State<AddProducts> {
                               units: selectlist,
                             );
                             if (_create != null) {
+                              await context.read<ProductController>().getListProducts();
+                              if (!mounted) {
+                                return;
+                              }
                               LoadingDialog.close(context);
                               Navigator.pop(context, true);
                               // Navigator.pushAndRemoveUntil(
