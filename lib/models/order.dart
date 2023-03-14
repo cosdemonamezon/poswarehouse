@@ -12,6 +12,7 @@ class Order {
   final String? product_id;
   final String? unit_id;
   final String? cost;
+  final String? code;
   final String? price_per_unit;
   final String? price;
   final String? qty;
@@ -31,6 +32,7 @@ class Order {
     this.product_id,
     this.unit_id,
     this.cost,
+    this.code,
     this.price_per_unit,
     this.price,
     this.qty,
