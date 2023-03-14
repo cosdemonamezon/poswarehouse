@@ -104,7 +104,7 @@ class ProductApi {
 
   ///Create Product
 
-  static Future<Product> createProduct({
+  static Future<void> createProduct({
     required String category_product_id,
     required String sub_category_id,
     required String name,
@@ -139,12 +139,12 @@ class ProductApi {
     );
     try {
       final response = await Dio().post(
-        'https://asha-dev.com/pos-api/public/api/product',
+        'http://$publicUrl/pos-api/public/api/product',
         data: formData,
         options: Options(headers: headers),
       );
 
-      return Product.fromJson(response.data['data']);
+      // return Product.fromJson(response.data['data']);
     } on DioError catch (e) {
       throw (e.response?.data['message']);
     }

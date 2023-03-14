@@ -49,7 +49,8 @@ class _AddProductsState extends State<AddProducts> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => {paradeinitialize(), categoryinitialize()});
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => {paradeinitialize(), categoryinitialize()});
     unitsitialize();
   }
 
@@ -85,7 +86,8 @@ class _AddProductsState extends State<AddProducts> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer2<ProductController, CategoryController>(builder: (context, controller, controllerCategory, child) {
+    return Consumer2<ProductController, CategoryController>(
+        builder: (context, controller, controllerCategory, child) {
       return Scaffold(
         appBar: AppBar(
           title: Text('เพิ่มสินค้าใหม่'),
@@ -111,7 +113,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'รหัสสินค้า',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -128,7 +131,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'ราคายกลัง',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -151,7 +155,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'ราคาทุน',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -175,7 +180,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'ประเภทสินค้า',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           controllerCategory.allTypeProduct != null
@@ -184,14 +190,19 @@ class _AddProductsState extends State<AddProducts> {
                                       height: size.height * 0.07,
                                       width: size.width * 0.45,
                                       decoration: BoxDecoration(
-                                          border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
-                                          color: Color.fromARGB(255, 238, 238, 238),
-                                          borderRadius: BorderRadius.circular(10)),
+                                          border: Border.all(
+                                              color: Color.fromARGB(
+                                                  255, 238, 238, 238)),
+                                          color: Color.fromARGB(
+                                              255, 238, 238, 238),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                       child: DropdownButtonHideUnderline(
                                         child: DropdownButton<TypeProduct>(
                                           value: categoryValue,
                                           icon: Padding(
-                                            padding: EdgeInsets.symmetric(horizontal: 10),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10),
                                             child: Icon(
                                               Icons.keyboard_arrow_down,
                                               size: 25,
@@ -200,31 +211,48 @@ class _AddProductsState extends State<AddProducts> {
                                           elevation: 16,
                                           isDense: false,
                                           isExpanded: true,
-                                          style: TextStyle(color: Colors.black, fontSize: 16),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16),
                                           underline: Container(
                                             height: 2,
                                             color: Colors.deepPurpleAccent,
                                           ),
-                                          onChanged: (TypeProduct? typeValue) async {
+                                          onChanged:
+                                              (TypeProduct? typeValue) async {
                                             // This is called when the user selects an item.
-                                            await context.read<CategoryController>().getCategoryById(typeValue!.id);
+                                            await context
+                                                .read<CategoryController>()
+                                                .getCategoryById(typeValue!.id);
                                             setState(() {
                                               categoryValue = typeValue;
-                                              if (context.read<CategoryController>().getCategoryId!.isNotEmpty) {
-                                                categoryDetail = context.read<CategoryController>().getCategoryId![0];
+                                              if (context
+                                                  .read<CategoryController>()
+                                                  .getCategoryId!
+                                                  .isNotEmpty) {
+                                                categoryDetail = context
+                                                    .read<CategoryController>()
+                                                    .getCategoryId![0];
                                               }
                                               {
                                                 return;
                                               }
                                             });
                                           },
-                                          items: controllerCategory.allTypeProduct!
-                                              .map<DropdownMenuItem<TypeProduct>>((TypeProduct typeValue) {
-                                            return DropdownMenuItem<TypeProduct>(
+                                          items: controllerCategory
+                                              .allTypeProduct!
+                                              .map<
+                                                      DropdownMenuItem<
+                                                          TypeProduct>>(
+                                                  (TypeProduct typeValue) {
+                                            return DropdownMenuItem<
+                                                TypeProduct>(
                                               value: typeValue,
                                               child: Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                                child: Text('${typeValue.name}'),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                child:
+                                                    Text('${typeValue.name}'),
                                               ),
                                             );
                                           }).toList(),
@@ -237,24 +265,33 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'คลังสินค้า',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           controllerCategory.getCategoryId != null
                               ? controllerCategory.getCategoryId!.isNotEmpty
-                                  ? context.read<CategoryController>().getCategoryId!.isNotEmpty
+                                  ? context
+                                          .read<CategoryController>()
+                                          .getCategoryId!
+                                          .isNotEmpty
                                       ? Container(
                                           height: size.height * 0.07,
                                           width: size.width * 0.45,
                                           decoration: BoxDecoration(
-                                              border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
-                                              color: Color.fromARGB(255, 238, 238, 238),
-                                              borderRadius: BorderRadius.circular(10)),
+                                              border: Border.all(
+                                                  color: Color.fromARGB(
+                                                      255, 238, 238, 238)),
+                                              color: Color.fromARGB(
+                                                  255, 238, 238, 238),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
                                           child: DropdownButtonHideUnderline(
                                             child: DropdownButton<SubCategory>(
                                               value: categoryDetail,
                                               icon: Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10),
                                                 child: Icon(
                                                   Icons.keyboard_arrow_down,
                                                   size: 25,
@@ -263,24 +300,36 @@ class _AddProductsState extends State<AddProducts> {
                                               elevation: 16,
                                               isDense: false,
                                               isExpanded: true,
-                                              style: TextStyle(color: Colors.black, fontSize: 16),
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
                                               underline: Container(
                                                 height: 2,
                                                 color: Colors.deepPurpleAccent,
                                               ),
-                                              onChanged: (SubCategory? detialValue) {
+                                              onChanged:
+                                                  (SubCategory? detialValue) {
                                                 // This is called when the user selects an item.
                                                 setState(() {
                                                   categoryDetail = detialValue;
                                                 });
                                               },
-                                              items: controllerCategory.getCategoryId!
-                                                  .map<DropdownMenuItem<SubCategory>>((SubCategory detialValue) {
-                                                return DropdownMenuItem<SubCategory>(
+                                              items: controllerCategory
+                                                  .getCategoryId!
+                                                  .map<
+                                                          DropdownMenuItem<
+                                                              SubCategory>>(
+                                                      (SubCategory
+                                                          detialValue) {
+                                                return DropdownMenuItem<
+                                                    SubCategory>(
                                                   value: detialValue,
                                                   child: Padding(
-                                                    padding: EdgeInsets.symmetric(horizontal: 10),
-                                                    child: Text('${detialValue.name}'),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10),
+                                                    child: Text(
+                                                        '${detialValue.name}'),
                                                   ),
                                                 );
                                               }).toList(),
@@ -302,7 +351,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'ชื่อสินค้า',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -325,7 +375,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'รายละเอียดสินค้า',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -348,7 +399,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'ราคาขายปลีก',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -371,7 +423,8 @@ class _AddProductsState extends State<AddProducts> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               'ราคาขายส่ง',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -400,7 +453,8 @@ class _AddProductsState extends State<AddProducts> {
                 ),
                 controller.units != null
                     ? SizedBox(
-                        child: controller.units!.data!.isNotEmpty && selected.isNotEmpty
+                        child: controller.units!.data!.isNotEmpty &&
+                                selected.isNotEmpty
                             ? Wrap(
                                 children: [
                                   Row(
@@ -416,7 +470,8 @@ class _AddProductsState extends State<AddProducts> {
                                                 setState(() {
                                                   selected[index] = value!;
                                                   if (selected[index] == true) {
-                                                    list.insert(index, '${controller.units!.data![index].id}');
+                                                    list.insert(index,
+                                                        '${controller.units!.data![index].id}');
                                                     list.removeAt(index + 1);
                                                   } else {
                                                     list.removeAt(index);
@@ -427,7 +482,9 @@ class _AddProductsState extends State<AddProducts> {
                                             ),
                                             Text(
                                               '${controller.units!.data![index].name}',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
                                             ),
                                           ],
                                         ),
@@ -452,7 +509,8 @@ class _AddProductsState extends State<AddProducts> {
                           children: [
                             InkWell(
                               onTap: () async {
-                                final img = await picker.pickImage(source: ImageSource.camera);
+                                final img = await picker.pickImage(
+                                    source: ImageSource.camera);
                                 setState(() {
                                   image = img;
                                 });
@@ -460,9 +518,12 @@ class _AddProductsState extends State<AddProducts> {
                               child: image == null
                                   ? Container(
                                       width: size.width * 0.12,
-                                      decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey)),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(Icons.add),
                                           Text(
@@ -474,7 +535,9 @@ class _AddProductsState extends State<AddProducts> {
                                     )
                                   : Container(
                                       width: size.width * 0.12,
-                                      decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey)),
                                       child: Image.file(
                                         File(image!.path),
                                         fit: BoxFit.fill,
@@ -496,41 +559,53 @@ class _AddProductsState extends State<AddProducts> {
                       child: GestureDetector(
                         onTap: () async {
                           setState(() {
-                            final add = list.where((element) => element != '0').toList();
+                            final add = list
+                                .where((element) => element != '0')
+                                .toList();
                             for (var i = 0; i < add.length; i++) {
                               selectlist = selectlist + add[i] + ',';
                             }
-                            selectlist = selectlist.substring(0, selectlist.length - 1);
+                            selectlist =
+                                selectlist.substring(0, selectlist.length - 1);
                             inspect(selectlist);
                             //selectlist = '';
                           });
-                          if (image != null && addProductFormKey.currentState!.validate()) {
+                          if (image != null &&
+                              addProductFormKey.currentState!.validate()) {
                             LoadingDialog.open(context);
-                            final _create = await ProductApi.createProduct(
-                              category_product_id: categoryValue!.id.toString(),
-                              sub_category_id: categoryDetail!.id.toString(),
-                              name: productName.text,
-                              detial: detailProduct.text,
-                              cost: originPrice.text,
-                              price_for_retail: retailPrice.text,
-                              price_for_wholesale: wholesalePrice.text,
-                              price_for_box: pricePerCarton.text,
-                              file: image!,
-                              code: productId.text,
-                              units: selectlist,
-                            );
-                            if (_create != null) {
-                              await context.read<ProductController>().getListProducts();
+                            try {
+                              await ProductApi.createProduct(
+                                category_product_id:
+                                    categoryValue!.id.toString(),
+                                sub_category_id: categoryDetail!.id.toString(),
+                                name: productName.text,
+                                detial: detailProduct.text,
+                                cost: originPrice.text,
+                                price_for_retail: retailPrice.text,
+                                price_for_wholesale: wholesalePrice.text,
+                                price_for_box: pricePerCarton.text,
+                                file: image!,
+                                code: productId.text,
+                                units: selectlist,
+                              );
+
                               if (!mounted) {
                                 return;
                               }
+
+                              await context
+                                  .read<ProductController>()
+                                  .getListProducts();
+
+                              if (!mounted) {
+                                return;
+                              }
+
                               LoadingDialog.close(context);
+                              
                               Navigator.pop(context, true);
-                              // Navigator.pushAndRemoveUntil(
-                              //     context, MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
-                            } else {
-                              LoadingDialog.open(context);
-                              print('object can not create product !!!!!!');
+                            } catch (e) {
+                              LoadingDialog.close(context);
                             }
                           } else {
                             print('object Data is not mat');
@@ -539,11 +614,16 @@ class _AddProductsState extends State<AddProducts> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'บันทึก',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ),
                         ),
