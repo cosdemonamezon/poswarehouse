@@ -13,7 +13,7 @@ class WareHouseApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category_page');
+    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -41,7 +41,7 @@ class WareHouseApi {
 
   ///เพิ่มคลังสินค้า
   static Future<WareHouse> createSubCategory(String category_product_id, String name) async {
-    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category');
+    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -60,7 +60,7 @@ class WareHouseApi {
 
   //ลบคลังสินค้า
   static deleteSubCategory(int id) async {
-    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category/$id');
+    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category/$id');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.delete(
       url,
@@ -78,7 +78,7 @@ class WareHouseApi {
 
   //แกใขชื่อคลังสินค้า
   static Future<WareHouse> editSubCategory(int id, String name) async {
-    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category/$id');
+    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category/$id');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.put(
       url,

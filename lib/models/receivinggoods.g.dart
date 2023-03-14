@@ -8,12 +8,12 @@ part of 'receivinggoods.dart';
 
 ReceivingGoods _$ReceivingGoodsFromJson(Map<String, dynamic> json) =>
     ReceivingGoods(
-      json['id'] as int?,
+      json['id'] as int,
       json['stock_pick_out_no'] as String?,
-      json['product_id'] as String?,
-      json['unit_id'] as String?,
+      json['product_id'] as int?,
+      json['unit_id'] as int?,
       json['price'] as String?,
-      json['qty'] as String?,
+      json['qty'] as int?,
       json['pick_out_date'] as String?,
       json['status'] as String?,
       json['remark'] as String?,

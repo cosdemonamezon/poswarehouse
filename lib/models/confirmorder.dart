@@ -6,9 +6,9 @@ part 'confirmorder.g.dart';
 
 @JsonSerializable()
 class ConfirmOrder {
-  final int? id;
+  final int id;
   final String? order_no;
-  final String? client_id;
+  final int? client_id;
   final String? order_date;
   final String? type;
   final String? status;

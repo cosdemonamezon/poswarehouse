@@ -6,12 +6,12 @@ part 'receivinggoods.g.dart';
 
 @JsonSerializable()
 class ReceivingGoods {
-  final int? id;
+  final int id;
   final String? stock_pick_out_no;
-  final String? product_id;
-  final String? unit_id;
+  final int? product_id;
+  final int? unit_id;
   final String? price;
-  final String? qty;
+  final int? qty;
   final String? pick_out_date;
   final String? status;
   final String? remark;
