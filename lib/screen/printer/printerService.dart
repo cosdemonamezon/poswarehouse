@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poswarehouse/models/printer.dart';
@@ -10,7 +9,7 @@ import 'package:sunmi_printer_plus/sunmi_style.dart';
 class PrinterService {
   const PrinterService();
 
-  Future<void> print(Printer printer) async{
+  Future<void> print(Printer printer) async {
     await SunmiPrinter.initPrinter();
     await SunmiPrinter.startTransactionPrint(true);
 
@@ -18,38 +17,60 @@ class PrinterService {
     // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     // await SunmiPrinter.printImage(byte);
 
-    await SunmiPrinter.printText('', style: SunmiStyle(fontSize: SunmiFontSize.MD));
-    await SunmiPrinter.printText('บริษัทอาชาเทค คอเปอเรชั่น จำกัด', style: SunmiStyle(fontSize: SunmiFontSize.MD));
-    await SunmiPrinter.printText('64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526', style: SunmiStyle(fontSize: SunmiFontSize.MD, align: SunmiPrintAlign.CENTER));
+    await SunmiPrinter.printText('',
+        style: SunmiStyle(fontSize: SunmiFontSize.MD));
+    await SunmiPrinter.printText('บริษัทอาชาเทค คอเปอเรชั่น จำกัด',
+        style: SunmiStyle(fontSize: SunmiFontSize.MD));
+    await SunmiPrinter.printText(
+        '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',
+        style: SunmiStyle(
+            fontSize: SunmiFontSize.MD, align: SunmiPrintAlign.CENTER));
     await SunmiPrinter.line();
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Name', width: 5, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: printer.confirmOrder!.client!.name!.toString(), width: 25, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(
+          text: printer.confirmOrder!.client!.name!.toString(),
+          width: 25,
+          align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Date', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: printer.confirmOrder!.order_date!, width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(
+          text: printer.confirmOrder!.order_date!,
+          width: 10,
+          align: SunmiPrintAlign.RIGHT),
       //ColumnMaker(text: printer.time!, width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
 
     await SunmiPrinter.line();
     for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
       await SunmiPrinter.printRow(cols: [
-        ColumnMaker(text: 'Product Code:', width: 13, align: SunmiPrintAlign.LEFT),
+        ColumnMaker(
+            text: 'Product Code:', width: 13, align: SunmiPrintAlign.LEFT),
         ColumnMaker(text: '', width: 3, align: SunmiPrintAlign.LEFT),
-        ColumnMaker(text: '${printer.confirmOrder!.orders![i].code}', width: 10, align: SunmiPrintAlign.RIGHT),
+        ColumnMaker(
+            text: '${printer.confirmOrder!.orders![i].code}',
+            width: 10,
+            align: SunmiPrintAlign.RIGHT),
       ]);
       await SunmiPrinter.printRow(cols: [
-        ColumnMaker(text: 'Product Qty:', width: 13, align: SunmiPrintAlign.LEFT),
+        ColumnMaker(
+            text: 'Product Qty:', width: 13, align: SunmiPrintAlign.LEFT),
         ColumnMaker(text: '', width: 5, align: SunmiPrintAlign.LEFT),
-        ColumnMaker(text: '${printer.confirmOrder!.orders![i].qty}', width: 10, align: SunmiPrintAlign.RIGHT),
+        ColumnMaker(
+            text: '${printer.confirmOrder!.orders![i].qty}',
+            width: 10,
+            align: SunmiPrintAlign.RIGHT),
       ]);
     }
-    
+
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Type:', width: 10, align: SunmiPrintAlign.LEFT),
       ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '${printer.confirmOrder!.type}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(
+          text: '${printer.confirmOrder!.type}',
+          width: 10,
+          align: SunmiPrintAlign.RIGHT),
     ]);
     // for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
     //   await SunmiPrinter.printRow(cols: [
@@ -57,17 +78,23 @@ class PrinterService {
     //   ColumnMaker(text: '${printer.confirmOrder!.orders![i].product!.name}', width: 10, align: SunmiPrintAlign.LEFT),
     //   ColumnMaker(text: '${printer.confirmOrder!.orders![i].qty}', width: 10, align: SunmiPrintAlign.RIGHT),
     // ]);
-    
+
     await SunmiPrinter.line();
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Price', width: 10, align: SunmiPrintAlign.LEFT),
       ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '${printer.confirmOrder!.selling_price}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(
+          text: '${printer.confirmOrder!.selling_price}',
+          width: 10,
+          align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Pay', width: 10, align: SunmiPrintAlign.LEFT),
       ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '${printer.confirmOrder!.amount}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(
+          text: '${printer.confirmOrder!.amount}',
+          width: 10,
+          align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'VAT', width: 10, align: SunmiPrintAlign.LEFT),
@@ -75,9 +102,12 @@ class PrinterService {
       ColumnMaker(text: '0.00', width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Totle', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: 'Total', width: 10, align: SunmiPrintAlign.LEFT),
       ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.CENTER),
-      ColumnMaker(text: '${printer.confirmOrder!.amount}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(
+          text: '${printer.confirmOrder!.amount}',
+          width: 10,
+          align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.line();
 
