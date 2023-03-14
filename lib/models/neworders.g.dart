@@ -10,6 +10,7 @@ NewOrders _$NewOrdersFromJson(Map<String, dynamic> json) => NewOrders(
       json['product_id'] as String,
       json['qty'] as int?,
       json['cost'] as int?,
+      json['price'] as int?,
       json['price_per_unit'] as int?,
       json['unit_id'] as int,
       json['unit'] == null
@@ -26,6 +27,7 @@ Map<String, dynamic> _$NewOrdersToJson(NewOrders instance) => <String, dynamic>{
       'qty': instance.qty,
       'price_per_unit': instance.price_per_unit,
       'cost': instance.cost,
+      'price': instance.price,
       'unit_id': instance.unit_id,
       'unit': instance.unit,
       'product': instance.product,

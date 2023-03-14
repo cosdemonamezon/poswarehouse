@@ -63,7 +63,8 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer2<ProductController, OrdersController>(builder: (context, controller, ordersController, child) {
+    return Consumer2<ProductController, OrdersController>(
+        builder: (context, controller, ordersController, child) {
       return Scaffold(
         appBar: AppBar(
           title: Text('สร้างคำสั่งซื้อ'),
@@ -117,7 +118,8 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         Icon(Icons.shopify_outlined),
                         Text(
                           "สินค้า",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -141,13 +143,20 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             },
                           );
                           if (_select != null && _select.isNotEmpty) {
-
-                            
-
                             //inspect(_select);
                             setState(() {
-
-                              final List<NewOrders> select = _select.map((e) => NewOrders(e.id.toString(), 0,0, e.cost!, e.unit_id!, controller.units!.data![0], e, false)).toList();
+                              final List<NewOrders> select = _select
+                                  .map((e) => NewOrders(
+                                      e.id.toString(),
+                                      0,
+                                      0,
+                                      e.cost!,
+                                      15,
+                                      e.unit_id!,
+                                      controller.units!.data![0],
+                                      e,
+                                      false))
+                                  .toList();
 
                               listneworder.addAll(select);
 
@@ -163,7 +172,6 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                               //   qtyunitController!.add(TextEditingController(text: '0'));
                               //   listneworder.add(emptyorder);
                               // }
-                              
                             });
                             inspect(listneworder);
                           } else {
@@ -173,11 +181,16 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เพิ่มสินค้า',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ),
                         ),
@@ -191,14 +204,15 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                 Container(
                   width: double.infinity,
                   height: size.height * 0.40,
-                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
                   child: listneworder.isNotEmpty
                       ? SingleChildScrollView(
                           child: SizedBox(
                           width: double.infinity,
                           child: DataTable(
-                            dataRowHeight: size.height * 0.10,
+                              dataRowHeight: size.height * 0.10,
                               columns: <DataColumn>[
                                 DataColumn(
                                   label: Text(''),
@@ -225,10 +239,16 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                               rows: List<DataRow>.generate(
                                   listneworder.length,
                                   (index) => DataRow(
-                                        color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                                        color: MaterialStateProperty
+                                            .resolveWith<Color?>(
+                                                (Set<MaterialState> states) {
                                           // All rows will have the same selected color.
-                                          if (states.contains(MaterialState.selected)) {
-                                            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return Theme.of(context)
+                                                .colorScheme
+                                                .primary
+                                                .withOpacity(0.08);
                                           }
                                           // Even rows will have a grey color.
                                           if (index.isEven) {
@@ -237,11 +257,13 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           return null; // Use default value for other states and odd rows.
                                         }),
                                         cells: <DataCell>[
-                                          DataCell(IconButton(onPressed: (){
-                                            setState(() {
-                                              listneworder.removeAt(index);
-                                            });
-                                          }, icon: Icon(Icons.delete))),
+                                          DataCell(IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  listneworder.removeAt(index);
+                                                });
+                                              },
+                                              icon: Icon(Icons.delete))),
                                           DataCell(Text(
                                               '${listneworder[index].product!.No}')),
                                           DataCell(Text(
@@ -249,25 +271,37 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
-                                            child: listneworder[index].product!.image != null
-                                                ? Image.network('${listneworder[index].product!.image}', fit: BoxFit.fill)
-                                                : Image.asset('assets/images/noimage.jpg', fit: BoxFit.fill,
+                                            child: listneworder[index]
+                                                        .product!
+                                                        .image !=
+                                                    null
+                                                ? Image.network(
+                                                    '${listneworder[index].product!.image}',
+                                                    fit: BoxFit.fill)
+                                                : Image.asset(
+                                                    'assets/images/noimage.jpg',
+                                                    fit: BoxFit.fill,
                                                   ),
                                           )),
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
-                                            child: Text('${listneworder[index].product!.price_for_retail}'),
+                                            child: Text(
+                                                '${listneworder[index].product!.price_for_retail}'),
                                           )),
                                           DataCell(
                                             InkWell(
-                                              onTap: () async{
-                                                final selectNumber = await showDialog<String>(
+                                              onTap: () async {
+                                                final selectNumber =
+                                                    await showDialog<String>(
                                                   context: context,
-                                                  builder: (BuildContext context) => InputNumberDialog(),
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          InputNumberDialog(),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
-                                                    listneworder[index].qty = int.parse(selectNumber);
+                                                    listneworder[index].qty =
+                                                        int.parse(selectNumber);
                                                     // selectProducts[index]. = int.parse(selectNumber);
                                                     // qtyText.insert(index, selectNumber);
                                                     // qtyText.removeAt(index + 1);
@@ -276,13 +310,13 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                     // listneworder.removeAt(index + 1);
                                                   });
                                                   inspect(listneworder);
-                                                } else {
-                                                  
-                                                }
+                                                } else {}
                                               },
                                               child: Container(
                                                 width: size.width * 0.05,
-                                                child: Center(child: Text('${listneworder[index].qty}')),
+                                                child: Center(
+                                                    child: Text(
+                                                        '${listneworder[index].qty}')),
                                               ),
                                             ),
                                             // Center(
@@ -298,16 +332,16 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                             //           setState(() {
                                             //             if (newValue == "") {
                                             //               qtyController![index].text = '';
-                                            //               order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
+                                            //               order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
                                             //               listneworder.insert(index, order!);
                                             //               listneworder.removeAt(index + 1);
                                             //             } else {
                                             //               qtyController![index].text = newValue.toString();
-                                            //               order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
+                                            //               order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
                                             //               listneworder.insert(index, order!);
                                             //               listneworder.removeAt(index + 1);
                                             //             }
-                                                        
+
                                             //           });
                                             //           inspect(listneworder);
                                             //         },
@@ -323,33 +357,40 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           DataCell(SizedBox(
                                             width: size.width * 0.06,
                                             child: Row(
-                                              children: [                                                
+                                              children: [
                                                 InkWell(
-                                                  onTap: () async{
-                                                    final selectUnit = await showDialog<Unit>(
+                                                  onTap: () async {
+                                                    final selectUnit =
+                                                        await showDialog<Unit>(
                                                       context: context,
-                                                      builder: (BuildContext context) => UnitDialog(units: controller.units!.data!,),
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          UnitDialog(
+                                                        units: controller
+                                                            .units!.data!,
+                                                      ),
                                                     );
                                                     if (selectUnit != null) {
                                                       setState(() {
-                                                        listneworder[index].unit_id = selectUnit.id;
-                                                        listneworder[index].unit = selectUnit;                                                    
-                                                      });                                                  
-                                                    } else {
-                                                      
-                                                    }
+                                                        listneworder[index]
+                                                                .unit_id =
+                                                            selectUnit.id;
+                                                        listneworder[index]
+                                                            .unit = selectUnit;
+                                                      });
+                                                    } else {}
                                                   },
                                                   child: Container(
                                                     width: size.width * 0.03,
-                                                    child: Center(child: Text('${listneworder[index].unit!.name}')),
+                                                    child: Center(
+                                                        child: Text(
+                                                            '${listneworder[index].unit!.name}')),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           )),
-                                          
                                         ],
-                                        
                                       ))),
                         ))
                       : SizedBox(
@@ -378,7 +419,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           child: Center(
                             child: Text(
                               'ยกเลิก',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ),
                         ),
@@ -394,11 +438,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           //final list = listneworder.where((element) => element.selected == true).toList();
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
-                            await context.read<OrdersController>().createNewOrder(datePick!.text, listneworder);
+                            await context
+                                .read<OrdersController>()
+                                .createNewOrder(datePick!.text, listneworder);
                             if (ordersController.stockPurchase != null) {
                               print('object Create Success****');
                               Navigator.pop(context, true);
-                               
                             } else {
                               print('object Error Data');
                             }
@@ -409,11 +454,16 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'บันทึก',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ),
                         ),

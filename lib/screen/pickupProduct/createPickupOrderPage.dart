@@ -120,7 +120,6 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                     ),
                   ],
                 ),
-                
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -158,7 +157,18 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           );
                           if (_select != null && _select.isNotEmpty) {
                             setState(() {
-                              final List<NewOrders> select = _select.map((e) => NewOrders(e.id.toString(), 0,0, e.cost!, e.unit_id!, controller.units!.data![0], e, false)).toList();
+                              final List<NewOrders> select = _select
+                                  .map((e) => NewOrders(
+                                      e.id.toString(),
+                                      0,
+                                      0,
+                                      e.cost!,
+                                      15,
+                                      e.unit_id!,
+                                      controller.units!.data![0],
+                                      e,
+                                      false))
+                                  .toList();
                               listneworder.addAll(select);
                             });
                             inspect(listneworder);
@@ -248,7 +258,10 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
-                                            child: listneworder[index].product!.image != null
+                                            child: listneworder[index]
+                                                        .product!
+                                                        .image !=
+                                                    null
                                                 ? Image.network(
                                                     '${listneworder[index].product!.image}',
                                                     fit: BoxFit.fill)
@@ -257,7 +270,6 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                                     fit: BoxFit.fill,
                                                   ),
                                           )),
-                                          
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
                                             child: Text(
@@ -265,55 +277,67 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                           )),
                                           DataCell(
                                             InkWell(
-                                              onTap: () async{
-                                                final selectNumber = await showDialog<String>(
+                                              onTap: () async {
+                                                final selectNumber =
+                                                    await showDialog<String>(
                                                   context: context,
-                                                  builder: (BuildContext context) => InputNumberDialog(),
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          InputNumberDialog(),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
-                                                    listneworder[index].qty = int.parse(selectNumber);
+                                                    listneworder[index].qty =
+                                                        int.parse(selectNumber);
                                                   });
                                                   inspect(listneworder);
-                                                } else {
-                                                  
-                                                }
+                                                } else {}
                                               },
                                               child: Container(
                                                 width: size.width * 0.05,
-                                                child: Center(child: Text('${listneworder[index].qty}')),
+                                                child: Center(
+                                                    child: Text(
+                                                        '${listneworder[index].qty}')),
                                               ),
                                             ),
                                           ),
                                           DataCell(SizedBox(
                                             width: size.width * 0.06,
                                             child: Row(
-                                              children: [                                                
+                                              children: [
                                                 InkWell(
-                                                  onTap: () async{
-                                                    final selectUnit = await showDialog<Unit>(
+                                                  onTap: () async {
+                                                    final selectUnit =
+                                                        await showDialog<Unit>(
                                                       context: context,
-                                                      builder: (BuildContext context) => UnitDialog(units: controller.units!.data!,),
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          UnitDialog(
+                                                        units: controller
+                                                            .units!.data!,
+                                                      ),
                                                     );
                                                     if (selectUnit != null) {
                                                       setState(() {
-                                                        listneworder[index].unit_id = selectUnit.id;
-                                                        listneworder[index].unit = selectUnit;                                                    
-                                                      });                                                  
-                                                    } else {
-                                                      
-                                                    }
+                                                        listneworder[index]
+                                                                .unit_id =
+                                                            selectUnit.id;
+                                                        listneworder[index]
+                                                            .unit = selectUnit;
+                                                      });
+                                                    } else {}
                                                   },
                                                   child: Container(
                                                     width: size.width * 0.03,
-                                                    child: Center(child: Text('${listneworder[index].unit!.name}')),
+                                                    child: Center(
+                                                        child: Text(
+                                                            '${listneworder[index].unit!.name}')),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           )),
                                         ],
-                                        
                                       ))),
                         ))
                       : SizedBox(
@@ -359,22 +383,31 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                       child: GestureDetector(
                         onTap: () async {
                           setState(() {
-                            final list = listneworder.where((element) => element.product_id != '0').toList();
+                            final list = listneworder
+                                .where((element) => element.product_id != '0')
+                                .toList();
                             listneworder.clear();
                             listneworder = list;
                           });
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
                             try {
-                              await context.read<PickupProductController>().creatOrderPickOut(datePick!.text, listneworder);
-                              if (pickupController.pickOutStockPurchase != null) {
+                              await context
+                                  .read<PickupProductController>()
+                                  .creatOrderPickOut(
+                                      datePick!.text, listneworder);
+                              if (pickupController.pickOutStockPurchase !=
+                                  null) {
                                 print('object Create Success****');
                                 //Navigator.pop(context, true);
                                 Navigator.push(
-                                    context, MaterialPageRoute(
-                                      builder: (context) => DetailPickProducts(
-                                            stock_purchase_no: '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
-                                  )));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailPickProducts(
+                                              stock_purchase_no:
+                                                  '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
+                                            )));
                               } else {
                                 print('object Error Data');
                               }
@@ -386,18 +419,16 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                   return AlertDialogYes(
                                     title: 'แจ้งเตือน',
                                     description: e.toString(),
-                                    pressYes: (){
+                                    pressYes: () {
                                       Navigator.pop(context, true);
                                     },
                                   );
                                 },
                               );
                             }
-                            
                           } else {
                             print('object No Select Data');
                           }
-                          
                         },
                         child: Container(
                           width: size.width * 0.2,
