@@ -190,11 +190,12 @@ class _AppTextFormEmailState extends State<AppTextFormEmail> {
 }
 
 class appTextFormField extends StatelessWidget {
-  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.onChanged, required this.horizontal, required this.vertical, this.controller, this.validator,this.color, required this.readOnly});
+  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.onChanged, required this.horizontal, required this.vertical, this.controller, this.validator,this.color, required this.readOnly, this.onEditingComplete});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
   void Function(String?)? onChanged;
+  VoidCallback? onEditingComplete;
   
   final double vertical;
   final double horizontal;
@@ -206,6 +207,8 @@ class appTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      //textAlign: TextAlign.end,
+      //keyboardType: TextInputType.number,
       readOnly: readOnly,
       decoration: InputDecoration(
           contentPadding:
@@ -218,12 +221,14 @@ class appTextFormField extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          prefixIcon: Icon(preIcon),
-          suffixIcon: IconButton(
+          prefixIcon: preIcon != null ? Icon(preIcon) :null,
+          suffixIcon: sufPress != null
+          ?IconButton(
             onPressed: sufPress,
-            icon: Icon(sufIcon))),
+            icon: Icon(sufIcon)):null),
           validator: validator,
           onChanged: onChanged,
+          onEditingComplete: onEditingComplete,
     );
   }
 }
@@ -239,6 +244,7 @@ class appTextTowFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      textAlign: TextAlign.start,
       decoration: InputDecoration(
         labelText: '${labelText}',
           filled: true,
@@ -248,10 +254,11 @@ class appTextTowFormField extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          prefixIcon: Icon(preIcon),
-          suffixIcon: IconButton(
+          prefixIcon: preIcon != null ? Icon(preIcon) :null,
+          suffixIcon: sufPress != null
+          ?IconButton(
             onPressed: sufPress,
-            icon: Icon(sufIcon))),
+            icon: Icon(sufIcon)):null),
     );
   }
 }

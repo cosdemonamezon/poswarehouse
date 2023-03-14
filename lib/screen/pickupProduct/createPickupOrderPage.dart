@@ -5,11 +5,16 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/extension/dateExtension.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/product.dart';
+import 'package:poswarehouse/models/unit.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'package:poswarehouse/screen/pickupProduct/detailPickProducts.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/inputNumberDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:poswarehouse/widgets/productDialog.dart';
+import 'package:poswarehouse/widgets/unitDialog.dart';
 import 'package:provider/provider.dart';
 
 class CeatePickupOrderPage extends StatefulWidget {
@@ -29,13 +34,12 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
 
   List<NewOrders> listneworder = [];
   NewOrders? order;
-  NewOrders emptyorder = new NewOrders('0', 0, 0, 0);
-  //List<bool> selected = List<bool>.generate(numItems, (int index) => false);
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
+    _unitinitialize();
     setState(() {
       datePick!.text = dateTime.formatTo('yyyy-MM-dd');
     });
@@ -45,6 +49,10 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
     LoadingDialog.close(context);
+  }
+
+  Future<void> _unitinitialize() async {
+    await context.read<ProductController>().getListUnits();
   }
 
   Future<DateTime?> pickDate() => showDatePicker(
@@ -80,7 +88,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            'ราคาขายปลีก',
+                            'วันที่',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
@@ -112,92 +120,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                     ),
                   ],
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Column(
-                //       mainAxisAlignment: MainAxisAlignment.start,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Padding(
-                //           padding: EdgeInsets.symmetric(vertical: 2),
-                //           child: Text(
-                //             'รหัส',
-                //             style: TextStyle(
-                //                 fontWeight: FontWeight.bold, fontSize: 16),
-                //           ),
-                //         ),
-                //         SizedBox(
-                //             height: size.height * 0.06,
-                //             width: size.width * 0.45,
-                //             child: appTextFormField(
-                //               sufPress: () {},
-                //               readOnly: false,
-                //               vertical: 25.0,
-                //               horizontal: 10.0,
-                //             )),
-                //         Padding(
-                //           padding: EdgeInsets.symmetric(vertical: 2),
-                //           child: Text(
-                //             'โอนจาก',
-                //             style: TextStyle(
-                //                 fontWeight: FontWeight.bold, fontSize: 16),
-                //           ),
-                //         ),
-                //         SizedBox(
-                //             height: size.height * 0.06,
-                //             width: size.width * 0.45,
-                //             child: appTextFormField(
-                //               sufPress: () {},
-                //               readOnly: false,
-                //               vertical: 25.0,
-                //               horizontal: 10.0,
-                //             )),
-                //       ],
-                //     ),
-                //     //------------------
-                //     Column(
-                //       mainAxisAlignment: MainAxisAlignment.start,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Padding(
-                //           padding: EdgeInsets.symmetric(vertical: 2),
-                //           child: Text(
-                //             'วันที่',
-                //             style: TextStyle(
-                //                 fontWeight: FontWeight.bold, fontSize: 16),
-                //           ),
-                //         ),
-                //         SizedBox(
-                //             height: size.height * 0.06,
-                //             width: size.width * 0.45,
-                //             child: appTextFormField(
-                //               sufPress: () {},
-                //               readOnly: false,
-                //               vertical: 25.0,
-                //               horizontal: 10.0,
-                //             )),
-                //         Padding(
-                //           padding: EdgeInsets.symmetric(vertical: 2),
-                //           child: Text(
-                //             'ไปยัง',
-                //             style: TextStyle(
-                //                 fontWeight: FontWeight.bold, fontSize: 16),
-                //           ),
-                //         ),
-                //         SizedBox(
-                //             height: size.height * 0.06,
-                //             width: size.width * 0.45,
-                //             child: appTextFormField(
-                //               sufPress: () {},
-                //               readOnly: false,
-                //               vertical: 25.0,
-                //               horizontal: 10.0,
-                //             )),
-                //       ],
-                //     ),
-                //   ],
-                // ),
+                
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -218,15 +141,14 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          final _select = await showDialog(
+                          final _select = await showDialog<List<Product>>(
                             context: context,
                             barrierDismissible: false,
                             builder: (BuildContext context) {
                               return ProductDialog(
                                 title: '',
                                 description: '',
-                                allProduct: controller.allProduct,
-                                selectProducts: selectProducts,
+                                allProduct: controller.allProduct!.data,
                                 press: () {
                                   Navigator.pop(context);
                                 },
@@ -234,19 +156,12 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                               );
                             },
                           );
-                          if (_select.isNotEmpty) {
-                            //inspect(_select);
+                          if (_select != null && _select.isNotEmpty) {
                             setState(() {
-                              selectProducts = _select;
-                              numItems = selectProducts.length;
-                              selected  = List<bool>.generate(numItems, (int index) => false);
-                              for (var i = 0; i < selectProducts.length; i++) {
-                                qtyController!.add(TextEditingController(text: '0'));
-                                listneworder.add(emptyorder);
-                              }
-                              
+                              final List<NewOrders> select = _select.map((e) => NewOrders(e.id.toString(), 0,0, e.cost!, e.unit_id!, controller.units!.data![0], e, false)).toList();
+                              listneworder.addAll(select);
                             });
-                            inspect(selectProducts);
+                            inspect(listneworder);
                           } else {
                             print('object Na data of Select');
                           }
@@ -280,7 +195,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
-                  child: selectProducts.isNotEmpty
+                  child: listneworder.isNotEmpty
                       ? SingleChildScrollView(
                           child: SizedBox(
                           width: double.infinity,
@@ -296,14 +211,17 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                   label: Center(child: Text('รูปภาพ')),
                                 ),
                                 DataColumn(
-                                  label: Center(child: Text('ราคาขายส่ง')),
+                                  label: Center(child: Text('ราคาขาย')),
                                 ),
                                 DataColumn(
                                   label: Center(child: Text('จำนวน')),
                                 ),
+                                DataColumn(
+                                  label: Text('หน่วย'),
+                                ),
                               ],
                               rows: List<DataRow>.generate(
-                                  selectProducts.length,
+                                  listneworder.length,
                                   (index) => DataRow(
                                         color: MaterialStateProperty
                                             .resolveWith<Color?>(
@@ -324,17 +242,15 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                         }),
                                         cells: <DataCell>[
                                           DataCell(Text(
-                                              '${selectProducts[index].No}')),
+                                              '${listneworder[index].product!.No}')),
                                           DataCell(Text(
-                                              '${selectProducts[index].name}')),
+                                              '${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
-                                            child: selectProducts[index]
-                                                        .image !=
-                                                    null
+                                            child: listneworder[index].product!.image != null
                                                 ? Image.network(
-                                                    '${selectProducts[index].image}',
+                                                    '${listneworder[index].product!.image}',
                                                     fit: BoxFit.fill)
                                                 : Image.asset(
                                                     'assets/images/noimage.jpg',
@@ -345,64 +261,59 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
                                             child: Text(
-                                                '${selectProducts[index].price_for_retail}'),
+                                                '${listneworder[index].product!.price_for_retail}'),
                                           )),
                                           DataCell(
-                                            Center(
-                                              child: SizedBox(
-                                                  height: size.height * 0.045,
-                                                  child: appTextFormField(
-                                                    controller: qtyController![index],
-                                                    readOnly: selected[index] ? false : true,
-                                                    sufPress: () async {},
-                                                    onChanged: (newValue) async{
-                                                      //print(newValue);
-                                                      setState(() {
-                                                        if (newValue == "") {
-                                                          qtyController![index].text = '';
-                                                          order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
-                                                          listneworder.insert(index, order!);
-                                                          listneworder.removeAt(index + 1);
-                                                        } else {
-                                                          qtyController![index].text = newValue.toString();
-                                                          order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);                                                        
-                                                          listneworder.insert(index, order!);
-                                                          listneworder.removeAt(index + 1);
-                                                        }
-                                                        
-                                                      });
-                                                      inspect(listneworder);
-                                                    },
-                                                    vertical: 0.0,
-                                                    horizontal: 0.0,
-                                                    color: Color.fromARGB(255, 245, 245, 245),
-                                                  )),
+                                            InkWell(
+                                              onTap: () async{
+                                                final selectNumber = await showDialog<String>(
+                                                  context: context,
+                                                  builder: (BuildContext context) => InputNumberDialog(),
+                                                );
+                                                if (selectNumber != null) {
+                                                  setState(() {
+                                                    listneworder[index].qty = int.parse(selectNumber);
+                                                  });
+                                                  inspect(listneworder);
+                                                } else {
+                                                  
+                                                }
+                                              },
+                                              child: Container(
+                                                width: size.width * 0.05,
+                                                child: Center(child: Text('${listneworder[index].qty}')),
+                                              ),
                                             ),
                                           ),
+                                          DataCell(SizedBox(
+                                            width: size.width * 0.06,
+                                            child: Row(
+                                              children: [                                                
+                                                InkWell(
+                                                  onTap: () async{
+                                                    final selectUnit = await showDialog<Unit>(
+                                                      context: context,
+                                                      builder: (BuildContext context) => UnitDialog(units: controller.units!.data!,),
+                                                    );
+                                                    if (selectUnit != null) {
+                                                      setState(() {
+                                                        listneworder[index].unit_id = selectUnit.id;
+                                                        listneworder[index].unit = selectUnit;                                                    
+                                                      });                                                  
+                                                    } else {
+                                                      
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    width: size.width * 0.03,
+                                                    child: Center(child: Text('${listneworder[index].unit!.name}')),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )),
                                         ],
-                                        selected: selected[index],
-                                        onSelectChanged: (bool? value) {
-                                          setState(() {
-                                            selected[index] = value!;
-                                            if (qtyController!.isNotEmpty) {
-                                              if (selected[index] == true) {
-                                                order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
-                                                //listneworder.add(order!); 
-                                                listneworder.insert(index, order!);
-                                                listneworder.removeAt(index + 1);
-                                              } else {
-                                                //print(selectProducts[index].No);
-                                                listneworder.removeAt(index);
-                                                listneworder.insert(index, emptyorder);
-                                                //listneworder.clear();
-                                              }   
-                                              inspect(listneworder);
-                                            }else {
-                                              print('object No add QTY');
-                                              listneworder.clear();
-                                            }
-                                          });
-                                        },
+                                        
                                       ))),
                         ))
                       : SizedBox(
@@ -454,13 +365,35 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           });
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
-                            await context.read<PickupProductController>().createNewOrder(datePick!.text, listneworder);
-                            if (pickupController.stockPurchase != null) {
-                              print('object Create Success****');
-                              Navigator.pop(context, true);
-                            } else {
-                              print('object Error Data');
+                            try {
+                              await context.read<PickupProductController>().creatOrderPickOut(datePick!.text, listneworder);
+                              if (pickupController.pickOutStockPurchase != null) {
+                                print('object Create Success****');
+                                //Navigator.pop(context, true);
+                                Navigator.push(
+                                    context, MaterialPageRoute(
+                                      builder: (context) => DetailPickProducts(
+                                            stock_purchase_no: '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
+                                  )));
+                              } else {
+                                print('object Error Data');
+                              }
+                            } on Exception catch (e) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: e.toString(),
+                                    pressYes: (){
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
                             }
+                            
                           } else {
                             print('object No Select Data');
                           }

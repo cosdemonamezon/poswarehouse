@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:poswarehouse/models/product.dart';
+import 'package:poswarehouse/models/unit.dart';
 
 part 'neworders.g.dart';
 
@@ -6,14 +8,22 @@ part 'neworders.g.dart';
 class NewOrders {
   String product_id;
   int? qty;
-  int price;
+  int? price_per_unit;
+  int? cost;
   int unit_id;
+  Unit? unit;
+  Product? product;
+  bool selected = false;
 
   NewOrders(
     this.product_id,
     this.qty,
-    this.price,
-    this.unit_id
+    this.cost,
+    this.price_per_unit,
+    this.unit_id,
+    this.unit,
+    this.product,
+    this.selected
   );
 
   factory NewOrders.fromJson(Map<String, dynamic> json) => _$NewOrdersFromJson(json);

@@ -3,6 +3,7 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class DetailPickProducts extends StatefulWidget {
@@ -26,8 +27,8 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<PickupProductController>().getDetail(widget.stock_purchase_no);
-    purchaseId.text = await context.read<PickupProductController>().receivingGoods!.stock_purchase_no!;
-    date.text = await context.read<PickupProductController>().receivingGoods!.purchase_date!;
+    purchaseId.text = await context.read<PickupProductController>().receivingGoods!.stock_pick_out_no!;
+    date.text = await context.read<PickupProductController>().receivingGoods!.pick_out_date!;
     LoadingDialog.close(context);
   }
   @override
@@ -99,23 +100,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                               vertical: 25.0,
                               horizontal: 10.0,
                             )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'โอนจาก',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              sufPress: () {},
-                              readOnly: true,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
+                        
                       ],
                     ),
                     //------------------
@@ -141,23 +126,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                               vertical: 25.0,
                               horizontal: 10.0,
                             )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            'ไปยัง',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                            height: size.height * 0.06,
-                            width: size.width * 0.45,
-                            child: appTextFormField(
-                              sufPress: () {},
-                              readOnly: true,
-                              vertical: 25.0,
-                              horizontal: 10.0,
-                            )),
+                        
                       ],
                     ),
                   ],
@@ -199,9 +168,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                         DataColumn(
                           label: Text('รหัสสินค้า'),
                         ),
-                        DataColumn(
-                          label: Text('ราคา'),
-                        ),
+                        
                         DataColumn(
                           label: Text('จำนวน'),
                         ),
@@ -229,10 +196,9 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                                 }),
                                 cells: <DataCell>[
                                   DataCell(Text('${controller.receivingGoods!.orders![index].id}')),
-                                  DataCell(Text('${controller.receivingGoods!.orders![index].stock_purchase_no}')),
+                                  DataCell(Text('${controller.receivingGoods!.orders![index].stock_pick_out_no}')),
                                   DataCell(Text('${controller.receivingGoods!.orders![index].product_id}')),
-                                  DataCell(
-                                      Text('${controller.receivingGoods!.orders![index].price}')),
+                                  
                                   DataCell(
                                       Text('${controller.receivingGoods!.orders![index].qty}')),
                                   DataCell(Row(
@@ -259,36 +225,59 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      // Padding(
+                      //   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      //   child: GestureDetector(
+                      //     onTap: () async {
+                      //       setState(() {});
+                      //     },
+                      //     child: Container(
+                      //       width: size.width * 0.1,
+                      //       height: size.height * 0.06,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //           color: Colors.white,
+                      //           border: Border.all(color: Colors.grey)),
+                      //       child: Center(
+                      //         child: Text(
+                      //           'ไม่อนุมัติ',
+                      //           style: TextStyle(
+                      //               fontSize: 18,
+                      //               fontWeight: FontWeight.bold,
+                      //               color: Colors.black),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: GestureDetector(
                           onTap: () async {
-                            setState(() {});
-                          },
-                          child: Container(
-                            width: size.width * 0.1,
-                            height: size.height * 0.06,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                border: Border.all(color: Colors.grey)),
-                            child: Center(
-                              child: Text(
-                                'ไม่อนุมัติ',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: GestureDetector(
-                          onTap: () async {
-                            setState(() {});
+                            try {
+                              LoadingDialog.open(context);
+                              await context.read<PickupProductController>().receiveStockPickout(purchaseId.text);
+                                                    
+                              LoadingDialog.close(context);
+                              setState(() {});
+                              Navigator.of(context)..pop()..pop();
+                            } on Exception catch (e) {
+                              LoadingDialog.close(context);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: e.toString(),
+                                    pressYes: (){
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
+                            }
+                            
                           },
                           child: Container(
                             width: size.width * 0.1,

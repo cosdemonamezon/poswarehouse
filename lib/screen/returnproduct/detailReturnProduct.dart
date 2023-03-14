@@ -41,8 +41,8 @@ class _DetailReturnProductState extends State<DetailReturnProduct> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<PickupProductController>().getDetailReturnProduct(widget.stock_purchase_no);
-    returnProductId.text = await context.read<PickupProductController>().returnProduct!.stock_purchase_no!;
-    returnProductDate.text = await context.read<PickupProductController>().returnProduct!.purchase_date!;
+    returnProductId.text = await context.read<PickupProductController>().returnProduct!.stock_pick_out_no!;
+    returnProductDate.text = await context.read<PickupProductController>().returnProduct!.pick_out_date!;
     LoadingDialog.close(context);
   }
 

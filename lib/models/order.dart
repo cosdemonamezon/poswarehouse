@@ -7,7 +7,13 @@ part 'order.g.dart';
 class Order {
   final int? id;
   final String? stock_purchase_no;
+  final String? stock_pick_out_no;
+  final String? order_no;
   final String? product_id;
+  final String? unit_id;
+  final String? cost;
+  final String? code;
+  final String? price_per_unit;
   final String? price;
   final String? qty;
   final String? created_at;
@@ -15,19 +21,27 @@ class Order {
   final String? create_by;
   final String? update_by;
   final String? deleted_at;
+  final Product? product;
   
 
   Order(    
     this.id,
     this.stock_purchase_no,
+    this.stock_pick_out_no,
+    this.order_no,
     this.product_id,
+    this.unit_id,
+    this.cost,
+    this.code,
+    this.price_per_unit,
     this.price,
     this.qty,
     this.created_at,
     this.updated_at,
     this.create_by,
     this.update_by,
-    this.deleted_at
+    this.deleted_at,
+    this.product
   );
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);

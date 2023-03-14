@@ -5,7 +5,7 @@ part 'warehouse.g.dart';
 @JsonSerializable()
 class WareHouse {
   final int id;
-  final String? category_product_id;
+  final int? category_product_id;
   final String? name;
   final String? create_by;
   final String? update_by;

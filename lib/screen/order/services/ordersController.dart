@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poswarehouse/models/damageds.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/purchase.dart';
 import 'package:poswarehouse/models/purchaseProduct.dart';
@@ -12,6 +13,7 @@ class OrdersController extends ChangeNotifier {
   OrdersApi api;
 
   StockPurchase? stockPurchase;
+  
 
   PurchaseProduct? purchaseProduct;
   Purchase? purchase;
@@ -21,6 +23,8 @@ class OrdersController extends ChangeNotifier {
     stockPurchase = await OrdersApi.createOrders(date, orders);
     notifyListeners();
   }
+
+  
 
   getListOrders({
     int start = 0,
@@ -33,8 +37,8 @@ class OrdersController extends ChangeNotifier {
     notifyListeners();
   }
 
-  pickupNewOrders(String stock_purchase_no) async {
-    purchase = await OrdersApi.pickupOrders(stock_purchase_no);
+  pickupNewOrders(String stock_purchase_no, List<Damageds> damageds) async {
+    purchase = await OrdersApi.pickupOrders(stock_purchase_no, damageds);
     notifyListeners();
   }
 

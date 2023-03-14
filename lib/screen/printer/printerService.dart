@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poswarehouse/models/printer.dart';
 import 'package:sunmi_printer_plus/column_maker.dart';
@@ -23,25 +24,50 @@ class PrinterService {
     await SunmiPrinter.line();
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Name', width: 5, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: printer.name!, width: 25, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(text: printer.confirmOrder!.client!.name!.toString(), width: 25, align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Date', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: printer.date!, width: 10, align: SunmiPrintAlign.RIGHT),
-      ColumnMaker(text: printer.time!, width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(text: printer.confirmOrder!.order_date!, width: 10, align: SunmiPrintAlign.RIGHT),
+      //ColumnMaker(text: printer.time!, width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
 
     await SunmiPrinter.line();
+    for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
+      await SunmiPrinter.printRow(cols: [
+        ColumnMaker(text: 'Product Code:', width: 13, align: SunmiPrintAlign.LEFT),
+        ColumnMaker(text: '', width: 3, align: SunmiPrintAlign.LEFT),
+        ColumnMaker(text: '${printer.confirmOrder!.orders![i].code}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ]);
+      await SunmiPrinter.printRow(cols: [
+        ColumnMaker(text: 'Product Qty:', width: 13, align: SunmiPrintAlign.LEFT),
+        ColumnMaker(text: '', width: 5, align: SunmiPrintAlign.LEFT),
+        ColumnMaker(text: '${printer.confirmOrder!.orders![i].qty}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ]);
+    }
+    
     await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: '1', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: 'TopUp', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '${printer.qty}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(text: 'Type:', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: '${printer.confirmOrder!.type}', width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
+    // for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
+    //   await SunmiPrinter.printRow(cols: [
+    //   ColumnMaker(text: '$i', width: 10, align: SunmiPrintAlign.LEFT),
+    //   ColumnMaker(text: '${printer.confirmOrder!.orders![i].product!.name}', width: 10, align: SunmiPrintAlign.LEFT),
+    //   ColumnMaker(text: '${printer.confirmOrder!.orders![i].qty}', width: 10, align: SunmiPrintAlign.RIGHT),
+    // ]);
+    
     await SunmiPrinter.line();
     await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'SUBTOTAL', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: 'Price', width: 10, align: SunmiPrintAlign.LEFT),
       ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '${printer.total}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(text: '${printer.confirmOrder!.selling_price}', width: 10, align: SunmiPrintAlign.RIGHT),
+    ]);
+    await SunmiPrinter.printRow(cols: [
+      ColumnMaker(text: 'Pay', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: '${printer.confirmOrder!.amount}', width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'VAT', width: 10, align: SunmiPrintAlign.LEFT),
@@ -49,9 +75,9 @@ class PrinterService {
       ColumnMaker(text: '0.00', width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'TOTAL', width: 10, align: SunmiPrintAlign.LEFT),
+      ColumnMaker(text: 'Totle', width: 10, align: SunmiPrintAlign.LEFT),
       ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.CENTER),
-      ColumnMaker(text: '${printer.balance}', width: 10, align: SunmiPrintAlign.RIGHT),
+      ColumnMaker(text: '${printer.confirmOrder!.amount}', width: 10, align: SunmiPrintAlign.RIGHT),
     ]);
     await SunmiPrinter.line();
 

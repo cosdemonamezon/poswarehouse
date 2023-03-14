@@ -11,7 +11,7 @@ class CategoryApi {
 
   //เรียกดูประเภทสินค้าทั้งหมด
   static Future<List<TypeProduct>> getCategorys() async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/category_product_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/category_product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -42,7 +42,7 @@ class CategoryApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/category_product_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/category_product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -75,7 +75,7 @@ class CategoryApi {
     // final SharedPreferences prefs = await _prefs;
     // final token = prefs.getString('token');
     final headers = {'Authorization': 'Bearer', 'Content-Type': 'application/json'};
-    final url = Uri.https(publicUrl, 'pos-api/public/api/category_product/$idCategorys');
+    final url = Uri.http('192.168.1.126', 'pos-api/public/api/category_product/$idCategorys');
     final response = await http.get(
       url,
       headers: headers,
@@ -92,7 +92,7 @@ class CategoryApi {
 
   //สร้างประเภทสินค้า
   static Future<TypeProduct> crateCategorys(String name) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/category_product');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/category_product');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -134,7 +134,7 @@ class CategoryApi {
     String title,
     int catagoryId,
   ) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/category_product/$catagoryId');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/category_product/$catagoryId');
 
     final response = await http.put(url,
         body: jsonEncode({

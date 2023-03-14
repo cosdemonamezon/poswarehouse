@@ -1,4 +1,5 @@
 import 'package:poswarehouse/constants/constants.dart';
+import 'package:poswarehouse/models/damageds.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/purchase.dart';
 import 'package:poswarehouse/models/purchaseProduct.dart';
@@ -13,7 +14,28 @@ class OrdersApi {
   const OrdersApi();
 
   static Future<StockPurchase> createOrders(String date, List<NewOrders> orders) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_purchase');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/stock_purchase');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "purchase_date": date,
+        "orders": orders,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return StockPurchase.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  static Future<StockPurchase> createPickOutOrders(String date, List<NewOrders> orders) async {
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/stock_pickout');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -38,7 +60,7 @@ class OrdersApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_purchase_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/stock_purchase_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -64,14 +86,15 @@ class OrdersApi {
   }
 
   //รับสินค้าเข้าคลัง
-  static Future<Purchase> pickupOrders(String stock_purchase_no) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/receive_stock_purchase');
+  static Future<Purchase> pickupOrders(String stock_purchase_no, List<Damageds> damageds) async {
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/receive_stock_purchase');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
       headers: headers,
       body: convert.jsonEncode({
         "stock_purchase_no": stock_purchase_no,
+        "damageds": damageds,
       }),
     );
 
@@ -87,7 +110,7 @@ class OrdersApi {
   // Get By Id สินค้า
   static Future<PurchaseOrders> getOrderById(
       String stock_purchase_no) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/get_stock_purchase_line/$stock_purchase_no');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/get_stock_purchase_line/$stock_purchase_no');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,

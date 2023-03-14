@@ -8,13 +8,13 @@ class ProductDialog extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.description,
-      required this.press,required this.pressSelect,this.allProduct,this.selectProducts})
+      required this.press,required this.pressSelect,this.allProduct,})
       : super(key: key);
   final String title, description;
   final VoidCallback press;
   final VoidCallback pressSelect;
-  AllProduct? allProduct;
-  List<Product>? selectProducts;
+  //AllProduct? allProduct;
+  List<Product>? allProduct;
 
   @override
   State<ProductDialog> createState() => _ProductDialogState();
@@ -23,7 +23,22 @@ class ProductDialog extends StatefulWidget {
 class _ProductDialogState extends State<ProductDialog> {
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  List<Product> newSelectProducts = [];
+  List<Product> products=[];
+  @override
+  void initState() {
+    super.initState();
+    //products = widget.allProduct!;
+    for (var i = 0; i <  widget.allProduct!.length; i++) {
+
+      final p = widget.allProduct![i];
+      p.selected = false;
+
+      products.add(p);
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -46,10 +61,8 @@ class _ProductDialogState extends State<ProductDialog> {
                 children: [
                   IconButton(
                       onPressed: () async{
-                        setState(() {
-                          newSelectProducts = [];
-                        });
-                        Navigator.pop(context, newSelectProducts);
+                        
+                        Navigator.pop(context);
                       },
                       icon: Icon(
                         Icons.cancel,
@@ -60,12 +73,9 @@ class _ProductDialogState extends State<ProductDialog> {
               ),
               SizedBox(height: size.height * 0.02),
               Center(
-                child: Text('เลือกสินค้า',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: Text('เลือกสินค้า', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               ),
-              widget.allProduct != null
-              ?Container(
+              Container(
                 //color: Colors.blue,
                 height: size.height * 0.45,
                 child: SingleChildScrollView(
@@ -75,7 +85,7 @@ class _ProductDialogState extends State<ProductDialog> {
                         width: double.infinity,
                         decoration:
                             BoxDecoration(border: Border.all(color: Colors.grey)),
-                        child: widget.allProduct!.data!.isNotEmpty
+                        child: products.isNotEmpty
                         ?DataTable(
                             columns: <DataColumn>[
                               DataColumn(
@@ -104,7 +114,7 @@ class _ProductDialogState extends State<ProductDialog> {
                               ),
                             ],
                             rows: List<DataRow>.generate(
-                                widget.allProduct!.data!.length,
+                                products.length,
                                 (index) => DataRow(
                                       color: MaterialStateProperty.resolveWith<Color?>(
                                           (Set<MaterialState> states) {
@@ -122,38 +132,39 @@ class _ProductDialogState extends State<ProductDialog> {
                                         return null; // Use default value for other states and odd rows.
                                       }),
                                       cells: <DataCell>[
-                                        DataCell(Text('${widget.allProduct!.data![index].id}')),
-                                        DataCell(Text('${widget.allProduct!.data![index].name}')),
+                                        DataCell(Text('${products[index].id}')),
+                                        DataCell(Text('${products[index].name}')),
                                         DataCell(SizedBox(
                                           width: size.width * 0.08,
                                           height: size.height * 0.10,
-                                          child: widget.allProduct!.data![index].image != null
+                                          child: products[index].image != null
                                           ?Image.network(
-                                              '${widget.allProduct!.data![index].image}',fit: BoxFit.fill)
+                                              '${products[index].image}',fit: BoxFit.fill)
                                           :Image.asset(
                                               'assets/images/noimage.jpg',fit: BoxFit.fill,),
                                         )),
                                         DataCell(
-                                            Center(child: Text('${widget.allProduct!.data![index].cost}'))),
+                                            Center(child: Text('${products[index].cost}'))),
                                         DataCell(
-                                            Center(child: Text('${widget.allProduct!.data![index].price_for_retail}'))),
+                                            Center(child: Text('${products[index].price_for_retail}'))),
                                         DataCell(
-                                            Center(child: Text('${widget.allProduct!.data![index].price_for_wholesale}'))),
+                                            Center(child: Text('${products[index].price_for_wholesale}'))),
                                         DataCell(
-                                            Center(child: Text('${widget.allProduct!.data![index].price_for_box}'))),
+                                            Center(child: Text('${products[index].price_for_box}'))),
                                         DataCell(
-                                            Center(child: Text('${widget.allProduct!.data![index].remain}'))),
+                                            Center(child: Text('${products[index].remain}'))),
                                       ],
                                       selected: selected[index],
                                       onSelectChanged: (bool? value) {
                                         setState(() {
                                           selected[index] = value!;
-                                          if (widget.selectProducts != null) {
-                                            widget.selectProducts!.add(widget.allProduct!.data![index]);
-                                            newSelectProducts = widget.selectProducts!;
-                                          } else {
-                                            newSelectProducts.add(widget.allProduct!.data![index]);
-                                          }
+                                          products[index].selected = value;
+                                          // if (widget.selectProducts != null) {
+                                          //   widget.selectProducts!.add(products.data![index]);
+                                          //   newSelectProducts = widget.selectProducts!;
+                                          // } else {
+                                          //   newSelectProducts.add(products.data![index]);
+                                          // }
                                           
                                         });
                                       },
@@ -162,27 +173,23 @@ class _ProductDialogState extends State<ProductDialog> {
                     ],
                   ),
                 ),
-              ):SizedBox(),
+              ),
               SizedBox(height: size.height * 0.05),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: GestureDetector(
                   onTap: ()async{
-                    Navigator.pop(context, newSelectProducts);
+                    final list = products.where((element) => element.selected == true).toList();
+                    Navigator.pop(context, list);
                   },
                   child: Container(
                     width: size.width * 0.1,
                     height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                     child: Center(
                       child: Text(
                         'เลือก',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                   ),

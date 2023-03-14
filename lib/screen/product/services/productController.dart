@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/models/allProduct.dart';
+import 'package:poswarehouse/models/confirmorder.dart';
+import 'package:poswarehouse/models/neworders.dart';
+import 'package:poswarehouse/models/orderproduct.dart';
 import 'package:poswarehouse/models/parade.dart';
 import 'package:poswarehouse/models/product.dart';
 import 'package:poswarehouse/models/units.dart';
@@ -14,6 +17,8 @@ class ProductController extends ChangeNotifier {
   Parade? parade;
   AllProduct? allProduct;
   Units? units;
+  OrderProduct? orderProduct;
+  ConfirmOrder? confirmOrder;
 
   getListProducts({
     int start = 0,
@@ -34,6 +39,16 @@ class ProductController extends ChangeNotifier {
 
   getListUnits() async {
     units = await ProductApi.getUnits();
+    notifyListeners();
+  }
+
+  confirmNewOrder(String order_no, int amount) async{
+    confirmOrder = await ProductApi.payment(order_no, amount);
+    notifyListeners();
+  }
+
+  createNewOrder(String order_date, String name, String phone, String email,String address, String type, List<NewOrders> orders) async{
+    orderProduct = await ProductApi.newOrder(order_date, name, phone, email, address, type, orders);
     notifyListeners();
   }
 }

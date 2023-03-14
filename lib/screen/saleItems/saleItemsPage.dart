@@ -3,7 +3,9 @@ import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/order/createOrderOffline.dart';
+import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
 import 'package:poswarehouse/screen/saleItems/detailSaleItem.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/LoadingDialog.dart';
 
@@ -24,155 +26,155 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
     {"id": "3", "date": "18/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
     {"id": "4", "date": "29/2/2566", "number": "SO-02249", "name": "Mr.suthap 2", "price": "500", "status": "ยกเลิก"},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
+  }
+
+  Future<void> _initialize() async {
+    LoadingDialog.open(context);
+    await context.read<PickupProductController>().getListPickupProducts();
+    LoadingDialog.close(context);
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('รายการขาย'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                      width: size.width * 0.64,
-                      height: size.height * 0.08,
-                      child: appTextFormField(
-                        sufPress: () {},
-                        readOnly: false,
-                        preIcon: Icons.search,
-                        vertical: 25.0,
-                        horizontal: 10.0,
-                      )),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateOrderOffLine()));
-                      },
-                      child: Container(
-                        width: size.width * 0.2,
+    return Consumer<PickupProductController>(builder: (context, controller, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('รายการขาย'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        width: size.width * 0.64,
                         height: size.height * 0.08,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
-                        child: Center(
-                          child: Text(
-                            'สร้างรายการขาย',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                        child: appTextFormField(
+                          sufPress: () {},
+                          readOnly: false,
+                          preIcon: Icons.search,
+                          vertical: 25.0,
+                          horizontal: 10.0,
+                        )),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: GestureDetector(
+                        onTap: () async {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateOrderOffLine()));
+                        },
+                        child: Container(
+                          width: size.width * 0.2,
+                          height: size.height * 0.08,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                          child: Center(
+                            child: Text(
+                              'สร้างรายการขาย',
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: DataTable(
-                    columns: <DataColumn>[
-                      DataColumn(
-                        label: Text('#'),
+                  ],
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                controller.allReceiving != null
+                ?SizedBox(
+                  width: double.infinity,
+                  child: controller.allReceiving!.data!.isNotEmpty
+                  ?DataTable(
+                      columns: <DataColumn>[
+                        DataColumn(
+                          label: Text('#'),
+                        ),
+                        DataColumn(
+                          label: Text('รหัส'),
+                        ),
+                        DataColumn(
+                          label: Text('วันที่'),
+                        ),
+                        
+                        DataColumn(
+                          label: Text(''),
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                          controller.allReceiving!.data!.length,
+                          (index) => DataRow(
+                                color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                                  // All rows will have the same selected color.
+                                  if (states.contains(MaterialState.selected)) {
+                                    return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                                  }
+                                  // Even rows will have a grey color.
+                                  if (index.isEven) {
+                                    return Colors.grey.withOpacity(0.3);
+                                  }
+                                  return null; // Use default value for other states and odd rows.
+                                }),
+                                cells: <DataCell>[
+                                  DataCell(Text('${controller.allReceiving!.data![index].No}')),
+                                  DataCell(Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
+                                  DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),                                  
+                                  DataCell(IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context, MaterialPageRoute(builder: (context) => DetailSaleItem()));
+                                      },
+                                      icon: Icon(Icons.more_vert)))
+                                ],
+                                // selected: selected[index],
+                                // onSelectChanged: (bool? value) {
+                                //   setState(() {
+                                //     selected[index] = value!;
+                                //   });
+                                // },
+                              ))):SizedBox(),
+                ):SizedBox(),
+                // controller.allProduct != null
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: size.width * 0.22,
+                      child: NumberPaginator(
+                        // numberPages: controller.allProduct!.last_page!,
+                        config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
+                        numberPages: 1,
+                        onPageChange: (p0) async {
+                          LoadingDialog.open(context);
+                          setState(() {
+                            start = ((p0 - 1) * start) + 10;
+                            print(start);
+                          });
+                          // await context.read<ProductController>().getListProducts(start: start);
+                          if (!mounted) {
+                            return;
+                          }
+                          LoadingDialog.close(context);
+                        },
                       ),
-                      DataColumn(
-                        label: Text('วันที่'),
-                      ),
-                      DataColumn(
-                        label: Text('หมายเลข'),
-                      ),
-                      DataColumn(
-                        label: Text('ชื่อลูกค้า'),
-                      ),
-                      DataColumn(
-                        label: Text('มูลค่า'),
-                      ),
-                      DataColumn(
-                        label: Text('สถานะ'),
-                      ),
-                      DataColumn(
-                        label: Text(''),
-                      ),
-                    ],
-                    rows: List<DataRow>.generate(
-                        4,
-                        (index) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                // All rows will have the same selected color.
-                                if (states.contains(MaterialState.selected)) {
-                                  return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                                }
-                                // Even rows will have a grey color.
-                                if (index.isEven) {
-                                  return Colors.grey.withOpacity(0.3);
-                                }
-                                return null; // Use default value for other states and odd rows.
-                              }),
-                              cells: <DataCell>[
-                                DataCell(Text('${itemcell[index]['id']}')),
-                                DataCell(Text('${itemcell[index]['date']}')),
-                                DataCell(Text('${itemcell[index]['number']}')),
-                                DataCell(Text('${itemcell[index]['name']}')),
-                                DataCell(Text('${itemcell[index]['price']}')),
-                                DataCell(Chip(
-                                    labelPadding: EdgeInsets.all(2.0),
-                                    elevation: 6.0,
-                                    shadowColor: Colors.grey[60],
-                                    backgroundColor: itemcell[index]['status'] == 'สำเร็จ' ? Colors.green : Colors.red,
-                                    label: Text('${itemcell[index]['status']}'))),
-                                DataCell(IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context, MaterialPageRoute(builder: (context) => DetailSaleItem()));
-                                    },
-                                    icon: Icon(Icons.more_vert)))
-                              ],
-                              selected: selected[index],
-                              onSelectChanged: (bool? value) {
-                                setState(() {
-                                  selected[index] = value!;
-                                });
-                              },
-                            ))),
-              ),
-              // controller.allProduct != null
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: size.width * 0.22,
-                    child: NumberPaginator(
-                      // numberPages: controller.allProduct!.last_page!,
-                      numberPages: 1,
-                      onPageChange: (p0) async {
-                        LoadingDialog.open(context);
-                        setState(() {
-                          start = ((p0 - 1) * start) + 10;
-                          print(start);
-                        });
-                        // await context.read<ProductController>().getListProducts(start: start);
-                        if (!mounted) {
-                          return;
-                        }
-                        LoadingDialog.close(context);
-                      },
                     ),
-                  ),
-                ],
-              ),
-              // : SizedBox.shrink(),
-            ],
+                  ],
+                ),
+                // : SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+  });}
 }

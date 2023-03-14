@@ -8,19 +8,20 @@ part 'product.g.dart';
 @JsonSerializable()
 class Product {
   final int id;
+  final String? code;
   final String? image;
-  final String? category_product_id;
-  final String? sub_category_id;
-  final String? unit_id;
+  final int? category_product_id;
+  final int? sub_category_id;
+  final int? unit_id;
   final String? name;
   final String? detail;
-  final String? cost;
-  final String? price_for_retail;
-  final String? price_for_wholesale;
-  final String? price_for_box;
-  final String? remain;
-  final String? remain_shop;
-  final String? min;
+  final int? cost;
+  final double? price_for_retail;
+  final double? price_for_wholesale;
+  final double? price_for_box;
+  final int? remain;
+  final int? remain_shop;
+  final int? min;
   final String? create_by;
   final String? update_by;
   final String? createdAt;
@@ -29,9 +30,11 @@ class Product {
   final CategoryProduct? category_product;
   final SubCategory? sub_category;
   final Unit? unit;
+  bool? selected;
 
   Product(
     this.id,
+    this.code,
     this.image,
     this.category_product_id,
     this.sub_category_id,
@@ -52,7 +55,8 @@ class Product {
     this.No,
     this.category_product,
     this.sub_category,
-    this.unit
+    this.unit,
+    this.selected
   );
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);

@@ -4,7 +4,8 @@ const kDisableColor = Color(0xFFB0BBC9);
 const kSecondaryColor = Color.fromARGB(255, 81, 120, 136);
 const kPrimaryColor = Color(0xFF01579B);
 
-const String publicUrl = 'asha-dev.com';
+//const String publicUrl = 'asha-dev.com';
+const String publicUrl = '192.168.1.126';
 
 List<Map<String, dynamic>> newitemcell = [
   {
@@ -159,15 +160,21 @@ List checkListItems = [
     "id": 1,
     "value": false,
     "title": "ราคาขายปลีก",
+    "valuetitle": "retail",
+     "cost": 15
   },
   {
     "id": 2,
     "value": false,
     "title": "ราคาขายส่ง",
+    "valuetitle": "wholesale",
+     "cost": 13
   },
   {
     "id": 3,
     "value": false,
-    "title": "ราคาขายยกคลัง",
+    "title": "ราคาขายยกลัง",
+    "valuetitle": "box",
+    "cost": 14
   }
 ];

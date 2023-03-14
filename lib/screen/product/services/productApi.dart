@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/allProduct.dart';
+import 'package:poswarehouse/models/confirmorder.dart';
+import 'package:poswarehouse/models/neworders.dart';
+import 'package:poswarehouse/models/orderproduct.dart';
 import 'package:poswarehouse/models/parade.dart';
 import 'package:poswarehouse/models/product.dart';
 import 'package:poswarehouse/models/units.dart';
@@ -17,7 +20,7 @@ class ProductApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/product_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -45,7 +48,7 @@ class ProductApi {
 
   ///Get พาเรทวางสินค้า
   static Future<Parade> getParades() async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -73,7 +76,7 @@ class ProductApi {
 
   // Get Unit
   static Future<Units> getUnits() async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/unit_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/unit_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -182,7 +185,7 @@ class ProductApi {
     String title,
     int catagoryId,
   ) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category/$catagoryId');
 
     final response = await http.put(url,
         body: jsonEncode({
@@ -194,6 +197,55 @@ class ProductApi {
       return true;
     } else {
       return false;
+    }
+  }
+
+  //สร้างออร์เดอร์ก่อนจ่ายเงิน
+  static Future<OrderProduct> newOrder(String order_date, String name, String phone, String email,String address, String type, List<NewOrders> orders) async {
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/order');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "order_date": "2023-03-09",
+        "name":"AAAAA",
+        "phone":"0999999999",
+        "email":"client@gmail.com",
+        "address":"11/11",
+        "type": "wholesale",
+        "orders": orders,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return OrderProduct.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+  //จ่ายเงิน
+  static Future<ConfirmOrder> payment(String order_no, int amount) async {
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/confirm_order');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: convert.jsonEncode({
+        "order_no": order_no,
+        "payment": "cash",
+        "amount": amount
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return ConfirmOrder.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
     }
   }
 }
