@@ -313,7 +313,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                             if (_select != null && _select.isNotEmpty) {
                                               setState(() {
         
-                                                final List<NewOrders> select = _select.map((e) => NewOrders(e.id.toString(), 0,0, int.parse(e.cost!), int.parse(e.unit_id!), controller.units!.data![0], e, false)).toList();
+                                                final List<NewOrders> select = _select.map((e) => NewOrders(e.id.toString(), 0,0, e.cost!, e.unit_id!, controller.units!.data![0], e, false)).toList();
         
                                                 listneworder.addAll(select);
                                                 

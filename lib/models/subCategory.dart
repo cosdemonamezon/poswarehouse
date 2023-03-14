@@ -5,7 +5,7 @@ part 'subCategory.g.dart';
 @JsonSerializable()
 class SubCategory {
   final int id;
-  final String? category_product_id;
+  final int? category_product_id;
   final String? name;
   final String? create_by;
   final String? update_by;

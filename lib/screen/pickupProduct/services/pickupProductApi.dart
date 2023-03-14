@@ -16,7 +16,7 @@ class PickupProductApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_pickout_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/stock_pickout_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -43,7 +43,7 @@ class PickupProductApi {
 
   // Get By Id
   static Future<ReceivingGoods> getPickupsById(String stock_pick_out_no) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/get_stock_pickout_line/$stock_pick_out_no');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/get_stock_pickout_line/$stock_pick_out_no');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,
@@ -61,7 +61,7 @@ class PickupProductApi {
 
   //Create
   static Future<StockPurchase> createPickoutOrders(String date, List<NewOrders> orders) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/stock_pickout');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/stock_pickout');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -83,7 +83,7 @@ class PickupProductApi {
 
   //รับสินค้าที่เบิก
   static Future<StockPurchase> receiveStock(String stock_pick_out_no) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/receive_stock_pickout');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/receive_stock_pickout');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -104,7 +104,7 @@ class PickupProductApi {
 
   // Get By Id ReturnProductPage
   static Future<ReceivingGoods> getReturnProduct(String stock_purchase_no) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/get_stock_purchase_damaged/$stock_purchase_no');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/get_stock_purchase_damaged/$stock_purchase_no');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,

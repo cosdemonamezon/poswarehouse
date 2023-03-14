@@ -20,7 +20,7 @@ class ProductApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/product_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -48,7 +48,7 @@ class ProductApi {
 
   ///Get พาเรทวางสินค้า
   static Future<Parade> getParades() async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -76,7 +76,7 @@ class ProductApi {
 
   // Get Unit
   static Future<Units> getUnits() async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/unit_page');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/unit_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -185,7 +185,7 @@ class ProductApi {
     String title,
     int catagoryId,
   ) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/sub_category/$catagoryId');
 
     final response = await http.put(url,
         body: jsonEncode({
@@ -202,7 +202,7 @@ class ProductApi {
 
   //สร้างออร์เดอร์ก่อนจ่ายเงิน
   static Future<OrderProduct> newOrder(String order_date, String name, String phone, String email,String address, String type, List<NewOrders> orders) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/order');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -228,7 +228,7 @@ class ProductApi {
   }
   //จ่ายเงิน
   static Future<ConfirmOrder> payment(String order_no, int amount) async {
-    final url = Uri.https(publicUrl, '/pos-api/public/api/confirm_order');
+    final url = Uri.http('192.168.1.126', '/pos-api/public/api/confirm_order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
