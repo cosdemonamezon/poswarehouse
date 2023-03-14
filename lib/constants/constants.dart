@@ -5,7 +5,7 @@ const kSecondaryColor = Color.fromARGB(255, 81, 120, 136);
 const kPrimaryColor = Color(0xFF01579B);
 
 //const String publicUrl = 'asha-dev.com';
-const String publicUrl = '192.168.1.116';
+const String publicUrl = '192.168.1.153';
 
 List<Map<String, dynamic>> newitemcell = [
   {
@@ -156,25 +156,7 @@ List<Map<String, dynamic>> productType = [
 ];
 
 List checkListItems = [
-  {
-    "id": 1,
-    "value": false,
-    "title": "ราคาขายปลีก",
-    "valuetitle": "retail",
-     "cost": 15
-  },
-  {
-    "id": 2,
-    "value": false,
-    "title": "ราคาขายส่ง",
-    "valuetitle": "wholesale",
-     "cost": 13
-  },
-  {
-    "id": 3,
-    "value": false,
-    "title": "ราคาขายยกลัง",
-    "valuetitle": "box",
-    "cost": 14
-  }
+  {"id": 1, "value": false, "title": "ราคาขายปลีก", "valuetitle": "retail", "cost": 15},
+  {"id": 2, "value": false, "title": "ราคาขายส่ง", "valuetitle": "wholesale", "cost": 13},
+  {"id": 3, "value": false, "title": "ราคาขายยกลัง", "valuetitle": "box", "cost": 14}
 ];

@@ -108,13 +108,12 @@ class OrdersApi {
   }
 
   // Get By Id สินค้า
-  static Future<PurchaseOrders> getOrderById(
-      String stock_purchase_no) async {
+  static Future<PurchaseOrders> getOrderById(String stock_purchase_no) async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/get_stock_purchase_line/$stock_purchase_no');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,
-      headers: headers,      
+      headers: headers,
     );
 
     if (response.statusCode == 200) {

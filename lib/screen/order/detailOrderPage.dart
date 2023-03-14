@@ -13,8 +13,7 @@ import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class DetailOrderPage extends StatefulWidget {
-  DetailOrderPage({Key? key, required this.stock_purchase_no})
-      : super(key: key);
+  DetailOrderPage({Key? key, required this.stock_purchase_no}) : super(key: key);
   final String stock_purchase_no;
 
   @override
@@ -28,6 +27,8 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
   List<int> amounts = [];
   List<int> prices = [];
   List<Damageds>? damageds = [];
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  static const int numItems = 10;
   //Damageds? damaged;
   int amount = 0;
   int price = 0;
@@ -40,46 +41,22 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context
-        .read<OrdersController>()
-        .getDetailPurchase(widget.stock_purchase_no);
-    orderId.text = await context
-        .read<OrdersController>()
-        .purchaseOrders!
-        .stock_purchase_no!;
-    orderDate.text =
-        await context.read<OrdersController>().purchaseOrders!.purchase_date!;
-    setState(() {
-      for (var i = 0;
-          i < context.read<OrdersController>().purchaseOrders!.orders!.length;
-          i++) {
-        amounts.add(int.parse(context
-            .read<OrdersController>()
-            .purchaseOrders!
-            .orders![i]
-            .qty
-            .toString()));
-        prices.add(int.parse(context
-            .read<OrdersController>()
-            .purchaseOrders!
-            .orders![i]
-            .price
-            .toString()));
-        final damaged = new Damageds(
-            int.parse(context
-                .read<OrdersController>()
-                .purchaseOrders!
-                .orders![i]
-                .id
-                .toString()),
-            '');
+    await context.read<OrdersController>().getDetailPurchase(widget.stock_purchase_no);
+    orderId.text = await context.read<OrdersController>().purchaseOrders!.stock_purchase_no!;
+    // orderDate.text = await context.read<OrdersController>().purchaseOrders!.purchase_date!;
+    // setState(() {
+    //   for (var i = 0; i < context.read<OrdersController>().purchaseOrders!.orders!.length; i++) {
+    //     amounts.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].qty.toString()));
+    //     prices.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].price.toString()));
+    //     final damaged =
+    //         new Damageds(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].id.toString()), '');
 
-        damageds!.add(damaged);
-      }
-      amount = amounts.sum;
-      price = prices.sum;
-      sum = amount * price;
-    });
+    //     damageds!.add(damaged);
+    //   }
+    //   amount = amounts.sum;
+    //   price = prices.sum;
+    //   sum = amount * price;
+    // });
 
     LoadingDialog.close(context);
   }
@@ -108,8 +85,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                         Icon(Icons.list_alt_rounded),
                         Text(
                           "ข้อมูล",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -119,8 +95,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             "สถานะ",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w300),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                           ),
                         ),
                         Chip(
@@ -128,9 +103,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           elevation: 6.0,
                           shadowColor: Colors.grey[60],
                           backgroundColor:
-                              controller.purchaseOrders?.status == 'Receive'
-                                  ? Colors.green
-                                  : Colors.orangeAccent,
+                              controller.purchaseOrders?.status == 'Receive' ? Colors.green : Colors.orangeAccent,
                           label: Text('${controller.purchaseOrders?.status}'),
                         ),
                       ],
@@ -151,8 +124,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
                             'รหัสคำสั่งซื้อ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
@@ -176,8 +148,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
                             'วันที่รับ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
@@ -202,15 +173,13 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                     Icon(Icons.shopify_sharp),
                     Text(
                       "สินค้า",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
                   ],
                 ),
                 controller.purchaseOrders != null
                     ? Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)),
+                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                         width: double.infinity,
                         child: controller.purchaseOrders!.orders!.isNotEmpty
                             ? DataTable(
@@ -219,74 +188,74 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                   DataColumn(
                                     label: Text(
                                       '#',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'รหัส PO',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'รหัสสินค้า',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'จำนวน',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'ราคา',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       'หมายเหตุ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ],
                                 rows: List<DataRow>.generate(
                                     controller.purchaseOrders!.orders!.length,
                                     (index) => DataRow(
+                                          selected: selected[index],
+                                          onSelectChanged: (value) {
+                                            final damaged = Damageds(controller.purchaseOrders!.orders![index].id, '');
+                                            setState(() {
+                                              selected[index] = value!;
+                                              controller.purchaseOrders!.orders![index].selected = value;
+                                              print(controller.purchaseOrders!.orders![index].selected);
+                                              if (value) {
+                                                // 'รถกระบะ';
+                                                damageds!.add(damaged);
+                                                // inspect(ListChacked);
+                                              }
+                                            });
+                                          },
                                           cells: <DataCell>[
-                                            DataCell(Text(
-                                                '${controller.purchaseOrders!.orders![index].id}')),
-                                            DataCell(Text(
-                                                '${controller.purchaseOrders!.orders![index].stock_purchase_no}')),
-                                            DataCell(Text(
-                                                '${controller.purchaseOrders!.orders![index].product_id}')),
-                                            DataCell(Text(
-                                                '${controller.purchaseOrders!.orders![index].qty}')),
-                                            DataCell(Text(
-                                                '${controller.purchaseOrders!.orders![index].price}')),
+                                            DataCell(Text('${controller.purchaseOrders!.orders![index].id}')),
+                                            DataCell(
+                                                Text('${controller.purchaseOrders!.orders![index].stock_purchase_no}')),
+                                            DataCell(Text('${controller.purchaseOrders!.orders![index].product_id}')),
+                                            DataCell(Text('${controller.purchaseOrders!.orders![index].qty}')),
+                                            DataCell(Text('${controller.purchaseOrders!.orders![index].price}')),
                                             DataCell(
                                               InkWell(
                                                 onTap: () async {
-                                                  final selectText =
-                                                      await showDialog<String>(
+                                                  final selectText = await showDialog<String>(
                                                     context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        InputTextDialog(),
+                                                    builder: (BuildContext context) => InputTextDialog(),
                                                   );
-                                                  if (selectText != null) {
+                                                  if (selectText != null && selectText != '') {
                                                     setState(() {
-                                                      damageds![index].remark =
-                                                          selectText;
+                                                      damageds![index].remark = selectText;
                                                     });
                                                     inspect(damageds);
                                                   } else {}
@@ -337,67 +306,49 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                               child: Column(
                                 children: [
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'จำนวนทั้งหมด',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           '${amount}',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'รวม',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           '${price}',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'ภาษีมูลค่าเพิ่ม',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           '%',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
@@ -407,23 +358,17 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                       color: Color.fromARGB(255, 245, 250, 255),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
+                                      padding: EdgeInsets.symmetric(horizontal: 10),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             'รวมทั้งหมด',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             '${sum}',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                           )
                                         ],
                                       ),
@@ -457,10 +402,8 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                     child: Center(
                                       child: Text(
                                         'ไม่อนุมัติ',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black),
+                                        style:
+                                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                                       ),
                                     ),
                                   ),
@@ -470,13 +413,9 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    if (controller.purchaseOrders?.status !=
-                                        'Receive') {
+                                    if (controller.purchaseOrders?.status != 'Receive') {
                                       LoadingDialog.open(context);
-                                      await context
-                                          .read<OrdersController>()
-                                          .pickupNewOrders(
-                                              '${orderId.text}', damageds!);
+                                      await context.read<OrdersController>().pickupNewOrders(orderId.text, damageds!);
                                       if (controller.purchase != null) {
                                         LoadingDialog.close(context);
                                         print('object Success');
@@ -507,16 +446,13 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                   child: Container(
                                     width: size.width * 0.1,
                                     height: size.height * 0.06,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: kPrimaryColor),
+                                    decoration:
+                                        BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                                     child: Center(
                                       child: Text(
                                         'อนุมัติ',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
+                                        style:
+                                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                                       ),
                                     ),
                                   ),

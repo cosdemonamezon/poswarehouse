@@ -4,8 +4,8 @@ part 'damageds.g.dart';
 
 @JsonSerializable()
 class Damageds {
-  int stock_purchase_line_id;
-  String remark;
+  int? stock_purchase_line_id;
+  String? remark;
 
   Damageds(
     this.stock_purchase_line_id,

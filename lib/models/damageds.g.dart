@@ -7,8 +7,8 @@ part of 'damageds.dart';
 // **************************************************************************
 
 Damageds _$DamagedsFromJson(Map<String, dynamic> json) => Damageds(
-      json['stock_purchase_line_id'] as int,
-      json['remark'] as String,
+      json['stock_purchase_line_id'] as int?,
+      json['remark'] as String?,
     );
 
 Map<String, dynamic> _$DamagedsToJson(Damageds instance) => <String, dynamic>{
