@@ -5,7 +5,7 @@ const kSecondaryColor = Color.fromARGB(255, 81, 120, 136);
 const kPrimaryColor = Color(0xFF01579B);
 
 //const String publicUrl = 'asha-dev.com';
-const String publicUrl = '192.168.1.153';
+const String publicUrl = '192.168.1.116';
 
 List<Map<String, dynamic>> newitemcell = [
   {

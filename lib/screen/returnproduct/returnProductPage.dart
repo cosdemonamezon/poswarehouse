@@ -135,7 +135,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                   ),
                                 ],
                                 rows: List<DataRow>.generate(
-                                    pickupproduct.length,
+                                    controller.allReceiving!.data!.length,
                                     (index) => DataRow(
                                           color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                             // All rows will have the same selected color.

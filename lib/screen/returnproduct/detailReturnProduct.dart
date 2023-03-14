@@ -91,7 +91,7 @@ class _DetailReturnProductState extends State<DetailReturnProduct> {
                           elevation: 6.0,
                           shadowColor: Colors.grey[60],
                           backgroundColor: Colors.green,
-                          label: Text(controller.returnProduct!.status!),
+                          label: Text(controller.returnProduct?.status ?? ''),
                         ),
                       ],
                     ),
