@@ -964,7 +964,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                           controller
                                                               .orderProduct!
                                                               .order_no!,
-                                                          int.parse(
+                                                          (
                                                               textPriceController
                                                                   .text));
                                                   if (controller.confirmOrder !=

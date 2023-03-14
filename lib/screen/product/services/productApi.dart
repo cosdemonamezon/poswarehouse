@@ -139,7 +139,7 @@ class ProductApi {
     );
     try {
       final response = await Dio().post(
-        'http://$publicUrl/pos-api/public/api/product',
+        'http://${publicUrl}/pos-api/public/api/product',
         data: formData,
         options: Options(headers: headers),
       );
@@ -227,7 +227,7 @@ class ProductApi {
     }
   }
   //จ่ายเงิน
-  static Future<ConfirmOrder> payment(String order_no, int amount) async {
+  static Future<ConfirmOrder> payment(String order_no, String amount) async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/confirm_order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(

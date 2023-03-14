@@ -42,7 +42,7 @@ class ProductController extends ChangeNotifier {
     notifyListeners();
   }
 
-  confirmNewOrder(String order_no, int amount) async{
+  confirmNewOrder(String order_no, String amount) async{
     confirmOrder = await ProductApi.payment(order_no, amount);
     notifyListeners();
   }

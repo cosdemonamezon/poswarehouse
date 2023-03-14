@@ -43,26 +43,29 @@ class PrinterService {
     ]);
 
     await SunmiPrinter.line();
-    for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
-      await SunmiPrinter.printRow(cols: [
-        ColumnMaker(
-            text: 'Product Code:', width: 13, align: SunmiPrintAlign.LEFT),
-        ColumnMaker(text: '', width: 3, align: SunmiPrintAlign.LEFT),
-        ColumnMaker(
-            text: '${printer.confirmOrder!.orders![i].code}',
-            width: 10,
-            align: SunmiPrintAlign.RIGHT),
-      ]);
-      await SunmiPrinter.printRow(cols: [
-        ColumnMaker(
-            text: 'Product Qty:', width: 13, align: SunmiPrintAlign.LEFT),
-        ColumnMaker(text: '', width: 5, align: SunmiPrintAlign.LEFT),
-        ColumnMaker(
-            text: '${printer.confirmOrder!.orders![i].qty}',
-            width: 10,
-            align: SunmiPrintAlign.RIGHT),
-      ]);
+    if (printer.confirmOrder?.orders?.isNotEmpty ?? false) {
+      for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
+        await SunmiPrinter.printRow(cols: [
+          ColumnMaker(
+              text: 'Product Code:', width: 13, align: SunmiPrintAlign.LEFT),
+          ColumnMaker(text: '', width: 3, align: SunmiPrintAlign.LEFT),
+          ColumnMaker(
+              text: '${printer.confirmOrder!.orders![i].code}',
+              width: 10,
+              align: SunmiPrintAlign.RIGHT),
+        ]);
+        await SunmiPrinter.printRow(cols: [
+          ColumnMaker(
+              text: 'Product Qty:', width: 13, align: SunmiPrintAlign.LEFT),
+          ColumnMaker(text: '', width: 5, align: SunmiPrintAlign.LEFT),
+          ColumnMaker(
+              text: '${printer.confirmOrder!.orders![i].qty}',
+              width: 10,
+              align: SunmiPrintAlign.RIGHT),
+        ]);
+      }
     }
+    
 
     await SunmiPrinter.printRow(cols: [
       ColumnMaker(text: 'Type:', width: 10, align: SunmiPrintAlign.LEFT),
