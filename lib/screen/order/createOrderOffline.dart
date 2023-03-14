@@ -62,7 +62,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
     _unitinitialize();
-    //_printerInitail();
+    _printerInitail();
     textPriceController.text = '0.00';
     setState(() {
       radioButtonItem = checkListItems[0]['title'];
@@ -114,6 +114,16 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   Future<bool?> _bindingPrinter() async {
     final bool? result = await SunmiPrinter.bindingPrinter();
     return result;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    datePick!.dispose();
+    name!.dispose();
+    phone!.dispose();
+    email!.dispose();
+    address!.dispose();
   }
 
   @override
@@ -840,7 +850,27 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                               LoadingDialog.close(context);
                                               setState(() {
                                                 changPrice =  controller.confirmOrder!.change.toString();
-                                                printer = new Printer('name1', '12/03/2023', '06.55', '16', '100.00', '100.00');
+                                                printer = new Printer('name1', '12/03/2023', '06.55', '16', '100.00', '100.00', controller.confirmOrder);
+                                                
+                                              //   showDialog(
+                                              //   context: context,
+                                              //   barrierDismissible: false,
+                                              //   builder: (BuildContext context) {
+                                              //     return AlertDialogYes(
+                                              //       title: 'สำเร็จ',
+                                              //       description: 'ทำรายการสำเร็จ',
+                                              //       pressYes: (){
+                                              //         Navigator.pop(context, true);
+                                              //       },
+                                              //     );
+                                              //   },
+                                              // );
+                                              });
+                                              await PrinterService().print(printer!);
+                                              setState(() {
+                                                if (textPriceController.text != '') {
+                                                  changPrice = textPriceController.text;
+                                                }
                                               });
                                             } else {
                                               LoadingDialog.close(context);
@@ -881,12 +911,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                           
                                         }                                     
                                         
-                                        //await PrinterService().print(printer!);
-                                        // setState(() {
-                                        //   if (textPriceController.text != '') {
-                                        //     changPrice = textPriceController.text;
-                                        //   }
-                                        // });
+                                        
                                       },
                                       child: Container(
                                         width: size.width * 0.1,
