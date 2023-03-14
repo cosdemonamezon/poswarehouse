@@ -40,7 +40,7 @@ class WareHouseApi {
   }
 
   ///เพิ่มคลังสินค้า
-  static Future<WareHouse> createSubCategory(String category_product_id, String name) async {
+  static Future<WareHouse> createSubCategory(int category_product_id, String name) async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(

@@ -23,7 +23,7 @@ class WareHouseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  createNewWareHouse(String category_product_id, String name) async {
+  createNewWareHouse(int category_product_id, String name) async {
     wareHouse = await WareHouseApi.createSubCategory(category_product_id, name);
     notifyListeners();
   }

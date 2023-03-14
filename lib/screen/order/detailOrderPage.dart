@@ -291,12 +291,13 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                                     inspect(damageds);
                                                   } else {}
                                                 },
-                                                child: Container(
+                                                child: SizedBox(
                                                   width: size.width * 0.05,
                                                   //child: Center(child: Text('${listneworder[index].qty}')),
                                                   child: Center(
-                                                      child: Text(
-                                                          '${damageds![index].remark}')),
+                                                      child: Text(''
+                                                          // '${damageds![index].remark}'
+                                                          )),
                                                 ),
                                               ),
                                             ),

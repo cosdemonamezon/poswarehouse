@@ -5,17 +5,17 @@ part 'order.g.dart';
 
 @JsonSerializable()
 class Order {
-  final int? id;
+  final int id;
   final String? stock_purchase_no;
   final String? stock_pick_out_no;
   final String? order_no;
-  final String? product_id;
-  final String? unit_id;
+  final int? product_id;
+  final int? unit_id;
   final String? cost;
   final String? code;
   final String? price_per_unit;
-  final String? price;
-  final String? qty;
+  final int? price;
+  final int? qty;
   final String? created_at;
   final String? updated_at;
   final String? create_by;

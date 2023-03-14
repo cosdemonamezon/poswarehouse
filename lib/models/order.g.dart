@@ -7,17 +7,17 @@ part of 'order.dart';
 // **************************************************************************
 
 Order _$OrderFromJson(Map<String, dynamic> json) => Order(
-      json['id'] as int?,
+      json['id'] as int,
       json['stock_purchase_no'] as String?,
       json['stock_pick_out_no'] as String?,
       json['order_no'] as String?,
-      json['product_id'] as String?,
-      json['unit_id'] as String?,
+      json['product_id'] as int?,
+      json['unit_id'] as int?,
       json['cost'] as String?,
       json['code'] as String?,
       json['price_per_unit'] as String?,
-      json['price'] as String?,
-      json['qty'] as String?,
+      json['price'] as int?,
+      json['qty'] as int?,
       json['created_at'] as String?,
       json['updated_at'] as String?,
       json['create_by'] as String?,
