@@ -12,6 +12,7 @@ import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/product/services/productApi.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 class EditProduct extends StatefulWidget {
@@ -618,6 +619,19 @@ class _EditProductState extends State<EditProduct> {
                               Navigator.pop(context, true);
                             } catch (e) {
                               LoadingDialog.close(context);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: e.toString(),
+                                    pressYes: () {
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
                             }
                           } else {
                             print('object Data is not mat');

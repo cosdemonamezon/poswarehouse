@@ -20,12 +20,6 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
   int start = 0;
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  List<Map<String, dynamic>> itemcell = [
-    {"id": "1", "date": "28/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
-    {"id": "2", "date": "10/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
-    {"id": "3", "date": "18/2/2566", "number": "SO-02245", "name": "Mr.suthap", "price": "200", "status": "สำเร็จ"},
-    {"id": "4", "date": "29/2/2566", "number": "SO-02249", "name": "Mr.suthap 2", "price": "500", "status": "ยกเลิก"},
-  ];
 
   @override
   void initState() {

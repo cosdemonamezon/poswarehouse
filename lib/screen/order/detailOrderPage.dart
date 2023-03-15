@@ -459,10 +459,23 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                           LoadingDialog.close(context);
                                           print('object  Already Receive');
                                         }
-                                      } catch (e) {
-                                        
-                                      }
-                                      
+                                      } on Exception catch (e) {
+                                        if (!mounted) {return;}
+                                        LoadingDialog.close(context);
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return AlertDialogYes(
+                                              title: 'แจ้งเตือน',
+                                              description: e.toString(),
+                                              pressYes: () {
+                                                Navigator.pop(context, true);
+                                              },
+                                            );
+                                          },
+                                        );
+                                      }                                      
                                     } else {
                                       print('object status = Receive');
                                     }

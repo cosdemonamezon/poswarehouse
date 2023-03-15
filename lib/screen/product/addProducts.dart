@@ -13,6 +13,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/subCategory.dart';
@@ -604,6 +605,19 @@ class _AddProductsState extends State<AddProducts> {
                               Navigator.pop(context, true);
                             } catch (e) {
                               LoadingDialog.close(context);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: e.toString(),
+                                    pressYes: () {
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
                             }
                           } else {
                             print('object Data is not mat');

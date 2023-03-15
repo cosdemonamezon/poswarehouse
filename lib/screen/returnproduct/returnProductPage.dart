@@ -20,19 +20,6 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
   int start = 0;
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  List<Map<String, dynamic>> itemcell = [
-    {"id": "1", "date": "28/2/2566", "number": "DN-02246", "name": "ร้านค้าที่ 1", "price": "200", "status": "สำเร็จ"},
-    {"id": "2", "date": "28/2/2566", "number": "DN-02247", "name": "ร้านค้าที่ 2", "price": "300", "status": "สำเร็จ"},
-    {
-      "id": "3",
-      "date": "28/2/2566",
-      "number": "DN-02248",
-      "name": "ร้านค้าที่ 3",
-      "price": "400",
-      "status": "รออนุมัติ"
-    },
-    {"id": "4", "date": "28/2/2566", "number": "DN-02249", "name": "ร้านค้าที่ 4", "price": "500", "status": "ยกเลิก"}
-  ];
   @override
   void initState() {
     super.initState();

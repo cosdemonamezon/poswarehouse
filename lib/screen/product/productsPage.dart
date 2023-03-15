@@ -26,7 +26,6 @@ class _ProductsPageState extends State<ProductsPage> {
   List<String> images = [];
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  //List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
   void initState() {
     super.initState();

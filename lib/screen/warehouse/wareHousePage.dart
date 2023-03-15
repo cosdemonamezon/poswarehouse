@@ -210,10 +210,9 @@ class WareHousePageState extends State<WareHousePage> {
                                                       );
                                                       if (_edit != null) {
                                                         LoadingDialog.open(context);
-                                                        await context
-                                                            .read<WareHouseController>()
-                                                            .editWareHouse(_edit.id, _edit.name);
+                                                        await context.read<WareHouseController>().editWareHouse(_edit.id, _edit.name);
                                                         if (context.read<WareHouseController>().editwareHouse != null) {
+                                                          if (!mounted) {return;}
                                                           LoadingDialog.close(context);
                                                           showDialog(
                                                             context: context,
@@ -262,6 +261,7 @@ class WareHousePageState extends State<WareHousePage> {
                                                         final delete = await WareHouseApi.deleteSubCategory(
                                                             controller.allWareHouses!.data![index].id);
                                                         if (delete == true) {
+                                                          if (!mounted) {return;}
                                                           LoadingDialog.close(context);
                                                           showDialog(
                                                             context: context,
