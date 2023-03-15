@@ -1,31 +1,28 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/parades.dart';
+import 'package:poswarehouse/models/subCategory.dart';
 import 'package:poswarehouse/models/typeProduct.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/product/services/productApi.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
-import 'dart:io';
-import 'dart:async';
-
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/subCategory.dart';
-
-class AddProducts extends StatefulWidget {
-  AddProducts({Key? key}) : super(key: key);
-
+class EditProduct extends StatefulWidget {
+  EditProduct({Key? key, required this.id}) : super(key: key);
+  String id;
   @override
-  State<AddProducts> createState() => _AddProductsState();
+  State<EditProduct> createState() => _EditProductState();
 }
 
-class _AddProductsState extends State<AddProducts> {
-  final GlobalKey<FormState> addProductFormKey = GlobalKey<FormState>();
+class _EditProductState extends State<EditProduct> {
+  final GlobalKey<FormState> editProductFormKey = GlobalKey<FormState>();
   final TextEditingController productId = TextEditingController();
   final TextEditingController productName = TextEditingController();
   final TextEditingController detailProduct = TextEditingController();
@@ -34,22 +31,46 @@ class _AddProductsState extends State<AddProducts> {
   final TextEditingController wholesalePrice = TextEditingController();
   final TextEditingController pricePerCarton = TextEditingController();
   List<String> list = [];
-  String selectlist = '';
-  Parades? dropdownValue;
-  TypeProduct? categoryValue;
-  SubCategory? categoryDetail;
-
   ImagePicker picker = ImagePicker();
   XFile? image;
   List<bool> selected = [];
+  String selectlist = '';
   int numItems = 0;
+  Parades? dropdownValue;
+  TypeProduct? categoryValue;
+  SubCategory? categoryDetail;
+  String images = '';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => {paradeinitialize(), categoryinitialize()});
-    unitsitialize();
+        
+  }
+
+  Future<void> getProduct() async{
+    await context.read<ProductController>().getDetailProduct(widget.id);
+    final idCategory = await context.read<ProductController>().product!.category_product!.id;
+    await context.read<CategoryController>().getCategoryById(idCategory);
+    setState(() {      
+      categoryDetail = context.read<CategoryController>().getCategoryId![0];
+      productId.text = context.read<ProductController>().product!.code.toString();
+      productName.text = context.read<ProductController>().product!.name.toString();
+      detailProduct.text = context.read<ProductController>().product!.detail.toString();
+      originPrice.text = context.read<ProductController>().product!.cost.toString();
+      retailPrice.text = context.read<ProductController>().product!.price_for_retail.toString();
+      wholesalePrice.text = context.read<ProductController>().product!.price_for_wholesale.toString();
+      pricePerCarton.text = context.read<ProductController>().product!.price_for_box.toString();
+      //categoryValue = context.read<ProductController>().product.;
+      images = context.read<ProductController>().product!.image.toString();
+      selected.insert(0, true);
+      selected.removeAt(1);
+      list.insert(0, context.read<ProductController>().product!.unit!.id.toString());
+      list.removeAt(1);
+      //categoryValue = context.read<ProductController>().product!.category_product;
+      //categoryDetail = context.read<ProductController>().product!.sub_category;
+    });
   }
 
   Future<void> paradeinitialize() async {
@@ -63,12 +84,13 @@ class _AddProductsState extends State<AddProducts> {
 
   Future<void> categoryinitialize() async {
     await context.read<CategoryController>().getListCategorys();
-    final idCategory = context.read<CategoryController>().allTypeProduct![0].id;
-    await context.read<CategoryController>().getCategoryById(idCategory);
+    //final idCategory = context.read<CategoryController>().allTypeProduct![0].id;
+    //await context.read<CategoryController>().getCategoryById(idCategory);
     setState(() {
       categoryValue = context.read<CategoryController>().allTypeProduct![0];
-      categoryDetail = context.read<CategoryController>().getCategoryId![0];
+      //categoryDetail = context.read<CategoryController>().getCategoryId![0];
     });
+    unitsitialize();
   }
 
   Future<void> unitsitialize() async {
@@ -79,31 +101,31 @@ class _AddProductsState extends State<AddProducts> {
       selected = List<bool>.generate(numItems, (int index) => false);
       list = List<String>.generate(numItems, (int index) => '0');
     });
+    getProduct();
   }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer2<ProductController, CategoryController>(
-        builder: (context, controller, controllerCategory, child) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('เพิ่มสินค้าใหม่'),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Form(
-                  key: addProductFormKey,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
+    return Consumer2<ProductController, CategoryController>(builder: (context, controller, controllerCategory, child) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('แก้ใขสินค้า'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Form(
+                key: editProductFormKey,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -446,10 +468,11 @@ class _AddProductsState extends State<AddProducts> {
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                  ],
                 ),
-                controller.units != null
+              ),
+              ///------------------
+              controller.units != null
                     ? SizedBox(
                         child: controller.units!.data!.isNotEmpty &&
                                 selected.isNotEmpty
@@ -495,7 +518,7 @@ class _AddProductsState extends State<AddProducts> {
                       )
                     : SizedBox(),
                 Divider(),
-                Row(
+              Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
@@ -507,32 +530,27 @@ class _AddProductsState extends State<AddProducts> {
                           children: [
                             InkWell(
                               onTap: () async {
-                                final img = await picker.pickImage(
-                                    source: ImageSource.camera);
+                                final img = await picker.pickImage(source: ImageSource.camera);
                                 setState(() {
                                   image = img;
+                                  images = "";
                                 });
                               },
                               child: image == null
                                   ? Container(
-                                      width: size.width * 0.12,
+                                      width: size.width * 0.16,
                                       decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey)),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.add),
-                                          Text(
-                                            'เลือกรูปภาพ',
-                                            style: TextStyle(fontSize: 16.0),
-                                          ),
-                                        ],
-                                      ),
+                                          border: Border.all(color: Colors.grey)),
+                                      child: images != ""
+                                      ?Image.network(
+                                        images,
+                                        fit: BoxFit.fill,
+                                        height: size.height * 0.54,
+                                        width: size.width * 0.90,
+                                      ):SizedBox(),
                                     )
                                   : Container(
-                                      width: size.width * 0.12,
+                                      width: size.width * 0.16,
                                       decoration: BoxDecoration(
                                           border:
                                               Border.all(color: Colors.grey)),
@@ -543,11 +561,7 @@ class _AddProductsState extends State<AddProducts> {
                                         width: size.width * 0.90,
                                       ),
                                     ),
-                            ),
-                            // Padding(
-                            //   padding: EdgeInsets.symmetric(horizontal: 20),
-                            //   child: Text('xxxxxx.png'),
-                            // )
+                            ),                            
                           ],
                         ),
                       ),
@@ -568,11 +582,11 @@ class _AddProductsState extends State<AddProducts> {
                             inspect(selectlist);
                             //selectlist = '';
                           });
-                          if (image != null &&
-                              addProductFormKey.currentState!.validate()) {
+                          if (image != null && editProductFormKey.currentState!.validate()) {
                             LoadingDialog.open(context);
                             try {
-                              await ProductApi.createProduct(
+                              await ProductApi.updateProduct(
+                                id: context.read<ProductController>().product!.id.toString(),
                                 category_product_id:
                                 categoryValue!.id.toString(),
                                 sub_category_id: categoryDetail!.id.toString(),
@@ -582,6 +596,9 @@ class _AddProductsState extends State<AddProducts> {
                                 price_for_retail: retailPrice.text,
                                 price_for_wholesale: wholesalePrice.text,
                                 price_for_box: pricePerCarton.text,
+                                remain: context.read<ProductController>().product!.remain.toString(),
+                                remain_shop: context.read<ProductController>().product!.remain_shop.toString(),
+                                min: context.read<ProductController>().product!.min.toString(),
                                 file: image!,
                                 code: productId.text,
                                 units: selectlist,
@@ -590,10 +607,7 @@ class _AddProductsState extends State<AddProducts> {
                               if (!mounted) {
                                 return;
                               }
-
-                              await context
-                                  .read<ProductController>()
-                                  .getListProducts();
+                              await context.read<ProductController>().getListProducts();
 
                               if (!mounted) {
                                 return;
@@ -629,11 +643,10 @@ class _AddProductsState extends State<AddProducts> {
                     ),
                   ],
                 ),
-              ],
-            ),
+            ],
           ),
         ),
-      );
-    });
-  }
+      ),
+    );
+  });}
 }

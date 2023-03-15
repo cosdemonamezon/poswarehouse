@@ -20,14 +20,17 @@ class _InputTextDialogState extends State<InputTextDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('กรอกรายละเอียด'),
-      content: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        controller: numberPick,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
+      content: Container(
+        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+        child: TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          controller: numberPick,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
             ),
           ),
         ),

@@ -171,8 +171,7 @@ class _OrderPageState extends State<OrderPage> {
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) => DetailOrderPage(
-                                                                    stock_purchase_no:
-                                                                        '${controller.purchaseProduct!.data![index].stock_purchase_no}',
+                                                                    stock_purchase_no: '${controller.purchaseProduct!.data![index].stock_purchase_no}',
                                                                   )));
                                                       if (_recive == true) {
                                                         _initialize();

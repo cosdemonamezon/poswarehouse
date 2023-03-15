@@ -19,6 +19,7 @@ class ProductController extends ChangeNotifier {
   Units? units;
   OrderProduct? orderProduct;
   ConfirmOrder? confirmOrder;
+  Product? product;
 
   getListProducts({
     int start = 0,
@@ -29,6 +30,11 @@ class ProductController extends ChangeNotifier {
       length: length,
     );
     // allProduct!.data!.sort((a, b) => b.id.compareTo(a.id));
+    notifyListeners();
+  }
+
+  getDetailProduct(String id) async{
+    product = await ProductApi.getProductById(id);
     notifyListeners();
   }
 

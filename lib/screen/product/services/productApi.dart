@@ -46,6 +46,26 @@ class ProductApi {
     }
   }
 
+  //get by id product
+  static Future<Product> getProductById(
+    String id,
+  ) async {
+    final url = Uri.http(publicUrl, '/pos-api/public/api/product/$id');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return Product.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
   ///Get พาเรทวางสินค้า
   static Future<Parade> getParades() async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category_page');
@@ -117,7 +137,10 @@ class ProductApi {
     required String code,
     required String units,
   }) async {
-    final headers = {'Authorization': 'Bearer', 'Content-Type': 'multipart/form-data'};
+    final headers = {
+      'Authorization': 'Bearer',
+      'Content-Type': 'multipart/form-data'
+    };
     var formData = FormData.fromMap(
       {
         'category_product_id': category_product_id,
@@ -160,6 +183,60 @@ class ProductApi {
     // }
   }
 
+  // Update Product
+  static Future<void> updateProduct({
+    required String id,
+    required String category_product_id,
+    required String sub_category_id,
+    required String name,
+    required String detial,
+    required String cost,
+    required String price_for_retail,
+    required String price_for_wholesale,
+    required String price_for_box,
+    required String remain,
+    required String remain_shop,
+    required String min,
+    required XFile file,
+    required String code,
+    required String units,
+  }) async {
+    final headers = {
+      'Authorization': 'Bearer',
+      'Content-Type': 'multipart/form-data'
+    };
+    var formData = FormData.fromMap(
+      {
+        'id': id,
+        'category_product_id': category_product_id,
+        'sub_category_id': sub_category_id,
+        'unit_id': 1,
+        'name': name,
+        'detail': detial,
+        'cost': cost,
+        'price_for_retail': price_for_retail,
+        'price_for_wholesale': price_for_wholesale,
+        'price_for_box': price_for_box,
+        'remain': remain,
+        'remain_shop': remain_shop,
+        'min': min,
+        'image': await MultipartFile.fromFile(file.path, filename: file.name),
+        'code': code,
+        'units': units,
+      },
+    );
+    try {
+      final response = await Dio().post(
+        'http://${publicUrl}/pos-api/public/api/update_product',
+        data: formData,
+        options: Options(headers: headers),
+      );
+      
+    } on DioError catch (e) {
+      throw (e.response?.data['message']);
+    }
+  }
+
   // ลบประเภทสินค้า
   Future<void> deleteSubCatagory({
     required int catagoryId,
@@ -171,7 +248,10 @@ class ProductApi {
       '/pos-api/public/api/sub_category/$catagoryId',
     );
 
-    final response = await http.delete(url, headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
+    final response = await http.delete(url, headers: {
+      'Authorization': 'Bearer ',
+      'Content-Type': 'application/json'
+    });
 
     if (response.statusCode == 201) {
     } else {
@@ -185,13 +265,17 @@ class ProductApi {
     String title,
     int catagoryId,
   ) async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
+    final url =
+        Uri.http(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
 
     final response = await http.put(url,
         body: jsonEncode({
           "name": title,
         }),
-        headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
+        headers: {
+          'Authorization': 'Bearer ',
+          'Content-Type': 'application/json'
+        });
 
     if (response.statusCode == 200) {
       return true;
@@ -201,18 +285,25 @@ class ProductApi {
   }
 
   //สร้างออร์เดอร์ก่อนจ่ายเงิน
-  static Future<OrderProduct> newOrder(String order_date, String name, String phone, String email,String address, String type, List<NewOrders> orders) async {
+  static Future<OrderProduct> newOrder(
+      String order_date,
+      String name,
+      String phone,
+      String email,
+      String address,
+      String type,
+      List<NewOrders> orders) async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
       headers: headers,
       body: convert.jsonEncode({
-        "order_date": "2023-03-09",
-        "name":"AAAAA",
-        "phone":"0999999999",
-        "email":"client@gmail.com",
-        "address":"11/11",
+        "order_date": order_date,
+        "name": "AAAAA",
+        "phone": "0999999999",
+        "email": "client@gmail.com",
+        "address": "11/11",
         "type": "wholesale",
         "orders": orders,
       }),
@@ -226,6 +317,7 @@ class ProductApi {
       throw Exception(data['message']);
     }
   }
+
   //จ่ายเงิน
   static Future<ConfirmOrder> payment(String order_no, String amount) async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/confirm_order');
@@ -233,11 +325,8 @@ class ProductApi {
     final response = await http.post(
       url,
       headers: headers,
-      body: convert.jsonEncode({
-        "order_no": order_no,
-        "payment": "cash",
-        "amount": amount
-      }),
+      body: convert.jsonEncode(
+          {"order_no": order_no, "payment": "cash", "amount": amount}),
     );
 
     if (response.statusCode == 200) {

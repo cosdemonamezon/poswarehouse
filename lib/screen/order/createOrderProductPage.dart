@@ -294,14 +294,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 final selectNumber =
                                                     await showDialog<String>(
                                                   context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          InputNumberDialog(),
+                                                  builder: (BuildContext context) => InputNumberDialog(),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
-                                                    listneworder[index].qty =
-                                                        int.parse(selectNumber);
+                                                    listneworder[index].qty = int.parse(selectNumber);
                                                     // selectProducts[index]. = int.parse(selectNumber);
                                                     // qtyText.insert(index, selectNumber);
                                                     // qtyText.removeAt(index + 1);
@@ -314,45 +311,14 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                               },
                                               child: Container(
                                                 width: size.width * 0.05,
+                                                height: size.height * 0.05,
+                                                decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                                                 child: Center(
                                                     child: Text(
                                                         '${listneworder[index].qty}')),
                                               ),
                                             ),
-                                            // Center(
-                                            //   child: SizedBox(
-                                            //       height: size.height * 0.045,
-                                            //       width: size.width * 0.10,
-                                            //       child: appTextFormField(
-                                            //         controller: qtyController![index],
-                                            //         readOnly: selected[index] ? false : true,
-                                            //         sufPress: () async {},
-                                            //         onChanged: (newValue) async{
-                                            //           print(newValue);
-                                            //           setState(() {
-                                            //             if (newValue == "") {
-                                            //               qtyController![index].text = '';
-                                            //               order = new NewOrders(selectProducts[index].id.toString(),0,int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
-                                            //               listneworder.insert(index, order!);
-                                            //               listneworder.removeAt(index + 1);
-                                            //             } else {
-                                            //               qtyController![index].text = newValue.toString();
-                                            //               order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyController![index].text),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
-                                            //               listneworder.insert(index, order!);
-                                            //               listneworder.removeAt(index + 1);
-                                            //             }
-
-                                            //           });
-                                            //           inspect(listneworder);
-                                            //         },
-                                            //         onEditingComplete: (){
-                                            //           print(' 555555 ');
-                                            //         },
-                                            //         vertical: 0.0,
-                                            //         horizontal: 0.0,
-                                            //         color: Color.fromARGB(255, 245, 245, 245),
-                                            //       )),
-                                            // ),
+                                           
                                           ),
                                           DataCell(SizedBox(
                                             width: size.width * 0.06,
@@ -360,31 +326,23 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                               children: [
                                                 InkWell(
                                                   onTap: () async {
-                                                    final selectUnit =
-                                                        await showDialog<Unit>(
+                                                    final selectUnit = await showDialog<Unit>(
                                                       context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          UnitDialog(
-                                                        units: controller
-                                                            .units!.data!,
-                                                      ),
+                                                      builder: (BuildContext context) => UnitDialog(units: controller.units!.data!,),
                                                     );
                                                     if (selectUnit != null) {
                                                       setState(() {
-                                                        listneworder[index]
-                                                                .unit_id =
-                                                            selectUnit.id;
-                                                        listneworder[index]
-                                                            .unit = selectUnit;
+                                                        listneworder[index].unit_id = selectUnit.id;
+                                                        listneworder[index].unit = selectUnit;
                                                       });
                                                     } else {}
                                                   },
                                                   child: Container(
-                                                    width: size.width * 0.03,
+                                                    width: size.width * 0.05,
+                                                    height: size.height * 0.05,
+                                                    decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                                                     child: Center(
-                                                        child: Text(
-                                                            '${listneworder[index].unit!.name}')),
+                                                        child: Text('${listneworder[index].unit!.name}')),
                                                   ),
                                                 ),
                                               ],

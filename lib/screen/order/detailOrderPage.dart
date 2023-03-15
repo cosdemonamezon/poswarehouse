@@ -7,7 +7,6 @@ import 'package:poswarehouse/models/damageds.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
-import 'package:poswarehouse/widgets/inputNumberDialog.dart';
 import 'package:poswarehouse/widgets/inputTextDialog.dart';
 import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
@@ -43,22 +42,28 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
     LoadingDialog.open(context);
     await context.read<OrdersController>().getDetailPurchase(widget.stock_purchase_no);
     orderId.text = await context.read<OrdersController>().purchaseOrders!.stock_purchase_no!;
-    // orderDate.text = await context.read<OrdersController>().purchaseOrders!.purchase_date!;
-    // setState(() {
-    //   for (var i = 0; i < context.read<OrdersController>().purchaseOrders!.orders!.length; i++) {
-    //     amounts.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].qty.toString()));
-    //     prices.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].price.toString()));
-    //     final damaged =
-    //         new Damageds(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].id.toString()), '');
+    orderDate.text = await context.read<OrdersController>().purchaseOrders!.purchase_date!;
+    setState(() {
+      for (var i = 0; i < context.read<OrdersController>().purchaseOrders!.orders!.length; i++) {
+        amounts.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].qty.toString()));
+        prices.add(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].price.toString()));
+        // final damaged =
+        //     new Damageds(int.parse(context.read<OrdersController>().purchaseOrders!.orders![i].id.toString()), '');
 
-    //     damageds!.add(damaged);
-    //   }
-    //   amount = amounts.sum;
-    //   price = prices.sum;
-    //   sum = amount * price;
-    // });
-
+        // damageds!.add(damaged);
+      }
+      amount = amounts.sum;
+      price = prices.sum;
+      sum = amount * price;
+    });
     LoadingDialog.close(context);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    orderId.dispose();
+    orderDate.dispose();
   }
 
   @override
@@ -83,6 +88,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                     Row(
                       children: [
                         Icon(Icons.list_alt_rounded),
+                        SizedBox(width: size.width * 0.01,),
                         Text(
                           "ข้อมูล",
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
@@ -216,9 +222,17 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text(
-                                      'หมายเหตุ',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    label: SizedBox(
+                                      width: size.width * 0.15,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            'หมายเหตุ',
+                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -241,33 +255,38 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                           },
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.purchaseOrders!.orders![index].id}')),
-                                            DataCell(
-                                                Text('${controller.purchaseOrders!.orders![index].stock_purchase_no}')),
+                                            DataCell(Text('${controller.purchaseOrders!.orders![index].stock_purchase_no}')),
                                             DataCell(Text('${controller.purchaseOrders!.orders![index].product_id}')),
                                             DataCell(Text('${controller.purchaseOrders!.orders![index].qty}')),
                                             DataCell(Text('${controller.purchaseOrders!.orders![index].price}')),
                                             DataCell(
-                                              InkWell(
-                                                onTap: () async {
-                                                  final selectText = await showDialog<String>(
-                                                    context: context,
-                                                    builder: (BuildContext context) => InputTextDialog(),
-                                                  );
-                                                  if (selectText != null && selectText != '') {
-                                                    setState(() {
-                                                      damageds![index].remark = selectText;
-                                                    });
-                                                    inspect(damageds);
-                                                  } else {}
-                                                },
-                                                child: SizedBox(
-                                                  width: size.width * 0.05,
-                                                  //child: Center(child: Text('${listneworder[index].qty}')),
-                                                  child: Center(
-                                                      child: Text(''
-                                                          // '${damageds![index].remark}'
-                                                          )),
-                                                ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      final selectText = await showDialog<String>(
+                                                        context: context,
+                                                        builder: (BuildContext context) => InputTextDialog(),
+                                                      );
+                                                      if (selectText != null && selectText != '') {
+                                                        setState(() {
+                                                          damageds![index].remark = selectText;
+                                                        });
+                                                        inspect(damageds);
+                                                      } else {}
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                                      width: size.width * 0.25,
+                                                      height: size.height * 0.07,
+                                                      child: Center(
+                                                          child: Text(''
+                                                              // '${damageds![index].remark}'
+                                                              )),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -416,29 +435,34 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                     if (controller.purchaseOrders?.status != 'Receive') {
                                       LoadingDialog.open(context);
                                       await context.read<OrdersController>().pickupNewOrders(orderId.text, damageds!);
-                                      if (controller.purchase != null) {
-                                        LoadingDialog.close(context);
-                                        print('object Success');
-                                        final _alert = await showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return AlertDialogYes(
-                                              title: 'รับสินค้าสำเร็จ',
-                                              description: '',
-                                              pressYes: () {
-                                                Navigator.pop(context, true);
-                                              },
-                                            );
-                                          },
-                                        );
-                                        if (_alert == true) {
-                                          Navigator.pop(context, true);
+                                      try {
+                                        if (controller.purchase != null) {
+                                          if (!mounted) {return;}
+                                          LoadingDialog.close(context);
+                                          final _alert = await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return AlertDialogYes(
+                                                title: 'รับสินค้าสำเร็จ',
+                                                description: '',
+                                                pressYes: () {
+                                                  Navigator.pop(context, true);
+                                                },
+                                              );
+                                            },
+                                          );
+                                          if (_alert == true) {
+                                            Navigator.pop(context, true);
+                                          }
+                                        } else {
+                                          LoadingDialog.close(context);
+                                          print('object  Already Receive');
                                         }
-                                      } else {
-                                        LoadingDialog.close(context);
-                                        print('object  Already Receive');
+                                      } catch (e) {
+                                        
                                       }
+                                      
                                     } else {
                                       print('object status = Receive');
                                     }

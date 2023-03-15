@@ -28,8 +28,8 @@ class _UnitDialogState extends State<UnitDialog> {
     return AlertDialog(
       title: Text('เลือกหน่วย'),
       content: Container(
-        height: size.height * 0.07,
-        width: size.width * 0.45,
+        height: size.height * 0.08,
+        width: size.width * 0.35,
         decoration: BoxDecoration(
             border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
             color: Color.fromARGB(255, 238, 238, 238),
@@ -53,7 +53,6 @@ class _UnitDialogState extends State<UnitDialog> {
               color: Colors.deepPurpleAccent,
             ),
             onChanged: (Unit? detialValue) {
-              // This is called when the user selects an item.
               setState(() {
                 unit = detialValue;
               });

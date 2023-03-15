@@ -20,14 +20,17 @@ class _InputNumberDialogState extends State<InputNumberDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('ใส่ตัวเลข'),
-      content: TextFormField(
-        keyboardType: TextInputType.number,
-        controller: numberPick,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
+      content: Container(
+        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+        child: TextFormField(
+          keyboardType: TextInputType.number,
+          controller: numberPick,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
             ),
           ),
         ),
@@ -46,7 +49,6 @@ class _InputNumberDialogState extends State<InputNumberDialog> {
             if (numberPick!.text != "") {
               Navigator.pop(context, numberPick!.text);
             }
-            
           },
           child: Text('ตกลง'),
         ),

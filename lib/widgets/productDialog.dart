@@ -49,7 +49,7 @@ class _ProductDialogState extends State<ProductDialog> {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: SizedBox(
-        width: size.width * 0.70,
+        width: size.width * 0.85,
         height: size.height * 0.75,
         child: Padding(
           padding: EdgeInsets.all(8.0),
