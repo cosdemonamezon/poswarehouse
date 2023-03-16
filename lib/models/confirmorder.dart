@@ -8,7 +8,7 @@ part 'confirmorder.g.dart';
 class ConfirmOrder {
   final int id;
   final String? order_no;
-  final int? client_id;
+  final String? client_id;
   final String? order_date;
   final String? type;
   final String? status;

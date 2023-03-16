@@ -9,7 +9,7 @@ part of 'confirmorder.dart';
 ConfirmOrder _$ConfirmOrderFromJson(Map<String, dynamic> json) => ConfirmOrder(
       json['id'] as int,
       json['order_no'] as String?,
-      json['client_id'] as int?,
+      json['client_id'] as String?,
       json['order_date'] as String?,
       json['type'] as String?,
       json['status'] as String?,
