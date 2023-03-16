@@ -29,7 +29,7 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context.read<PickupProductController>().getListPickupProducts();
+    await context.read<PickupProductController>().getListOrders();
     LoadingDialog.close(context);
   }
 
@@ -96,10 +96,10 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                controller.allReceiving != null
+                controller.orders != null
                     ? SizedBox(
                         width: double.infinity,
-                        child: controller.allReceiving!.data!.isNotEmpty
+                        child: controller.orders!.data!.isNotEmpty
                             ? DataTable(
                                 columns: <DataColumn>[
                                     DataColumn(
@@ -116,7 +116,7 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                                     ),
                                   ],
                                 rows: List<DataRow>.generate(
-                                    controller.allReceiving!.data!.length,
+                                    controller.orders!.data!.length,
                                     (index) => DataRow(
                                           color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                             // All rows will have the same selected color.
@@ -130,14 +130,14 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                                             return null; // Use default value for other states and odd rows.
                                           }),
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.allReceiving!.data![index].No}')),
+                                            DataCell(Text('${controller.orders!.data![index].id}')),
                                             DataCell(
-                                                Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
-                                            DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
+                                                Text('${controller.orders!.data![index].order_no}')),
+                                            DataCell(Text('${controller.orders!.data![index].created_at}')),
                                             DataCell(IconButton(
                                                 onPressed: () {
                                                   Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context) => DetailSaleItem()));
+                                                      MaterialPageRoute(builder: (context) => DetailSaleItem(id: '${controller.orders!.data![index].id}',)));
                                                 },
                                                 icon: Icon(Icons.more_vert)))
                                           ],

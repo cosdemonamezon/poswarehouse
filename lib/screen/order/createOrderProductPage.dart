@@ -16,6 +16,8 @@ import 'package:poswarehouse/widgets/productDialog.dart';
 import 'package:poswarehouse/widgets/unitDialog.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/testProduct.dart';
+
 class CreateOrderProductPage extends StatefulWidget {
   CreateOrderProductPage({Key? key}) : super(key: key);
 
@@ -30,6 +32,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
   DateTime dateTime = DateTime.now();
   int numItems = 0;
   List<bool> selected = [];
+  int am = 1;
 
   List<NewOrders> listneworder = [];
   NewOrders? order;
@@ -126,23 +129,24 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             context: context,
                             barrierDismissible: false,
                             builder: (BuildContext context) {
-                              return ProductDialog(
-                                title: '',
-                                description: '',
-                                allProduct: controller.allProduct!.data,
-                                press: () {
-                                  Navigator.pop(context);
-                                },
-                                pressSelect: () async {},
-                              );
+                              return TestProduct();
+                              // return ProductDialog(
+                              //   title: '',
+                              //   description: '',
+                              //   allProduct: controller.allProduct!.data,
+                              //   press: () {
+                              //     Navigator.pop(context);
+                              //   },
+                              //   pressSelect: () async {},
+                              // );
                             },
                           );
                           if (_select != null && _select.isNotEmpty) {
                             //inspect(_select);
                             setState(() {
                               final List<NewOrders> select = _select
-                                  .map((e) => NewOrders(e.id.toString(), 0, 0, double.parse(e.cost!), 15,
-                                      int.parse(e.unit_id!), controller.units!.data![0], e, false))
+                                  .map((e) => NewOrders(e.id.toString(), am, double.parse(e.cost!), double.parse(e.cost!),
+                                      double.parse(e.price_for_retail!), int.parse(e.unit_id!), controller.units!.data![0], e, false))
                                   .toList();
 
                               listneworder.addAll(select);
@@ -245,8 +249,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
                                             child: listneworder[index].product!.image != null
-                                                ? Image.network('${listneworder[index].product!.image}',
-                                                    fit: BoxFit.fill)
+                                                ? Image.network('${listneworder[index].product!.image}', fit: BoxFit.fill)
                                                 : Image.asset(
                                                     'assets/images/noimage.jpg',
                                                     fit: BoxFit.fill,
@@ -336,9 +339,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           width: size.width * 0.2,
                           height: size.height * 0.08,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey)),
+                              borderRadius: BorderRadius.circular(10), color: Colors.white, border: Border.all(color: Colors.grey)),
                           child: Center(
                             child: Text(
                               'ยกเลิก',
