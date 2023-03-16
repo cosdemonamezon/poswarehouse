@@ -198,9 +198,14 @@ class _ProductsPageState extends State<ProductsPage> {
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () async{
+                                                  onTap: () async {
                                                     //_initialize();
-                                                    final update = await Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProduct(id: '${controller.allProduct!.data![index].id}',)));
+                                                    final update = await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => EditProduct(
+                                                                  id: '${controller.allProduct!.data![index].id}',
+                                                                )));
                                                     if (update == true) {
                                                       _initialize();
                                                     } else {
@@ -258,7 +263,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                                   },
                                                   child: Icon(Icons.edit_calendar_sharp),
                                                 ),
-                                                SizedBox(width: size.width * 0.01,),
+                                                SizedBox(
+                                                  width: size.width * 0.01,
+                                                ),
                                                 GestureDetector(
                                                     onTap: () {
                                                       showDialog<String>(

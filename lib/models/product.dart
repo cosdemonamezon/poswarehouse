@@ -10,18 +10,18 @@ class Product {
   final int id;
   final String? code;
   final String? image;
-  final int? category_product_id;
-  final int? sub_category_id;
-  final int? unit_id;
+  final String? category_product_id;
+  final String? sub_category_id;
+  final String? unit_id;
   final String? name;
   final String? detail;
-  final int? cost;
-  final double? price_for_retail;
-  final double? price_for_wholesale;
-  final double? price_for_box;
-  final int? remain;
-  final int? remain_shop;
-  final int? min;
+  final String? cost;
+  final String? price_for_retail;
+  final String? price_for_wholesale;
+  final String? price_for_box;
+  final String? remain;
+  final String? remain_shop;
+  final String? min;
   final String? create_by;
   final String? update_by;
   final String? createdAt;
@@ -33,31 +33,30 @@ class Product {
   bool? selected;
 
   Product(
-    this.id,
-    this.code,
-    this.image,
-    this.category_product_id,
-    this.sub_category_id,
-    this.unit_id,
-    this.name,
-    this.detail,
-    this.cost,
-    this.price_for_retail,
-    this.price_for_wholesale,
-    this.price_for_box,
-    this.remain,
-    this.remain_shop,
-    this.min,
-    this.create_by,
-    this.update_by,
-    this.createdAt,
-    this.updatedAt,
-    this.No,
-    this.category_product,
-    this.sub_category,
-    this.unit,
-    this.selected
-  );
+      this.id,
+      this.code,
+      this.image,
+      this.category_product_id,
+      this.sub_category_id,
+      this.unit_id,
+      this.name,
+      this.detail,
+      this.cost,
+      this.price_for_retail,
+      this.price_for_wholesale,
+      this.price_for_box,
+      this.remain,
+      this.remain_shop,
+      this.min,
+      this.create_by,
+      this.update_by,
+      this.createdAt,
+      this.updatedAt,
+      this.No,
+      this.category_product,
+      this.sub_category,
+      this.unit,
+      this.selected);
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 

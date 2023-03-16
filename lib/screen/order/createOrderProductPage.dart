@@ -55,16 +55,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
     await context.read<ProductController>().getListUnits();
   }
 
-  Future<DateTime?> pickDate() => showDatePicker(
-      context: context,
-      initialDate: dateTime,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100));
+  Future<DateTime?> pickDate() =>
+      showDatePicker(context: context, initialDate: dateTime, firstDate: DateTime(1900), lastDate: DateTime(2100));
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer2<ProductController, OrdersController>(
-        builder: (context, controller, ordersController, child) {
+    return Consumer2<ProductController, OrdersController>(builder: (context, controller, ordersController, child) {
       return Scaffold(
         appBar: AppBar(
           title: Text('สร้างคำสั่งซื้อ'),
@@ -118,8 +114,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         Icon(Icons.shopify_outlined),
                         Text(
                           "สินค้า",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -146,16 +141,8 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                             //inspect(_select);
                             setState(() {
                               final List<NewOrders> select = _select
-                                  .map((e) => NewOrders(
-                                      e.id.toString(),
-                                      0,
-                                      0,
-                                      e.cost!,
-                                      15,
-                                      e.unit_id!,
-                                      controller.units!.data![0],
-                                      e,
-                                      false))
+                                  .map((e) => NewOrders(e.id.toString(), 0, 0, int.parse(e.cost!), 15,
+                                      int.parse(e.unit_id!), controller.units!.data![0], e, false))
                                   .toList();
 
                               listneworder.addAll(select);
@@ -181,16 +168,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เพิ่มสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -204,8 +186,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                 Container(
                   width: double.infinity,
                   height: size.height * 0.40,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
                   child: listneworder.isNotEmpty
                       ? SingleChildScrollView(
@@ -239,16 +220,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                               rows: List<DataRow>.generate(
                                   listneworder.length,
                                   (index) => DataRow(
-                                        color: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
+                                        color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                           // All rows will have the same selected color.
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                                .withOpacity(0.08);
+                                          if (states.contains(MaterialState.selected)) {
+                                            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                           }
                                           // Even rows will have a grey color.
                                           if (index.isEven) {
@@ -264,19 +239,13 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 });
                                               },
                                               icon: Icon(Icons.delete))),
-                                          DataCell(Text(
-                                              '${listneworder[index].product!.No}')),
-                                          DataCell(Text(
-                                              '${listneworder[index].product!.name}')),
+                                          DataCell(Text('${listneworder[index].product!.No}')),
+                                          DataCell(Text('${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
-                                            child: listneworder[index]
-                                                        .product!
-                                                        .image !=
-                                                    null
-                                                ? Image.network(
-                                                    '${listneworder[index].product!.image}',
+                                            child: listneworder[index].product!.image != null
+                                                ? Image.network('${listneworder[index].product!.image}',
                                                     fit: BoxFit.fill)
                                                 : Image.asset(
                                                     'assets/images/noimage.jpg',
@@ -285,14 +254,12 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           )),
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
-                                            child: Text(
-                                                '${listneworder[index].product!.price_for_retail}'),
+                                            child: Text('${listneworder[index].product!.price_for_retail}'),
                                           )),
                                           DataCell(
                                             InkWell(
                                               onTap: () async {
-                                                final selectNumber =
-                                                    await showDialog<String>(
+                                                final selectNumber = await showDialog<String>(
                                                   context: context,
                                                   builder: (BuildContext context) => InputNumberDialog(),
                                                 );
@@ -313,12 +280,9 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 width: size.width * 0.05,
                                                 height: size.height * 0.05,
                                                 decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                                                child: Center(
-                                                    child: Text(
-                                                        '${listneworder[index].qty}')),
+                                                child: Center(child: Text('${listneworder[index].qty}')),
                                               ),
                                             ),
-                                           
                                           ),
                                           DataCell(SizedBox(
                                             width: size.width * 0.06,
@@ -328,7 +292,9 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                   onTap: () async {
                                                     final selectUnit = await showDialog<Unit>(
                                                       context: context,
-                                                      builder: (BuildContext context) => UnitDialog(units: controller.units!.data!,),
+                                                      builder: (BuildContext context) => UnitDialog(
+                                                        units: controller.units!.data!,
+                                                      ),
                                                     );
                                                     if (selectUnit != null) {
                                                       setState(() {
@@ -341,8 +307,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                     width: size.width * 0.05,
                                                     height: size.height * 0.05,
                                                     decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                                                    child: Center(
-                                                        child: Text('${listneworder[index].unit!.name}')),
+                                                    child: Center(child: Text('${listneworder[index].unit!.name}')),
                                                   ),
                                                 ),
                                               ],
@@ -377,10 +342,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           child: Center(
                             child: Text(
                               'ยกเลิก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                             ),
                           ),
                         ),
@@ -396,9 +358,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                           //final list = listneworder.where((element) => element.selected == true).toList();
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
-                            await context
-                                .read<OrdersController>()
-                                .createNewOrder(datePick!.text, listneworder);
+                            await context.read<OrdersController>().createNewOrder(datePick!.text, listneworder);
                             if (ordersController.stockPurchase != null) {
                               print('object Create Success****');
                               Navigator.pop(context, true);
@@ -412,16 +372,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'บันทึก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),

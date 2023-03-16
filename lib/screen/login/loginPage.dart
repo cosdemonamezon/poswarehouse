@@ -14,8 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
-  final TextEditingController test = TextEditingController();
-  FocusNode mainFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -38,42 +36,14 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: size.height * 0.05,
             ),
-            RawKeyboardListener(
-              focusNode: mainFocusNode,
-              autofocus:true,
-              onKey: (RawKeyEvent event) {                
-                
-                if (event.runtimeType.toString() == 'RawKeyUpEvent') {
-                  //print(event.logicalKey.keyLabel);
-                  setState(() {
-                    if (event.logicalKey.keyLabel != 'Enter' && event.logicalKey.keyLabel != 'Shift Left') {
-                      test.text += event.logicalKey.keyLabel;
-                    } else {
-                      //test.clear();
-                      print('55555');
-                    }
-                  });
-                  //print(event.runtimeType.toString());
-                  //print(event.logicalKey.keyLabel);
-                }
 
-           
-              },
-              child: TextFormField(
-                controller: test,
-                onFieldSubmitted: (_) async {
-                  //print("asdadda");
-                  //submitContact();
-                },
-              ),
-            ),
             // Container(
             //   color: Colors.amber,
             //   width: size.width * 0.40,
             //   height: size.height * 0.08,
             //   child: TextFormField(
             //     controller: test,
-            //     autofocus: true,                
+            //     autofocus: true,
             //     //readOnly: true,
             //     //showCursor: true,
             //     //obscureText: true,
@@ -81,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
             //     decoration: InputDecoration(
             //       fillColor: Color(0xFFF3F6FA),
             //       contentPadding: EdgeInsets.all(15.0),
-            //       //filled: true,               
+            //       //filled: true,
             //       border: OutlineInputBorder(
             //         borderSide: BorderSide.none,
             //         borderRadius: BorderRadius.all(
@@ -95,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
             //         //test.text = '';
             //       });
             //     },
-            //     // onFieldSubmitted: (value) async{                  
+            //     // onFieldSubmitted: (value) async{
             //     //   setState(() {
             //     //     test.text = value;
             //     //   });
@@ -128,8 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Text(
                       'ชื่อผู้ใช้',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
                   Padding(
@@ -152,8 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Text(
                       'รหัสผ่าน',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
                   Padding(
@@ -185,24 +153,16 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: GestureDetector(
                       onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                       },
                       child: Container(
                         width: size.width * 0.5,
                         height: size.height * 0.08,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: kPrimaryColor),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                         child: Center(
                           child: Text(
                             'เข้าสู่ระบบ',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ),
                       ),

@@ -69,8 +69,8 @@ class _OrderPageState extends State<OrderPage> {
                           sufPress: () {},
                           readOnly: false,
                           onChanged: (p0) {
-                            final suggestion = controller.purchaseProduct!.data!.where((product) {
-                              final productTitle = product.stock_purchase_no!.toLowerCase();
+                            final suggestion = controller.purchaseProduct!.data!.where((e) {
+                              final productTitle = e.stock_purchase_no!.toLowerCase();
                               final input = p0!.toLowerCase();
 
                               return productTitle.contains(input);

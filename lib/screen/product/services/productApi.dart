@@ -20,7 +20,7 @@ class ProductApi {
     int start = 0,
     int length = 10,
   }) async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/product_page');
+    final url = Uri.https(publicUrl, '/pos/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -50,7 +50,7 @@ class ProductApi {
   static Future<Product> getProductById(
     String id,
   ) async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/product/$id');
+    final url = Uri.https(publicUrl, '/pos/public/api/product/$id');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,
@@ -68,7 +68,7 @@ class ProductApi {
 
   ///Get พาเรทวางสินค้า
   static Future<Parade> getParades() async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category_page');
+    final url = Uri.https(publicUrl, '/pos/public/api/sub_category_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -96,7 +96,7 @@ class ProductApi {
 
   // Get Unit
   static Future<Units> getUnits() async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/unit_page');
+    final url = Uri.https(publicUrl, '/pos/public/api/unit_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -159,7 +159,7 @@ class ProductApi {
     );
     try {
       final response = await Dio().post(
-        'http://${publicUrl}/pos-api/public/api/product',
+        'http://${publicUrl}/pos/public/api/product',
         data: formData,
         options: Options(headers: headers),
       );
@@ -170,7 +170,7 @@ class ProductApi {
     }
 
 //  final res = await Dio().post(
-//         'https://asha-dev.com/pos-api/public/api/product',
+//         'https://asha-dev.com/pos/public/api/product',
 //         data: formData,
 //       );
     // if (res.statusCode == 200 || res.statusCode == 201) {
@@ -221,7 +221,7 @@ class ProductApi {
     );
     try {
       final response = await Dio().post(
-        'http://${publicUrl}/pos-api/public/api/update_product',
+        'http://${publicUrl}/pos/public/api/update_product',
         data: formData,
         options: Options(headers: headers),
       );
@@ -238,7 +238,7 @@ class ProductApi {
     // final token = pref.getString('token');
     final url = Uri.https(
       publicUrl,
-      '/pos-api/public/api/sub_category/$catagoryId',
+      '/pos/public/api/sub_category/$catagoryId',
     );
 
     final response = await http.delete(url, headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
@@ -255,7 +255,7 @@ class ProductApi {
     String title,
     int catagoryId,
   ) async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
+    final url = Uri.https(publicUrl, '/pos/public/api/sub_category/$catagoryId');
 
     final response = await http.put(url,
         body: jsonEncode({
@@ -273,7 +273,7 @@ class ProductApi {
   //สร้างออร์เดอร์ก่อนจ่ายเงิน
   static Future<OrderProduct> newOrder(String order_date, String name, String phone, String email, String address,
       String type, List<NewOrders> orders) async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/order');
+    final url = Uri.https(publicUrl, '/pos/public/api/order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,
@@ -300,7 +300,7 @@ class ProductApi {
 
   //จ่ายเงิน
   static Future<ConfirmOrder> payment(String order_no, String amount) async {
-    final url = Uri.http(publicUrl, '/pos-api/public/api/confirm_order');
+    final url = Uri.https(publicUrl, '/pos/public/api/confirm_order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
       url,

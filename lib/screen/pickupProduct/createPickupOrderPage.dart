@@ -55,11 +55,8 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
     await context.read<ProductController>().getListUnits();
   }
 
-  Future<DateTime?> pickDate() => showDatePicker(
-      context: context,
-      initialDate: dateTime,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100));
+  Future<DateTime?> pickDate() =>
+      showDatePicker(context: context, initialDate: dateTime, firstDate: DateTime(1900), lastDate: DateTime(2100));
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +86,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
                             'วันที่',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                         SizedBox(
@@ -102,8 +98,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                               sufPress: () async {
                                 final _pick = await pickDate();
                                 setState(() {
-                                  datePick!.text =
-                                      _pick!.formatTo('yyyy-MM-dd');
+                                  datePick!.text = _pick!.formatTo('yyyy-MM-dd');
                                 });
                               },
                               sufIcon: Icons.calendar_month,
@@ -131,8 +126,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                         Icon(Icons.shopify_sharp),
                         Text(
                           "สินค้า",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
@@ -158,16 +152,8 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           if (_select != null && _select.isNotEmpty) {
                             setState(() {
                               final List<NewOrders> select = _select
-                                  .map((e) => NewOrders(
-                                      e.id.toString(),
-                                      0,
-                                      0,
-                                      e.cost!,
-                                      15,
-                                      e.unit_id!,
-                                      controller.units!.data![0],
-                                      e,
-                                      false))
+                                  .map((e) => NewOrders(e.id.toString(), 0, 0, int.parse(e.cost!), 15,
+                                      int.parse(e.unit_id!), controller.units!.data![0], e, false))
                                   .toList();
                               listneworder.addAll(select);
                             });
@@ -179,16 +165,11 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'เพิ่มสินค้า',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),
@@ -202,8 +183,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                 Container(
                   width: double.infinity,
                   height: size.height * 0.40,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
                   child: listneworder.isNotEmpty
                       ? SingleChildScrollView(
@@ -233,16 +213,10 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                               rows: List<DataRow>.generate(
                                   listneworder.length,
                                   (index) => DataRow(
-                                        color: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
+                                        color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                           // All rows will have the same selected color.
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                                .withOpacity(0.08);
+                                          if (states.contains(MaterialState.selected)) {
+                                            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                           }
                                           // Even rows will have a grey color.
                                           if (index.isEven) {
@@ -251,19 +225,13 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                           return null; // Use default value for other states and odd rows.
                                         }),
                                         cells: <DataCell>[
-                                          DataCell(Text(
-                                              '${listneworder[index].product!.No}')),
-                                          DataCell(Text(
-                                              '${listneworder[index].product!.name}')),
+                                          DataCell(Text('${listneworder[index].product!.No}')),
+                                          DataCell(Text('${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
                                             height: size.height * 0.10,
-                                            child: listneworder[index]
-                                                        .product!
-                                                        .image !=
-                                                    null
-                                                ? Image.network(
-                                                    '${listneworder[index].product!.image}',
+                                            child: listneworder[index].product!.image != null
+                                                ? Image.network('${listneworder[index].product!.image}',
                                                     fit: BoxFit.fill)
                                                 : Image.asset(
                                                     'assets/images/noimage.jpg',
@@ -272,32 +240,25 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                           )),
                                           DataCell(SizedBox(
                                             width: size.width * 0.03,
-                                            child: Text(
-                                                '${listneworder[index].product!.price_for_retail}'),
+                                            child: Text('${listneworder[index].product!.price_for_retail}'),
                                           )),
                                           DataCell(
                                             InkWell(
                                               onTap: () async {
-                                                final selectNumber =
-                                                    await showDialog<String>(
+                                                final selectNumber = await showDialog<String>(
                                                   context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          InputNumberDialog(),
+                                                  builder: (BuildContext context) => InputNumberDialog(),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
-                                                    listneworder[index].qty =
-                                                        int.parse(selectNumber);
+                                                    listneworder[index].qty = int.parse(selectNumber);
                                                   });
                                                   inspect(listneworder);
                                                 } else {}
                                               },
                                               child: Container(
                                                 width: size.width * 0.05,
-                                                child: Center(
-                                                    child: Text(
-                                                        '${listneworder[index].qty}')),
+                                                child: Center(child: Text('${listneworder[index].qty}')),
                                               ),
                                             ),
                                           ),
@@ -307,31 +268,22 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                               children: [
                                                 InkWell(
                                                   onTap: () async {
-                                                    final selectUnit =
-                                                        await showDialog<Unit>(
+                                                    final selectUnit = await showDialog<Unit>(
                                                       context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          UnitDialog(
-                                                        units: controller
-                                                            .units!.data!,
+                                                      builder: (BuildContext context) => UnitDialog(
+                                                        units: controller.units!.data!,
                                                       ),
                                                     );
                                                     if (selectUnit != null) {
                                                       setState(() {
-                                                        listneworder[index]
-                                                                .unit_id =
-                                                            selectUnit.id;
-                                                        listneworder[index]
-                                                            .unit = selectUnit;
+                                                        listneworder[index].unit_id = selectUnit.id;
+                                                        listneworder[index].unit = selectUnit;
                                                       });
                                                     } else {}
                                                   },
                                                   child: Container(
                                                     width: size.width * 0.03,
-                                                    child: Center(
-                                                        child: Text(
-                                                            '${listneworder[index].unit!.name}')),
+                                                    child: Center(child: Text('${listneworder[index].unit!.name}')),
                                                   ),
                                                 ),
                                               ],
@@ -366,10 +318,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           child: Center(
                             child: Text(
                               'ยกเลิก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                             ),
                           ),
                         ),
@@ -383,9 +332,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                       child: GestureDetector(
                         onTap: () async {
                           setState(() {
-                            final list = listneworder
-                                .where((element) => element.product_id != '0')
-                                .toList();
+                            final list = listneworder.where((element) => element.product_id != '0').toList();
                             listneworder.clear();
                             listneworder = list;
                           });
@@ -394,17 +341,14 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                             try {
                               await context
                                   .read<PickupProductController>()
-                                  .creatOrderPickOut(
-                                      datePick!.text, listneworder);
-                              if (pickupController.pickOutStockPurchase !=
-                                  null) {
+                                  .creatOrderPickOut(datePick!.text, listneworder);
+                              if (pickupController.pickOutStockPurchase != null) {
                                 print('object Create Success****');
                                 //Navigator.pop(context, true);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailPickProducts(
+                                        builder: (context) => DetailPickProducts(
                                               stock_purchase_no:
                                                   '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
                                             )));
@@ -433,16 +377,11 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                         child: Container(
                           width: size.width * 0.2,
                           height: size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kPrimaryColor),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
                               'บันทึก',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
                           ),
                         ),

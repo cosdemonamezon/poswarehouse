@@ -103,9 +103,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
             product.id.toString(),
             am,
             0,
-            product.cost,
+            int.parse(product.cost!),
             15,
-            product.unit_id!,
+            int.parse(product.unit_id!),
             context.read<ProductController>().units!.data![0],
             product,
             false,
@@ -368,8 +368,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                             if (_select != null && _select.isNotEmpty) {
                                               setState(() {
                                                 final List<NewOrders> select = _select
-                                                    .map((e) => NewOrders(e.id.toString(), 0, 0, e.cost, 15, e.unit_id!,
-                                                        controller.units!.data![0], e, false))
+                                                    .map((e) => NewOrders(e.id.toString(), 0, 0, int.parse(e.cost!), 15,
+                                                        int.parse(e.unit_id!), controller.units!.data![0], e, false))
                                                     .toList();
 
                                                 listneworder.addAll(select);
