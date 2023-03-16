@@ -35,4 +35,21 @@ class ReturnProductService {
       throw Exception(data['message']);
     }
   }
+
+   Future<Order> getReturnProduct(String stock_purchase_no) async {
+    final url = Uri.https(publicUrl, '/pos/public/api/get_stock_purchase_damaged/$stock_purchase_no');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return Order.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
 }

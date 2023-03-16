@@ -8,6 +8,8 @@ import 'package:poswarehouse/screen/returnproduct/returnProductController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
 
+import 'returnProductDetailPage.dart';
+
 class ReturnProductPage extends StatefulWidget {
   ReturnProductPage({Key? key}) : super(key: key);
 
@@ -116,9 +118,9 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                   ),
-                                  // DataColumn(
-                                  //   label: Text(''),
-                                  // ),
+                                  DataColumn(
+                                    label: Text(''),
+                                  ),
                                 ],
                                 rows: List<DataRow>.generate(
                                     controller.purchaseDamages.length,
@@ -135,7 +137,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                             return null; // Use default value for other states and odd rows.
                                           }),
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.purchaseDamages[index].No}')),
+                                            DataCell(Text('${controller.purchaseDamages[index]}')),
                                             DataCell(Text('${controller.purchaseDamages[index].stock_purchase_no}')),
                                             DataCell(Text(controller.purchaseDamages[index].remark ?? '-')),
                                             DataCell(Chip(
@@ -147,21 +149,21 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                 backgroundColor:
                                                     controller.purchaseDamages[index].status == 'Finish' ? Colors.green : Colors.red[100],
                                                 label: Text('${controller.purchaseDamages[index].status}'))),
-                                            // DataCell(Row(
-                                            //   children: [
-                                            //     IconButton(
-                                            //         onPressed: () {
-                                            //           Navigator.push(
-                                            //               context,
-                                            //               MaterialPageRoute(
-                                            //                   builder: (context) => DetailReturnProduct(
-                                            //                         stock_purchase_no:
-                                            //                             '${controller.purchaseDamages[index].stock_pick_out_no}',
-                                            //                       )));
-                                            //         },
-                                            //         icon: Icon(Icons.remove_red_eye_outlined)),
-                                            //   ],
-                                            // ))
+                                            DataCell(Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => ReturnProductDetailPage(
+                                                                    stock_purchase_no:
+                                                                        '${controller.purchaseDamages[index].stock_purchase_no}',
+                                                                  )));
+                                                    },
+                                                    icon: Icon(Icons.remove_red_eye_outlined)),
+                                              ],
+                                            ))
                                           ],
                                           // selected: selected[index],
                                           // onSelectChanged: (bool? value) {

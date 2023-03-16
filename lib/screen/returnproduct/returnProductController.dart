@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:poswarehouse/models/order.dart';
 
+import '../../models/order.dart';
 import 'returnProductService.dart';
 
 class ReturnProductController extends ChangeNotifier {
@@ -9,9 +9,15 @@ class ReturnProductController extends ChangeNotifier {
   ReturnProductService api;
 
   List<Order> purchaseDamages = [];
+  Order? purchaseDamage;
 
   Future<void> initialinze() async {
     purchaseDamages = await api.getPurchaseDamages();
+    notifyListeners();
+  }
+
+  Future<void> getDetail(String id) async {
+    purchaseDamage = await api.getReturnProduct(id);
     notifyListeners();
   }
 }
