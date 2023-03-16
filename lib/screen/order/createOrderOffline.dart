@@ -995,12 +995,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
 
                                                     setState(() {
                                                       controller.orderProduct = null;
-<<<<<<< HEAD
-                                                      if (textPriceController.text !='')
-                                                      {
-=======
                                                       if (textPriceController.text != '') {
->>>>>>> 1a75f1d5238e0816c4977054a3806d8261704aa0
                                                         changPrice = textPriceController.text;
                                                       }
                                                     });
