@@ -73,16 +73,16 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             },
           ),          
          
-          Divider(),
-          ListTile(
-            title:
-                Center(child: Text("เช็คสินค้าคงเหลือ", style: TextStyle(fontSize: 16))),
-            leading: Icon(Icons.output),
-            trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+          // Divider(),
+          // ListTile(
+          //   title:
+          //       Center(child: Text("เช็คสินค้าคงเหลือ", style: TextStyle(fontSize: 16))),
+          //   leading: Icon(Icons.output),
+          //   trailing: Icon(Icons.arrow_forward_ios),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
           Divider(),
           ListTile(
             title: Center(
