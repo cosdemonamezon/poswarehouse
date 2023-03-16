@@ -32,8 +32,13 @@ class PickupProductController extends ChangeNotifier {
   getListOrders({
     int start = 0,
     int length = 10,
+    String? search = '',
   }) async {
-    orders = await PickupProductApi.getOrders();
+    orders = await PickupProductApi.getOrders(
+      start: start,
+      length: length,
+      search: search,
+    );
     notifyListeners();
   }
 

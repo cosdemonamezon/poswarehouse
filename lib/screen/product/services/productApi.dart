@@ -16,7 +16,11 @@ import 'package:poswarehouse/models/units.dart';
 class ProductApi {
   const ProductApi();
 
-  static Future<AllProduct> getProducts({int start = 0, int length = 10, String? search = ''}) async {
+  static Future<AllProduct> getProducts({
+    int start = 0,
+    int length = 10,
+    String? search = '',
+  }) async {
     final url = Uri.https(publicUrl, '/pos/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
