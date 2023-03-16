@@ -14,7 +14,7 @@ class ConfirmOrder {
   final String? status;
   final String? payment;
   final String? amount;
-  final int? selling_price;
+  final String? selling_price;
   final String? created_at;
   final String? updated_at;
   final int? change;

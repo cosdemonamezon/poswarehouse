@@ -7,19 +7,11 @@ part of 'printer.dart';
 // **************************************************************************
 
 Printer _$PrinterFromJson(Map<String, dynamic> json) => Printer(
-      json['name'] as String?,
-      json['date'] as String?,
-      json['time'] as String?,
-      json['qty'] as String?,
-      json['total'] as String?,
-      json['balance'] as String?,
+      json['confirmOrder'] == null
+          ? null
+          : ConfirmOrder.fromJson(json['confirmOrder'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PrinterToJson(Printer instance) => <String, dynamic>{
-      'name': instance.name,
-      'date': instance.date,
-      'time': instance.time,
-      'qty': instance.qty,
-      'total': instance.total,
-      'balance': instance.balance,
+      'confirmOrder': instance.confirmOrder,
     };

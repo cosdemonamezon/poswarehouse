@@ -27,21 +27,39 @@ class PrinterService {
     //await SunmiPrinter.line();
 
     await SunmiPrinter.setCustomFontSize(16);
-    for (var i = 0; i < 3; i++) {
+    await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: 'Product Cose',
+          width: 30,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: 'Qty',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+        ColumnMaker(
+          text: 'Price}',
+          width: 7,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+    await SunmiPrinter.setCustomFontSize(16);
+    for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
       await SunmiPrinter.printRow(cols: [
         ColumnMaker(
-          text: '${printer.name}',
-          width: 20,
+          text: '${printer.confirmOrder!.orders![i].product!.code}',
+          width: 30,
           align: SunmiPrintAlign.LEFT,
         ),
         ColumnMaker(
-          text: '',
-          width: 15,
-          align: SunmiPrintAlign.LEFT,
+          text: '${printer.confirmOrder!.orders![i].qty}',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
         ),
         ColumnMaker(
-          text: '${printer.total}',
-          width: 10,
+          text: '${printer.confirmOrder!.orders![i].price_per_unit}',
+          width: 7,
           align: SunmiPrintAlign.RIGHT,
         ),
       ]);
@@ -49,7 +67,7 @@ class PrinterService {
     await SunmiPrinter.line();
     await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     await SunmiPrinter.printText(
-      'thank you' 
+      'Thank you' 
     );
 
     await SunmiPrinter.line();

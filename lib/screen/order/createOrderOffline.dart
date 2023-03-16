@@ -86,6 +86,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
       searchProduct.clear();
       listneworder.clear();
       selectProducts.clear();
+      textPriceController.clear();
       changPrice = '0.00';
     });
   }
@@ -968,14 +969,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                     LoadingDialog.close(context);
                                                     setState(() {
                                                       changPrice = controller.confirmOrder!.change.toString();
-                                                      // printer = new Printer(
-                                                      //     'name1',
-                                                      //     '12/03/2023',
-                                                      //     '06.55',
-                                                      //     '16',
-                                                      //     '100.00',
-                                                      //     '100.00',
-                                                      //     controller.confirmOrder);
+                                                      printer = new Printer(controller.confirmOrder);
 
                                                       //   showDialog(
                                                       //   context: context,
@@ -992,11 +986,11 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                       // );
                                                     });
                                                     await PrinterService().print(printer!);
-
+                                                    clearValue();
                                                     setState(() {
                                                       controller.orderProduct = null;
                                                       if (textPriceController.text != '') {
-                                                        changPrice = textPriceController.text;
+                                                        //changPrice = textPriceController.text;
                                                       }
                                                     });
                                                   } else {

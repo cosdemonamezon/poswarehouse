@@ -15,7 +15,7 @@ ConfirmOrder _$ConfirmOrderFromJson(Map<String, dynamic> json) => ConfirmOrder(
       json['status'] as String?,
       json['payment'] as String?,
       json['amount'] as String?,
-      json['selling_price'] as int?,
+      json['selling_price'] as String?,
       json['created_at'] as String?,
       json['updated_at'] as String?,
       json['change'] as int?,
