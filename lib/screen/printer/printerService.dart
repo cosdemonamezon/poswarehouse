@@ -18,11 +18,11 @@ class PrinterService {
     // await SunmiPrinter.printImage(byte);
     // await SunmiPrinter.setCustomFontSize(16);
     await SunmiPrinter.printText(
-      'บริษัทอาชาเทค คอเปอเรชั่น จำกัด',
+      'ร้าน หน่อย จิปาถะ',
     );
     await SunmiPrinter.setCustomFontSize(18);
     await SunmiPrinter.printText(
-      '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',
+      'ที่อยู่ 100 ตำบล เชียงรากน้อย อำเภอบางปะอิน จังหวัดพระนครศรีอยุธยา 13180 โทร  084 092 8554',
     );
     //await SunmiPrinter.line();
 
