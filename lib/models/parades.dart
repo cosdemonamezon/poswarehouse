@@ -13,16 +13,8 @@ class Parades {
   final String? updated_at;
   final int? No;
 
-  Parades(
-    this.id,
-    this.category_product_id,
-    this.name,
-    this.create_by,
-    this.update_by,
-    this.created_at,
-    this.updated_at,
-    this.No
-  );
+  Parades(this.id, this.category_product_id, this.name, this.create_by, this.update_by, this.created_at,
+      this.updated_at, this.No);
 
   factory Parades.fromJson(Map<String, dynamic> json) => _$ParadesFromJson(json);
 

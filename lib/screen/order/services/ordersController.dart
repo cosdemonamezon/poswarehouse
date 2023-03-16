@@ -13,7 +13,6 @@ class OrdersController extends ChangeNotifier {
   OrdersApi api;
 
   StockPurchase? stockPurchase;
-  
 
   PurchaseProduct? purchaseProduct;
   Purchase? purchase;
@@ -24,15 +23,15 @@ class OrdersController extends ChangeNotifier {
     notifyListeners();
   }
 
-  
-
   getListOrders({
     int start = 0,
     int length = 10,
+    String? search = '',
   }) async {
     purchaseProduct = await OrdersApi.getOrders(
       start: start,
       length: length,
+      search: search,
     );
     notifyListeners();
   }

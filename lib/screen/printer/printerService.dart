@@ -17,30 +17,62 @@ class PrinterService {
     // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     // await SunmiPrinter.printImage(byte);
     // await SunmiPrinter.setCustomFontSize(16);
-    await SunmiPrinter.printText('บริษัทอาชาเทค คอเปอเรชั่น จำกัด',);
-    await SunmiPrinter.setCustomFontSize(16);
     await SunmiPrinter.printText(
-        '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',);
+      'บริษัทอาชาเทค คอเปอเรชั่น จำกัด',
+    );
+    await SunmiPrinter.setCustomFontSize(18);
+    await SunmiPrinter.printText(
+      '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',
+    );
     //await SunmiPrinter.line();
-    await SunmiPrinter.setCustomFontSize(16);
-    //await SunmiPrinter.printText('${printer.name}   38      100',);
-    await SunmiPrinter.printText('ดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดด',);
 
-    // await SunmiPrinter.setCustomFontSize(16);
-    // await SunmiPrinter.printRow(
-    //   cols: [
-    //     ColumnMaker(
-    //       text: 'บริษัทอาชาเทค',
-    //       width: 20,
-    //       align: SunmiPrintAlign.LEFT,
-    //     ),
-    //   ]
-    // );
-    
-    
+    await SunmiPrinter.setCustomFontSize(16);
+    await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: 'Product Cose',
+          width: 30,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: 'Qty',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+        ColumnMaker(
+          text: 'Price}',
+          width: 7,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+    await SunmiPrinter.setCustomFontSize(16);
+    for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
+      await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: '${printer.confirmOrder!.orders![i].product!.code}',
+          width: 30,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: '${printer.confirmOrder!.orders![i].qty}',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+        ColumnMaker(
+          text: '${printer.confirmOrder!.orders![i].price_per_unit}',
+          width: 7,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+    }
+    await SunmiPrinter.line();
+    await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
+    await SunmiPrinter.printText(
+      'Thank you' 
+    );
+
     await SunmiPrinter.line();
 
-    await SunmiPrinter.lineWrap(5);
+    await SunmiPrinter.lineWrap(3);
     await SunmiPrinter.exitTransactionPrint(true);
   }
 }

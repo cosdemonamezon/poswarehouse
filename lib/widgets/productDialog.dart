@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/allProduct.dart';
 import 'package:poswarehouse/models/product.dart';
+import 'package:provider/provider.dart';
 
 import '../screen/login/widgets/appTextForm.dart';
+import '../screen/product/services/productController.dart';
+import 'LoadingDialog.dart';
 
 class ProductDialog extends StatefulWidget {
-  ProductDialog({
-    Key? key,
-    required this.title,
-    required this.description,
-    required this.press,
-    required this.pressSelect,
-    this.allProduct,
-  }) : super(key: key);
+  ProductDialog(
+      {Key? key,
+      required this.title,
+      required this.description,
+      required this.press,
+      required this.pressSelect,
+      this.allProduct,
+      this.productPage})
+      : super(key: key);
   final String title, description;
   final VoidCallback press;
   final VoidCallback pressSelect;
   //AllProduct? allProduct;
   List<Product>? allProduct;
+  AllProduct? productPage;
 
   @override
   State<ProductDialog> createState() => _ProductDialogState();
@@ -30,6 +36,7 @@ class _ProductDialogState extends State<ProductDialog> {
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   List<Product> products = [];
+  int start = 0;
   @override
   void initState() {
     super.initState();
@@ -40,7 +47,12 @@ class _ProductDialogState extends State<ProductDialog> {
 
       products.add(p);
     }
+    // _initialize();
   }
+
+  // Future<void> _initialize() async {
+  //   await context.read<ProductController>().getListProducts();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +168,7 @@ class _ProductDialogState extends State<ProductDialog> {
                                               return null; // Use default value for other states and odd rows.
                                             }),
                                             cells: <DataCell>[
-                                              DataCell(Text('${products[index].id}')),
+                                              DataCell(Text('${products[index].No}')),
                                               DataCell(Text('${products[index].name}')),
                                               DataCell(SizedBox(
                                                 width: size.width * 0.08,
@@ -194,6 +206,32 @@ class _ProductDialogState extends State<ProductDialog> {
                     ),
                   ),
                 ),
+                widget.productPage != null
+                    ? SizedBox(
+                        width: size.width * 0.22,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NumberPaginator(
+                              numberPages: widget.productPage!.last_page!,
+                              config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
+                              onPageChange: (p0) async {
+                                LoadingDialog.open(context);
+                                setState(() {
+                                  start = ((p0 - 1) * start) + 10;
+                                  print(start);
+                                });
+                                await context.read<ProductController>().getListProducts(start: start);
+                                if (!mounted) {
+                                  return;
+                                }
+                                LoadingDialog.close(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox.shrink(),
                 SizedBox(height: size.height * 0.05),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -224,14 +262,15 @@ class _ProductDialogState extends State<ProductDialog> {
     );
   }
 
-  void searchProduct(String query) {
-    final suggestion = widget.allProduct!.where((product) {
-      final productTitle = product.name!.toLowerCase();
-      final input = query.toLowerCase();
+  void searchProduct(String query) async {
+    await context.read<ProductController>().getListProducts(search: query);
+    // final suggestion = widget.allProduct!.where((product) {
+    //   final productTitle = product.name!.toLowerCase();
+    //   final input = query.toLowerCase();
 
-      return productTitle.contains(input);
-    }).toList();
+    //   return productTitle.contains(input);
+    // }).toList();
 
-    setState(() => products = suggestion);
+    // setState(() => products = suggestion);
   }
 }

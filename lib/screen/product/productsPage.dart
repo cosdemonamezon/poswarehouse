@@ -13,6 +13,8 @@ import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
+import '../../models/product.dart';
+
 class ProductsPage extends StatefulWidget {
   ProductsPage({Key? key}) : super(key: key);
 
@@ -26,6 +28,7 @@ class _ProductsPageState extends State<ProductsPage> {
   List<String> images = [];
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  // List<Product> product2 = [];
   @override
   void initState() {
     super.initState();
@@ -39,6 +42,7 @@ class _ProductsPageState extends State<ProductsPage> {
       images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length,
           (index) => context.read<ProductController>().allProduct!.data![index].image!);
       //images.add(context.read<ProductController>().allProduct.data);
+      // product2 = context.read<ProductController>().allProduct!.data!;
     });
     LoadingDialog.close(context);
   }
@@ -68,6 +72,29 @@ class _ProductsPageState extends State<ProductsPage> {
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
+                          onChanged: (p0) async {
+                            print(p0);
+                            // if (p0 != '') {
+                            //   setState(() {
+                            //     product2 = product2.where((product) => product.name!.contains(p0!)).toList();
+                            //     // product2 = product2.where((product) {
+                            //     //   final productTitle = product.name!.toLowerCase();
+                            //     //   final input = p0!.toLowerCase();
+
+                            //     //   return productTitle.contains(input);
+                            //     // }).toList();
+                            //   });
+                            // } else {
+                            //   setState(() {
+                            //     product2 = controller.allProduct!.data!;
+                            //   });
+                            // }
+                            // Future.delayed(Duration(milliseconds: 500)).then((value) async {/
+                            // LoadingDialog.open(context);
+                            await context.read<ProductController>().getListProducts(search: p0);
+                            // LoadingDialog.close(context);
+                            // });///
+                          },
                           preIcon: Icons.search,
                           vertical: 25.0,
                           horizontal: 10.0,
