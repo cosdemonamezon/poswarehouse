@@ -25,13 +25,6 @@ class _DetailReturnProductState extends State<DetailReturnProduct> {
   int start = 0;
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  List<Map<String, dynamic>> itemcell = [
-    {"id": "1", "pid": "P001", "name": "เครื่องที่ 1", "amount": "11", "priceorigin": "200", "sum": "200"},
-    {"id": "2", "pid": "P002", "name": "เครื่องที่ 2", "amount": "21", "priceorigin": "200", "sum": "200"},
-    {"id": "3", "pid": "P003", "name": "เครื่องที่ 3", "amount": "41", "priceorigin": "200", "sum": "200"},
-    {"id": "4", "pid": "P004", "name": "เครื่องที่ 4", "amount": "50", "priceorigin": "200", "sum": "200"}
-  ];
-
   @override
   void initState() {
     super.initState();

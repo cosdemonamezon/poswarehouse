@@ -5,6 +5,7 @@ import 'dart:convert' as convert;
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:poswarehouse/models/neworders.dart';
+import 'package:poswarehouse/models/order.dart';
 import 'package:poswarehouse/models/orderproduct.dart';
 import 'package:poswarehouse/models/orders.dart';
 import 'package:poswarehouse/models/receivinggoods.dart';
@@ -44,8 +45,8 @@ class PickupProductApi {
   }
 
   // Get Order By Id
-  static Future<ReceivingGoods> getOrderById(String id) async {
-    final url = Uri.https(publicUrl, '/pos/public/api/get_stock_pickout_line/$id');
+  static Future<Order> getOrderById(String id) async {
+    final url = Uri.https(publicUrl, '/pos/public/api/order/$id');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,
@@ -54,7 +55,7 @@ class PickupProductApi {
 
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
-      return ReceivingGoods.fromJson(data['data']);
+      return Order.fromJson(data['data']);
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);

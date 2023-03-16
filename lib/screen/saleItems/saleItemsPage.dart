@@ -134,12 +134,17 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                                             DataCell(
                                                 Text('${controller.orders!.data![index].order_no}')),
                                             DataCell(Text('${controller.orders!.data![index].created_at}')),
-                                            DataCell(IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context) => DetailSaleItem(id: '${controller.orders!.data![index].id}',)));
-                                                },
-                                                icon: Icon(Icons.more_vert)))
+                                            DataCell(Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(builder: (context) => DetailSaleItem(id: '${controller.orders!.data![index].order_no}',)));
+                                                    },
+                                                    icon: Icon(Icons.remove_red_eye)),
+                                              ],
+                                            ))
                                           ],
                                           // selected: selected[index],
                                           // onSelectChanged: (bool? value) {

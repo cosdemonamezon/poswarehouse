@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/models/allReceiving.dart';
 import 'package:poswarehouse/models/neworders.dart';
+import 'package:poswarehouse/models/order.dart';
 import 'package:poswarehouse/models/orderproduct.dart';
 import 'package:poswarehouse/models/orders.dart';
 import 'package:poswarehouse/models/receivinggoods.dart';
@@ -14,6 +15,7 @@ class PickupProductController extends ChangeNotifier {
 
   AllReceiving? allReceiving;
   Orders? orders;
+  Order? order;
 
   ReceivingGoods? receivingGoods;
   StockPurchase? stockPurchase;
@@ -34,6 +36,11 @@ class PickupProductController extends ChangeNotifier {
     int length = 10,
   }) async {
     orders = await PickupProductApi.getOrders();
+    notifyListeners();
+  }
+
+  getDetailOrders(String id) async{
+    order = await PickupProductApi.getOrderById(id);
     notifyListeners();
   }
 
