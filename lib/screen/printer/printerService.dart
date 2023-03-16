@@ -26,11 +26,11 @@ class PrinterService {
     );
     //await SunmiPrinter.line();
 
-    await SunmiPrinter.setCustomFontSize(16);
+    await SunmiPrinter.setCustomFontSize(18);
     await SunmiPrinter.printRow(cols: [
         ColumnMaker(
-          text: 'Product Cose',
-          width: 30,
+          text: 'Product Code',
+          width: 27,
           align: SunmiPrintAlign.LEFT,
         ),
         ColumnMaker(
@@ -39,17 +39,18 @@ class PrinterService {
           align: SunmiPrintAlign.RIGHT,
         ),
         ColumnMaker(
-          text: 'Price}',
+          text: 'Price',
           width: 7,
           align: SunmiPrintAlign.RIGHT,
         ),
       ]);
-    await SunmiPrinter.setCustomFontSize(16);
+    await SunmiPrinter.line();
+    await SunmiPrinter.setCustomFontSize(18);
     for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
       await SunmiPrinter.printRow(cols: [
         ColumnMaker(
           text: '${printer.confirmOrder!.orders![i].product!.code}',
-          width: 30,
+          width: 27,
           align: SunmiPrintAlign.LEFT,
         ),
         ColumnMaker(
@@ -65,7 +66,61 @@ class PrinterService {
       ]);
     }
     await SunmiPrinter.line();
-    await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
+   
+    await SunmiPrinter.setCustomFontSize(18);
+    await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: 'Total',
+          width: 27,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: '',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+        ColumnMaker(
+          text: '${printer.confirmOrder!.selling_price}',
+          width: 7,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+      await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: 'Amount',
+          width: 27,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: '',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+        ColumnMaker(
+          text: '${printer.confirmOrder!.amount}',
+          width: 7,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+    await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: 'Change',
+          width: 27,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: '',
+          width: 6,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+        ColumnMaker(
+          text: '${printer.confirmOrder!.change}',
+          width: 7,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+    await SunmiPrinter.line();
+     await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     await SunmiPrinter.printText(
       'Thank you' 
     );

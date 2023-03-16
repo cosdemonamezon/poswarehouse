@@ -100,7 +100,7 @@ class _TestProductState extends State<TestProduct> {
                         ),
                         Container(
                           //color: Colors.blue,
-                          height: size.height * 0.5,
+                          height: size.height * 0.46,
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
