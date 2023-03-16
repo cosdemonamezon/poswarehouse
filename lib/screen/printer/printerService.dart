@@ -16,102 +16,28 @@ class PrinterService {
     //Uint8List byte = await _getImageFromAsset('assets/images/asha.jpg');
     // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     // await SunmiPrinter.printImage(byte);
-
-    await SunmiPrinter.printText('',
-        style: SunmiStyle(fontSize: SunmiFontSize.MD));
-    await SunmiPrinter.printText('บริษัทอาชาเทค คอเปอเรชั่น จำกัด',
-        style: SunmiStyle(fontSize: SunmiFontSize.MD));
+    // await SunmiPrinter.setCustomFontSize(16);
+    await SunmiPrinter.printText('บริษัทอาชาเทค คอเปอเรชั่น จำกัด',);
+    await SunmiPrinter.setCustomFontSize(16);
     await SunmiPrinter.printText(
-        '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',
-        style: SunmiStyle(
-            fontSize: SunmiFontSize.MD, align: SunmiPrintAlign.CENTER));
-    await SunmiPrinter.line();
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Name', width: 5, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(
-          text: printer.confirmOrder!.client!.name!.toString(),
-          width: 25,
-          align: SunmiPrintAlign.RIGHT),
-    ]);
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Date', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(
-          text: printer.confirmOrder!.order_date!,
-          width: 10,
-          align: SunmiPrintAlign.RIGHT),
-      //ColumnMaker(text: printer.time!, width: 10, align: SunmiPrintAlign.RIGHT),
-    ]);
+        '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',);
+    //await SunmiPrinter.line();
+    await SunmiPrinter.setCustomFontSize(16);
+    //await SunmiPrinter.printText('${printer.name}   38      100',);
+    await SunmiPrinter.printText('ดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดด',);
 
-    await SunmiPrinter.line();
-    if (printer.confirmOrder?.orders?.isNotEmpty ?? false) {
-      for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
-        await SunmiPrinter.printRow(cols: [
-          ColumnMaker(
-              text: 'Product Code:', width: 13, align: SunmiPrintAlign.LEFT),
-          ColumnMaker(text: '', width: 3, align: SunmiPrintAlign.LEFT),
-          ColumnMaker(
-              text: '${printer.confirmOrder!.orders![i].code}',
-              width: 10,
-              align: SunmiPrintAlign.RIGHT),
-        ]);
-        await SunmiPrinter.printRow(cols: [
-          ColumnMaker(
-              text: 'Product Qty:', width: 13, align: SunmiPrintAlign.LEFT),
-          ColumnMaker(text: '', width: 5, align: SunmiPrintAlign.LEFT),
-          ColumnMaker(
-              text: '${printer.confirmOrder!.orders![i].qty}',
-              width: 10,
-              align: SunmiPrintAlign.RIGHT),
-        ]);
-      }
-    }
+    // await SunmiPrinter.setCustomFontSize(16);
+    // await SunmiPrinter.printRow(
+    //   cols: [
+    //     ColumnMaker(
+    //       text: 'บริษัทอาชาเทค',
+    //       width: 20,
+    //       align: SunmiPrintAlign.LEFT,
+    //     ),
+    //   ]
+    // );
     
-
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Type:', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(
-          text: '${printer.confirmOrder!.type}',
-          width: 10,
-          align: SunmiPrintAlign.RIGHT),
-    ]);
-    // for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
-    //   await SunmiPrinter.printRow(cols: [
-    //   ColumnMaker(text: '$i', width: 10, align: SunmiPrintAlign.LEFT),
-    //   ColumnMaker(text: '${printer.confirmOrder!.orders![i].product!.name}', width: 10, align: SunmiPrintAlign.LEFT),
-    //   ColumnMaker(text: '${printer.confirmOrder!.orders![i].qty}', width: 10, align: SunmiPrintAlign.RIGHT),
-    // ]);
-
-    await SunmiPrinter.line();
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Price', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(
-          text: '${printer.confirmOrder!.selling_price}',
-          width: 10,
-          align: SunmiPrintAlign.RIGHT),
-    ]);
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Pay', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(
-          text: '${printer.confirmOrder!.amount}',
-          width: 10,
-          align: SunmiPrintAlign.RIGHT),
-    ]);
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'VAT', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.CENTER),
-      ColumnMaker(text: '0.00', width: 10, align: SunmiPrintAlign.RIGHT),
-    ]);
-    await SunmiPrinter.printRow(cols: [
-      ColumnMaker(text: 'Total', width: 10, align: SunmiPrintAlign.LEFT),
-      ColumnMaker(text: '', width: 10, align: SunmiPrintAlign.CENTER),
-      ColumnMaker(
-          text: '${printer.confirmOrder!.amount}',
-          width: 10,
-          align: SunmiPrintAlign.RIGHT),
-    ]);
+    
     await SunmiPrinter.line();
 
     await SunmiPrinter.lineWrap(5);

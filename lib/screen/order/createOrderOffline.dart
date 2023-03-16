@@ -941,8 +941,14 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                     LoadingDialog.close(context);
                                                     setState(() {
                                                       changPrice = controller.confirmOrder!.change.toString();
-                                                      printer = new Printer('name1', '12/03/2023', '06.55', '16',
-                                                          '100.00', '100.00', controller.confirmOrder);
+                                                      // printer = new Printer(
+                                                      //     'name1',
+                                                      //     '12/03/2023',
+                                                      //     '06.55',
+                                                      //     '16',
+                                                      //     '100.00',
+                                                      //     '100.00',
+                                                      //     controller.confirmOrder);
 
                                                       //   showDialog(
                                                       //   context: context,
@@ -1016,6 +1022,37 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       : SizedBox(),
                                 ],
                               ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    String a = 'บริษัทอาชาเทค';
+                                    print(a.length);
+                                    printer = new Printer(
+                                      'บริษัทอาชาเทค',
+                                      '12/03/2023',
+                                      '06.55',
+                                      '16',
+                                      '100.00',
+                                      '100.00',
+                                    );
+                                    await PrinterService().print(printer!);
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.1,
+                                    height: size.height * 0.08,
+                                    decoration:
+                                        BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                                    child: Center(
+                                      child: Text(
+                                        'ชำระเงิน',
+                                        style:
+                                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         )),
