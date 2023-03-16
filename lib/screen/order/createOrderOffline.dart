@@ -1165,10 +1165,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    String a = 'บริษัทอาชาเทค';
-                                    print(a.length);
                                     printer = new Printer(
-                                                          'บริษัทอาชาเทค',
+                                                          'GP-0125',
                                                           '12/03/2023',
                                                           '06.55',
                                                           '16',
