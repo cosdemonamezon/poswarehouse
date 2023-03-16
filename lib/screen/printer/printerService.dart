@@ -17,30 +17,44 @@ class PrinterService {
     // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     // await SunmiPrinter.printImage(byte);
     // await SunmiPrinter.setCustomFontSize(16);
-    await SunmiPrinter.printText('บริษัทอาชาเทค คอเปอเรชั่น จำกัด',);
-    await SunmiPrinter.setCustomFontSize(16);
     await SunmiPrinter.printText(
-        '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',);
+      'บริษัทอาชาเทค คอเปอเรชั่น จำกัด',
+    );
+    await SunmiPrinter.setCustomFontSize(18);
+    await SunmiPrinter.printText(
+      '64/99 ถนนกาญจนาภิเษก แขวงดอกไม้ เขตประเวศ กรุงเทพมหานคร 10250 โทร 0959405526',
+    );
     //await SunmiPrinter.line();
-    await SunmiPrinter.setCustomFontSize(16);
-    //await SunmiPrinter.printText('${printer.name}   38      100',);
-    await SunmiPrinter.printText('ดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดดด',);
 
-    // await SunmiPrinter.setCustomFontSize(16);
-    // await SunmiPrinter.printRow(
-    //   cols: [
-    //     ColumnMaker(
-    //       text: 'บริษัทอาชาเทค',
-    //       width: 20,
-    //       align: SunmiPrintAlign.LEFT,
-    //     ),
-    //   ]
-    // );
-    
-    
+    await SunmiPrinter.setCustomFontSize(16);
+    for (var i = 0; i < 3; i++) {
+      await SunmiPrinter.printRow(cols: [
+        ColumnMaker(
+          text: '${printer.name}',
+          width: 20,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: '',
+          width: 15,
+          align: SunmiPrintAlign.LEFT,
+        ),
+        ColumnMaker(
+          text: '${printer.total}',
+          width: 10,
+          align: SunmiPrintAlign.RIGHT,
+        ),
+      ]);
+    }
+    await SunmiPrinter.line();
+    await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
+    await SunmiPrinter.printText(
+      'thank you' 
+    );
+
     await SunmiPrinter.line();
 
-    await SunmiPrinter.lineWrap(5);
+    await SunmiPrinter.lineWrap(3);
     await SunmiPrinter.exitTransactionPrint(true);
   }
 }

@@ -77,6 +77,20 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     });
   }
 
+  clearValue(){
+    
+    setState(() {
+      name!.clear();
+      phone!.clear();
+      email!.clear();
+      address!.clear();
+      searchProduct.clear();
+      listneworder.clear();
+      selectProducts.clear();
+      changPrice = '0.00';
+    });
+  }
+
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
@@ -933,7 +947,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Padding(
+                                  controller.orderProduct == null
+                                  ?Padding(
                                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                     child: GestureDetector(
                                       onTap: () async {
@@ -1041,7 +1056,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ):SizedBox(),
                                   controller.orderProduct != null
                                       ? Padding(
                                           padding:
@@ -1086,15 +1101,13 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                       //   },
                                                       // );
                                                     });
-                                                    await PrinterService()
-                                                        .print(printer!);
+                                                    await PrinterService().print(printer!);
+
                                                     setState(() {
-                                                      if (textPriceController
-                                                              .text !=
-                                                          '') {
-                                                        changPrice =
-                                                            textPriceController
-                                                                .text;
+                                                      controller.orderProduct = null;
+                                                      if (textPriceController.text !='')
+                                                      {
+                                                        changPrice = textPriceController.text;
                                                       }
                                                     });
                                                   } else {
@@ -1161,37 +1174,37 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       : SizedBox(),
                                 ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    printer = new Printer(
-                                                          'GP-0125',
-                                                          '12/03/2023',
-                                                          '06.55',
-                                                          '16',
-                                                          '100.00',
-                                                          '100.00',);
-                                    await PrinterService().print(printer!);
-                                  },
-                                  child: Container(
-                                    width: size.width * 0.1,
-                                    height: size.height * 0.08,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: kPrimaryColor),
-                                    child: Center(
-                                      child: Text(
-                                        'ชำระเงิน',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
+                              // Padding(
+                              //   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              //   child: GestureDetector(
+                              //     onTap: () async {
+                              //       printer = new Printer(
+                              //                             'GP-0125',
+                              //                             '12/03/2023',
+                              //                             '06.55',
+                              //                             '16',
+                              //                             '100.00',
+                              //                             '100.00',);
+                              //       await PrinterService().print(printer!);
+                              //     },
+                              //     child: Container(
+                              //       width: size.width * 0.1,
+                              //       height: size.height * 0.08,
+                              //       decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(10),
+                              //           color: kPrimaryColor),
+                              //       child: Center(
+                              //         child: Text(
+                              //           'ชำระเงิน',
+                              //           style: TextStyle(
+                              //               fontSize: 18,
+                              //               fontWeight: FontWeight.bold,
+                              //               color: Colors.white),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         )),
