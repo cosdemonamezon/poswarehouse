@@ -7,6 +7,7 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/parades.dart';
 import 'package:poswarehouse/models/subCategory.dart';
 import 'package:poswarehouse/models/typeProduct.dart';
+import 'package:poswarehouse/models/units.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/product/services/productApi.dart';
@@ -41,6 +42,7 @@ class _EditProductState extends State<EditProduct> {
   TypeProduct? categoryValue;
   SubCategory? categoryDetail;
   String images = '';
+  Units? units;
 
   @override
   void initState() {

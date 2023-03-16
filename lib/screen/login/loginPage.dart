@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final TextEditingController test = TextEditingController();
+  FocusNode mainFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,6 +35,86 @@ class _LoginPageState extends State<LoginPage> {
                     fit: BoxFit.fitWidth,
                   )),
             ),
+            SizedBox(
+              height: size.height * 0.05,
+            ),
+            RawKeyboardListener(
+              focusNode: mainFocusNode,
+              autofocus:true,
+              onKey: (RawKeyEvent event) {                
+                
+                if (event.runtimeType.toString() == 'RawKeyUpEvent') {
+                  //print(event.logicalKey.keyLabel);
+                  setState(() {
+                    if (event.logicalKey.keyLabel != 'Enter' && event.logicalKey.keyLabel != 'Shift Left') {
+                      test.text += event.logicalKey.keyLabel;
+                    } else {
+                      //test.clear();
+                      print('55555');
+                    }
+                  });
+                  //print(event.runtimeType.toString());
+                  //print(event.logicalKey.keyLabel);
+                }
+
+           
+              },
+              child: TextFormField(
+                controller: test,
+                onFieldSubmitted: (_) async {
+                  //print("asdadda");
+                  //submitContact();
+                },
+              ),
+            ),
+            // Container(
+            //   color: Colors.amber,
+            //   width: size.width * 0.40,
+            //   height: size.height * 0.08,
+            //   child: TextFormField(
+            //     controller: test,
+            //     autofocus: true,                
+            //     //readOnly: true,
+            //     //showCursor: true,
+            //     //obscureText: true,
+            //     keyboardType: TextInputType.none,
+            //     decoration: InputDecoration(
+            //       fillColor: Color(0xFFF3F6FA),
+            //       contentPadding: EdgeInsets.all(15.0),
+            //       //filled: true,               
+            //       border: OutlineInputBorder(
+            //         borderSide: BorderSide.none,
+            //         borderRadius: BorderRadius.all(
+            //           Radius.circular(10),
+            //         ),
+            //       ),
+            //     ),
+            //     onEditingComplete: ()async{
+            //       print("onEditingComplete ${test.text}");
+            //       setState(() {
+            //         //test.text = '';
+            //       });
+            //     },
+            //     // onFieldSubmitted: (value) async{                  
+            //     //   setState(() {
+            //     //     test.text = value;
+            //     //   });
+            //     //   print("onFieldSubmitted ${test.text}");
+            //     // },
+            //     // onChanged: (value){
+            //     //   setState(() {
+            //     //     test.text = value;
+            //     //   });
+            //     //   print("onChanged ${test.text}");
+            //     // },
+            //     // onSaved: (value){
+            //     //   setState(() {
+            //     //     test.text = value!;
+            //     //   });
+            //     //   print("onSaved ${test.text}");
+            //     // },
+            //   ),
+            // ),
             SizedBox(
               height: size.height * 0.05,
             ),

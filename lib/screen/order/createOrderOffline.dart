@@ -34,6 +34,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   final TextEditingController? phone = TextEditingController();
   final TextEditingController? email = TextEditingController();
   final TextEditingController? address = TextEditingController();
+  final TextEditingController searchProduct = TextEditingController();
+  FocusNode mainFocusNode = FocusNode();
   String changPrice = '0.00';
   bool isRetailPrice = false;
   bool isWholeSalePrice = false;
@@ -274,6 +276,38 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                           )
                                         ],
                                       ),
+                                      SizedBox(
+                                        height: size.height * 0.06,
+                                        width: size.width * 0.12,
+                                        child: RawKeyboardListener(
+                                          focusNode: mainFocusNode,
+                                          autofocus:true,
+                                          onKey: (RawKeyEvent event) {                
+                                            
+                                            if (event.runtimeType.toString() == 'RawKeyUpEvent') {
+                                              //print(event.logicalKey.keyLabel);
+                                              setState(() {
+                                                if (event.logicalKey.keyLabel != 'Enter' && event.logicalKey.keyLabel != 'Shift Left') {
+                                                  searchProduct.text += event.logicalKey.keyLabel;
+                                                } else {
+                                                  //test.clear();
+                                                  print('55555');
+                                                }
+                                              });
+                                              //print(event.runtimeType.toString());
+                                              //print(event.logicalKey.keyLabel);
+                                            }
+                                      
+                                                                          
+                                          },
+                                          child: TextFormField(
+                                            controller: searchProduct,
+                                            onFieldSubmitted: (_) async {
+                                              
+                                            },
+                                          ),
+                                        ),
+                                      ),
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                         child: GestureDetector(
@@ -379,24 +413,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   DataColumn(
                                                     label: Center(child: Text('ราคา')),
                                                   ),
-                                                  // DataColumn(
-                                                  //   label: Center(
-                                                  //       child:
-                                                  //           Text('ราคาขายส่ง')),
-                                                  // ),
-                                                  // DataColumn(
-                                                  //   label: Center(
-                                                  //       child:
-                                                  //           Text('ราคาขายปลีก')),
-                                                  // ),
-                                                  // DataColumn(
-                                                  //   label: Center(
-                                                  //       child: Text('ราคายกลัง')),
-                                                  // ),
-                                                  // DataColumn(
-                                                  //   label: Center(
-                                                  //       child: Text('คงเหลือ')),
-                                                  // ),
+                                                  
                                                   DataColumn(
                                                     label: Text('จำนวน'),
                                                   ),
