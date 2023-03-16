@@ -8,7 +8,7 @@ part of 'parades.dart';
 
 Parades _$ParadesFromJson(Map<String, dynamic> json) => Parades(
       json['id'] as int,
-      json['category_product_id'] as int?,
+      json['category_product_id'] as String?,
       json['name'] as String?,
       json['create_by'] as String?,
       json['update_by'] as String?,

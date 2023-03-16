@@ -9,9 +9,9 @@ class ReceivingGoods {
   final int id;
   final String? stock_pick_out_no;
   final String? product_id;
-  final int? unit_id;
+  final String? unit_id;
   final String? price;
-  final int? qty;
+  final String? qty;
   final String? pick_out_date;
   final String? status;
   final String? remark;
