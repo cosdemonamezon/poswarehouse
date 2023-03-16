@@ -11,7 +11,6 @@ class Printer {
   final String? qty;
   final String? total;
   final String? balance;
-  final ConfirmOrder? confirmOrder;
 
   Printer(
     this.name,
@@ -20,7 +19,6 @@ class Printer {
     this.qty,
     this.total,
     this.balance,
-    this.confirmOrder
   );
 
   factory Printer.fromJson(Map<String, dynamic> json) => _$PrinterFromJson(json);

@@ -8,7 +8,7 @@ part 'receivinggoods.g.dart';
 class ReceivingGoods {
   final int id;
   final String? stock_pick_out_no;
-  final int? product_id;
+  final String? product_id;
   final int? unit_id;
   final String? price;
   final int? qty;

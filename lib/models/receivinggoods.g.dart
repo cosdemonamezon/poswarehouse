@@ -10,7 +10,7 @@ ReceivingGoods _$ReceivingGoodsFromJson(Map<String, dynamic> json) =>
     ReceivingGoods(
       json['id'] as int,
       json['stock_pick_out_no'] as String?,
-      json['product_id'] as int?,
+      json['product_id'] as String?,
       json['unit_id'] as int?,
       json['price'] as String?,
       json['qty'] as int?,

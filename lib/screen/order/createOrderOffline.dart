@@ -94,7 +94,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
 
       final product = context.read<ProductController>().product!;
       setState(() {
-        final found = listneworder.firstWhereOrNull((p) => p.product?.id == product.id);
+        final found =
+            listneworder.firstWhereOrNull((p) => p.product?.id == product.id);
         inspect(found);
         if (found != null) {
           found.qty = found.qty! + 1;
@@ -146,8 +147,11 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     });
   }
 
-  Future<DateTime?> pickDate() =>
-      showDatePicker(context: context, initialDate: dateTime, firstDate: DateTime(1900), lastDate: DateTime(2100));
+  Future<DateTime?> pickDate() => showDatePicker(
+      context: context,
+      initialDate: dateTime,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100));
 
   Future<bool?> _bindingPrinter() async {
     final bool? result = await SunmiPrinter.bindingPrinter();
@@ -196,7 +200,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                     Icon(Icons.list_alt_rounded),
                                     Text(
                                       "ข้อมูลลูกค้า",
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300),
                                     )
                                   ],
                                 ),
@@ -208,13 +214,16 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                     horizontal: 25,
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
                                         width: size.width * 0.24,
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
                                               height: size.height * 0.06,
@@ -251,8 +260,10 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       SizedBox(
                                         width: size.width * 0.24,
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
                                               height: size.height * 0.06,
@@ -260,10 +271,13 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 controller: datePick,
                                                 labelText: 'วันที่',
                                                 sufPress: () async {
-                                                  final _pick = await pickDate();
+                                                  final _pick =
+                                                      await pickDate();
                                                   if (_pick != null) {
                                                     setState(() {
-                                                      datePick!.text = _pick.formatTo('yyyy-MM-dd');
+                                                      datePick!.text =
+                                                          _pick.formatTo(
+                                                              'yyyy-MM-dd');
                                                     });
                                                   } else {}
                                                 },
@@ -304,14 +318,17 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 25),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
                                           Icon(Icons.shopping_bag),
                                           Text(
                                             "สินค้า",
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w300),
                                           )
                                         ],
                                       ),
@@ -322,13 +339,19 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                           focusNode: mainFocusNode,
                                           autofocus: true,
                                           onKey: (RawKeyEvent event) {
-                                            if (event.runtimeType.toString() == 'RawKeyUpEvent') {
+                                            if (event.runtimeType.toString() ==
+                                                'RawKeyUpEvent') {
                                               //print(event.logicalKey.keyLabel);
                                               setState(() {
-                                                if (event.logicalKey.keyLabel != 'Enter' &&
-                                                    event.logicalKey.keyLabel != 'Shift Left') {
-                                                  searchProduct.text += event.logicalKey.keyLabel;
-                                                } else if (event.logicalKey.keyLabel == 'Enter') {
+                                                if (event.logicalKey.keyLabel !=
+                                                        'Enter' &&
+                                                    event.logicalKey.keyLabel !=
+                                                        'Shift Left') {
+                                                  searchProduct.text +=
+                                                      event.logicalKey.keyLabel;
+                                                } else if (event
+                                                        .logicalKey.keyLabel ==
+                                                    'Enter') {
                                                   //test.clear();
                                                   print('55555');
                                                   test01(searchProduct.text);
@@ -347,17 +370,20 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                        padding:
+                                            EdgeInsets.fromLTRB(20, 0, 20, 0),
                                         child: GestureDetector(
                                           onTap: () async {
-                                            final _select = await showDialog<List<Product>>(
+                                            final _select =
+                                                await showDialog<List<Product>>(
                                               context: context,
                                               barrierDismissible: false,
                                               builder: (BuildContext context) {
                                                 return ProductDialog(
                                                   title: '',
                                                   description: '',
-                                                  allProduct: controller.allProduct!.data,
+                                                  allProduct: controller
+                                                      .allProduct!.data,
                                                   press: () {
                                                     Navigator.pop(context);
                                                   },
@@ -365,12 +391,24 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 );
                                               },
                                             );
-                                            if (_select != null && _select.isNotEmpty) {
+                                            if (_select != null &&
+                                                _select.isNotEmpty) {
                                               setState(() {
-                                                final List<NewOrders> select = _select
-                                                    .map((e) => NewOrders(e.id.toString(), 0, 0, int.parse(e.cost!), 15,
-                                                        int.parse(e.unit_id!), controller.units!.data![0], e, false))
-                                                    .toList();
+                                                final List<NewOrders> select =
+                                                    _select
+                                                        .map((e) => NewOrders(
+                                                            e.id.toString(),
+                                                            0,
+                                                            0,
+                                                            int.parse(e.cost!),
+                                                            15,
+                                                            int.parse(
+                                                                e.unit_id!),
+                                                            controller.units!
+                                                                .data![0],
+                                                            e,
+                                                            false))
+                                                        .toList();
 
                                                 listneworder.addAll(select);
                                               });
@@ -383,12 +421,16 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                             width: size.width * 0.1,
                                             height: size.height * 0.05,
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: kPrimaryColor),
                                             child: Center(
                                               child: Text(
                                                 'เพิ่มสินค้า',
                                                 style: TextStyle(
-                                                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
                                               ),
                                             ),
                                           ),
@@ -407,26 +449,46 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       child: Row(
                                         children: [
                                           Radio(
-                                            value: int.parse(checkListItems[index]["id"].toString()),
+                                            value: int.parse(
+                                                checkListItems[index]["id"]
+                                                    .toString()),
                                             groupValue: id,
                                             onChanged: (val) {
                                               setState(() {
-                                                radioButtonItem = '${checkListItems[index]["valuetitle"]}';
-                                                id = int.parse(checkListItems[index]["id"].toString());
+                                                radioButtonItem =
+                                                    '${checkListItems[index]["valuetitle"]}';
+                                                id = int.parse(
+                                                    checkListItems[index]["id"]
+                                                        .toString());
                                                 if (listneworder.isNotEmpty) {
                                                   if (id == 1) {
-                                                    for (var i = 0; i < listneworder.length; i++) {
-                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                    for (var i = 0;
+                                                        i < listneworder.length;
+                                                        i++) {
+                                                      listneworder[i]
+                                                              .price_per_unit =
+                                                          checkListItems[index]
+                                                              ["cost"];
                                                     }
                                                   }
                                                   if (id == 2) {
-                                                    for (var i = 0; i < listneworder.length; i++) {
-                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                    for (var i = 0;
+                                                        i < listneworder.length;
+                                                        i++) {
+                                                      listneworder[i]
+                                                              .price_per_unit =
+                                                          checkListItems[index]
+                                                              ["cost"];
                                                     }
                                                   }
                                                   if (id == 3) {
-                                                    for (var i = 0; i < listneworder.length; i++) {
-                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                    for (var i = 0;
+                                                        i < listneworder.length;
+                                                        i++) {
+                                                      listneworder[i]
+                                                              .price_per_unit =
+                                                          checkListItems[index]
+                                                              ["cost"];
                                                     }
                                                   } else {}
                                                 }
@@ -447,14 +509,16 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 Container(
                                   width: size.width * 0.68,
                                   height: size.height * 0.35,
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey)),
                                   //color: Colors.amber,
                                   child: SingleChildScrollView(
                                     child: listneworder.isNotEmpty
                                         ? SizedBox(
                                             width: double.infinity,
                                             child: DataTable(
-                                                dataRowHeight: size.height * 0.08,
+                                                dataRowHeight:
+                                                    size.height * 0.08,
                                                 columns: <DataColumn>[
                                                   DataColumn(
                                                     label: Text('รหัส'),
@@ -466,7 +530,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                     label: Text('รูปภาพ'),
                                                   ),
                                                   DataColumn(
-                                                    label: Center(child: Text('ราคา')),
+                                                    label: Center(
+                                                        child: Text('ราคา')),
                                                   ),
                                                   DataColumn(
                                                     label: Text('จำนวน'),
@@ -478,54 +543,88 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 rows: List<DataRow>.generate(
                                                     listneworder.length,
                                                     (index) => DataRow(
-                                                          color: MaterialStateProperty.resolveWith<Color?>(
-                                                              (Set<MaterialState> states) {
+                                                          color: MaterialStateProperty
+                                                              .resolveWith<
+                                                                  Color?>((Set<
+                                                                      MaterialState>
+                                                                  states) {
                                                             // All rows will have the same selected color.
-                                                            if (states.contains(MaterialState.selected)) {
-                                                              return Theme.of(context)
+                                                            if (states.contains(
+                                                                MaterialState
+                                                                    .selected)) {
+                                                              return Theme.of(
+                                                                      context)
                                                                   .colorScheme
                                                                   .primary
-                                                                  .withOpacity(0.08);
+                                                                  .withOpacity(
+                                                                      0.08);
                                                             }
                                                             // Even rows will have a grey color.
                                                             if (index.isEven) {
-                                                              return Colors.grey.withOpacity(0.3);
+                                                              return Colors.grey
+                                                                  .withOpacity(
+                                                                      0.3);
                                                             }
                                                             return null; // Use default value for other states and odd rows.
                                                           }),
                                                           cells: <DataCell>[
-                                                            DataCell(Text('${listneworder[index].product!.code}')),
-                                                            DataCell(Text('${listneworder[index].product!.name}')),
+                                                            DataCell(Text(
+                                                                '${listneworder[index].product!.code}')),
+                                                            DataCell(Text(
+                                                                '${listneworder[index].product!.name}')),
                                                             DataCell(SizedBox(
-                                                              width: size.width * 0.05,
-                                                              height: size.height * 0.07,
-                                                              child: listneworder[index].product!.image != null
+                                                              width:
+                                                                  size.width *
+                                                                      0.05,
+                                                              height:
+                                                                  size.height *
+                                                                      0.07,
+                                                              child: listneworder[
+                                                                              index]
+                                                                          .product!
+                                                                          .image !=
+                                                                      null
                                                                   ? Image.network(
                                                                       '${listneworder[index].product!.image}',
-                                                                      fit: BoxFit.fill)
+                                                                      fit: BoxFit
+                                                                          .fill)
                                                                   : Image.asset(
                                                                       'assets/images/noimage.jpg',
-                                                                      fit: BoxFit.fill,
+                                                                      fit: BoxFit
+                                                                          .fill,
                                                                     ),
                                                             )),
                                                             DataCell(
                                                               InkWell(
-                                                                onTap: () async {
-                                                                  final selectPrice = await showDialog<String>(
-                                                                    context: context,
-                                                                    builder: (BuildContext context) =>
+                                                                onTap:
+                                                                    () async {
+                                                                  final selectPrice =
+                                                                      await showDialog<
+                                                                          String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
                                                                         InputNumberDialog(),
                                                                   );
-                                                                  if (selectPrice != null) {
-                                                                    setState(() {
-                                                                      listneworder[index].price_per_unit =
-                                                                          int.parse(selectPrice);
+                                                                  if (selectPrice !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      listneworder[index]
+                                                                              .price_per_unit =
+                                                                          int.parse(
+                                                                              selectPrice);
                                                                     });
-                                                                    inspect(listneworder);
+                                                                    inspect(
+                                                                        listneworder);
                                                                   } else {}
                                                                 },
-                                                                child: Container(
-                                                                  width: size.width * 0.05,
+                                                                child:
+                                                                    Container(
+                                                                  width:
+                                                                      size.width *
+                                                                          0.05,
                                                                   child: Center(
                                                                       child: Text(
                                                                           '${listneworder[index].price_per_unit}')),
@@ -546,50 +645,82 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                             //         '${listneworder[index].product!.remain}'))),
                                                             DataCell(
                                                               InkWell(
-                                                                onTap: () async {
-                                                                  final selectNumber = await showDialog<String>(
-                                                                    context: context,
-                                                                    builder: (BuildContext context) =>
+                                                                onTap:
+                                                                    () async {
+                                                                  final selectNumber =
+                                                                      await showDialog<
+                                                                          String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
                                                                         InputNumberDialog(),
                                                                   );
-                                                                  if (selectNumber != null) {
-                                                                    setState(() {
-                                                                      listneworder[index].qty = int.parse(selectNumber);
+                                                                  if (selectNumber !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      listneworder[index]
+                                                                              .qty =
+                                                                          int.parse(
+                                                                              selectNumber);
                                                                     });
-                                                                    inspect(listneworder);
+                                                                    inspect(
+                                                                        listneworder);
                                                                   } else {}
                                                                 },
-                                                                child: Container(
-                                                                  width: size.width * 0.05,
-                                                                  child:
-                                                                      Center(child: Text('${listneworder[index].qty}')),
+                                                                child:
+                                                                    Container(
+                                                                  width:
+                                                                      size.width *
+                                                                          0.05,
+                                                                  child: Center(
+                                                                      child: Text(
+                                                                          '${listneworder[index].qty}')),
                                                                 ),
                                                               ),
                                                             ),
                                                             DataCell(SizedBox(
-                                                              width: size.width * 0.06,
+                                                              width:
+                                                                  size.width *
+                                                                      0.06,
                                                               child: Row(
                                                                 children: [
                                                                   InkWell(
-                                                                    onTap: () async {
-                                                                      final selectUnit = await showDialog<Unit>(
-                                                                        context: context,
-                                                                        builder: (BuildContext context) => UnitDialog(
-                                                                          units: controller.units!.data!,
+                                                                    onTap:
+                                                                        () async {
+                                                                      final selectUnit =
+                                                                          await showDialog<
+                                                                              Unit>(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (BuildContext context) =>
+                                                                                UnitDialog(
+                                                                          units: controller
+                                                                              .units!
+                                                                              .data!,
                                                                         ),
                                                                       );
-                                                                      if (selectUnit != null) {
-                                                                        setState(() {
-                                                                          listneworder[index].unit_id = selectUnit.id;
-                                                                          listneworder[index].unit = selectUnit;
+                                                                      if (selectUnit !=
+                                                                          null) {
+                                                                        setState(
+                                                                            () {
+                                                                          listneworder[index].unit_id =
+                                                                              selectUnit.id;
+                                                                          listneworder[index].unit =
+                                                                              selectUnit;
                                                                         });
                                                                       } else {}
                                                                     },
-                                                                    child: Container(
-                                                                      width: size.width * 0.03,
+                                                                    child:
+                                                                        Container(
+                                                                      width: size
+                                                                              .width *
+                                                                          0.03,
                                                                       child: Center(
-                                                                          child: Text(
-                                                                              '${listneworder[index].unit!.name}')),
+                                                                          child:
+                                                                              Text('${listneworder[index].unit!.name}')),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -704,11 +835,15 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                               controller.orderProduct != null
                                   ? Text(
                                       'ยอดที่ต้องชำระทั้งหมด ${controller.orderProduct!.selling_price}',
-                                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     )
                                   : Text(
                                       'ยอดที่ต้องชำระทั้งหมด 0.00',
-                                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
                               SizedBox(
                                 height: size.height * 0.01,
@@ -732,9 +867,11 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                               SizedBox(
                                 height: size.height * 0.10,
                                 child: Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey)),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         'เงินทอน',
@@ -752,7 +889,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 thickness: 2,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   numberPadAdd('50'),
                                   numberPadAdd('100'),
@@ -792,7 +930,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 height: size.height * 0.01,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -800,36 +939,46 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       onTap: () async {
                                         if (listneworder.isNotEmpty) {
                                           try {
-                                            for (var i = 0; i < listneworder.length; i++) {
+                                            for (var i = 0;
+                                                i < listneworder.length;
+                                                i++) {
                                               setState(() {
-                                                if (radioButtonItem == 'retail') {
+                                                if (radioButtonItem ==
+                                                    'retail') {
                                                   listneworder[i].cost = 15;
-                                                } else if (radioButtonItem == 'wholesale') {
+                                                } else if (radioButtonItem ==
+                                                    'wholesale') {
                                                   listneworder[i].cost = 13;
                                                 } else {
                                                   listneworder[i].cost = 14;
                                                 }
                                               });
                                               LoadingDialog.open(context);
-                                              await context.read<ProductController>().createNewOrder(
-                                                  datePick!.text,
-                                                  name!.text,
-                                                  phone!.text,
-                                                  email!.text,
-                                                  address!.text,
-                                                  radioButtonItem,
-                                                  listneworder);
-                                              if (controller.orderProduct != null) {
+                                              await context
+                                                  .read<ProductController>()
+                                                  .createNewOrder(
+                                                      datePick!.text,
+                                                      name!.text,
+                                                      phone!.text,
+                                                      email!.text,
+                                                      address!.text,
+                                                      radioButtonItem,
+                                                      listneworder);
+                                              if (controller.orderProduct !=
+                                                  null) {
                                                 LoadingDialog.close(context);
                                                 showDialog(
                                                   context: context,
                                                   barrierDismissible: false,
-                                                  builder: (BuildContext context) {
+                                                  builder:
+                                                      (BuildContext context) {
                                                     return AlertDialogYes(
                                                       title: 'สำเร็จ',
-                                                      description: 'ดำเนินการสำเร็จ',
+                                                      description:
+                                                          'ดำเนินการสำเร็จ',
                                                       pressYes: () {
-                                                        Navigator.pop(context, true);
+                                                        Navigator.pop(
+                                                            context, true);
                                                       },
                                                     );
                                                   },
@@ -838,12 +987,15 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 showDialog(
                                                   context: context,
                                                   barrierDismissible: false,
-                                                  builder: (BuildContext context) {
+                                                  builder:
+                                                      (BuildContext context) {
                                                     return AlertDialogYes(
                                                       title: 'แจ้งเตือน',
-                                                      description: 'เกิดข้อผิดพลาด',
+                                                      description:
+                                                          'เกิดข้อผิดพลาด',
                                                       pressYes: () {
-                                                        Navigator.pop(context, true);
+                                                        Navigator.pop(
+                                                            context, true);
                                                       },
                                                     );
                                                   },
@@ -860,7 +1012,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   title: 'แจ้งเตือน',
                                                   description: e.toString(),
                                                   pressYes: () {
-                                                    Navigator.pop(context, true);
+                                                    Navigator.pop(
+                                                        context, true);
                                                   },
                                                 );
                                               },
@@ -872,14 +1025,18 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                         width: size.width * 0.1,
                                         height: size.height * 0.08,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             color: Colors.white,
-                                            border: Border.all(color: Colors.grey)),
+                                            border:
+                                                Border.all(color: Colors.grey)),
                                         child: Center(
                                           child: Text(
                                             'สร้างออร์เดอร์',
                                             style: TextStyle(
-                                                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
                                           ),
                                         ),
                                       ),
@@ -887,20 +1044,33 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                   ),
                                   controller.orderProduct != null
                                       ? Padding(
-                                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          padding:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
                                           child: GestureDetector(
                                             onTap: () async {
-                                              if (textPriceController.text != "") {
+                                              if (textPriceController.text !=
+                                                  "") {
                                                 try {
                                                   LoadingDialog.open(context);
-                                                  await context.read<ProductController>().confirmNewOrder(
-                                                      controller.orderProduct!.order_no!, (textPriceController.text));
-                                                  if (controller.confirmOrder != null) {
-                                                    LoadingDialog.close(context);
+                                                  await context
+                                                      .read<ProductController>()
+                                                      .confirmNewOrder(
+                                                          controller.orderProduct!.order_no!,
+                                                          (textPriceController.text));
+                                                  if (controller.confirmOrder !=
+                                                      null) {
+                                                    LoadingDialog.close(
+                                                        context);
                                                     setState(() {
                                                       changPrice = controller.confirmOrder!.change.toString();
-                                                      printer = new Printer('name1', '12/03/2023', '06.55', '16',
-                                                          '100.00', '100.00', controller.confirmOrder);
+                                                      // printer = new Printer(
+                                                      //     'name1',
+                                                      //     '12/03/2023',
+                                                      //     '06.55',
+                                                      //     '16',
+                                                      //     '100.00',
+                                                      //     '100.00',
+                                                      //     controller.confirmOrder);
 
                                                       //   showDialog(
                                                       //   context: context,
@@ -916,23 +1086,32 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                       //   },
                                                       // );
                                                     });
-                                                    await PrinterService().print(printer!);
+                                                    await PrinterService()
+                                                        .print(printer!);
                                                     setState(() {
-                                                      if (textPriceController.text != '') {
-                                                        changPrice = textPriceController.text;
+                                                      if (textPriceController
+                                                              .text !=
+                                                          '') {
+                                                        changPrice =
+                                                            textPriceController
+                                                                .text;
                                                       }
                                                     });
                                                   } else {
-                                                    LoadingDialog.close(context);
+                                                    LoadingDialog.close(
+                                                        context);
                                                     showDialog(
                                                       context: context,
                                                       barrierDismissible: false,
-                                                      builder: (BuildContext context) {
+                                                      builder: (BuildContext
+                                                          context) {
                                                         return AlertDialogYes(
                                                           title: 'แจ้งเตือน',
-                                                          description: 'เกิดข้อผิดพลาด e',
+                                                          description:
+                                                              'เกิดข้อผิดพลาด e',
                                                           pressYes: () {
-                                                            Navigator.pop(context, true);
+                                                            Navigator.pop(
+                                                                context, true);
                                                           },
                                                         );
                                                       },
@@ -943,12 +1122,15 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   showDialog(
                                                     context: context,
                                                     barrierDismissible: false,
-                                                    builder: (BuildContext context) {
+                                                    builder:
+                                                        (BuildContext context) {
                                                       return AlertDialogYes(
                                                         title: 'แจ้งเตือน',
-                                                        description: e.toString(),
+                                                        description:
+                                                            e.toString(),
                                                         pressYes: () {
-                                                          Navigator.pop(context, true);
+                                                          Navigator.pop(
+                                                              context, true);
                                                         },
                                                       );
                                                     },
@@ -960,12 +1142,17 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                               width: size.width * 0.1,
                                               height: size.height * 0.08,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: kPrimaryColor),
                                               child: Center(
                                                 child: Text(
                                                   'ชำระเงิน',
                                                   style: TextStyle(
-                                                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
                                                 ),
                                               ),
                                             ),
@@ -974,6 +1161,39 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                       : SizedBox(),
                                 ],
                               ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    String a = 'บริษัทอาชาเทค';
+                                    print(a.length);
+                                    printer = new Printer(
+                                                          'บริษัทอาชาเทค',
+                                                          '12/03/2023',
+                                                          '06.55',
+                                                          '16',
+                                                          '100.00',
+                                                          '100.00',);
+                                    await PrinterService().print(printer!);
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.1,
+                                    height: size.height * 0.08,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: kPrimaryColor),
+                                    child: Center(
+                                      child: Text(
+                                        'ชำระเงิน',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         )),
@@ -1010,11 +1230,12 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                       return;
                     }
 
-                    textPriceController.text =
-                        textPriceController.text.substring(0, textPriceController.text.length - 1);
+                    textPriceController.text = textPriceController.text
+                        .substring(0, textPriceController.text.length - 1);
                   } else {
                     {
-                      if (text == '.' && textPriceController.text.contains('.')) {
+                      if (text == '.' &&
+                          textPriceController.text.contains('.')) {
                         return;
                       }
 
