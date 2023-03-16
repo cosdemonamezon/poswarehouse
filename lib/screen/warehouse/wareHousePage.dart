@@ -236,7 +236,7 @@ class WareHousePageState extends State<WareHousePage> {
                                                         print('Edit Error');
                                                       }
                                                     },
-                                                    icon: Icon(Icons.edit_calendar_outlined)),
+                                                    icon: Icon(Icons.edit)),
                                                 IconButton(
                                                     onPressed: () async {
                                                       final _delete = await showDialog(

@@ -7,9 +7,9 @@ import 'package:poswarehouse/screen/login/loginPage.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
 import 'package:poswarehouse/screen/product/services/productController.dart';
+import 'package:poswarehouse/screen/returnproduct/returnProductController.dart';
 import 'package:poswarehouse/screen/warehouse/services/wareHouseController.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
 
@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OrdersController()),
         ChangeNotifierProvider(create: (context) => WareHouseController()),
         ChangeNotifierProvider(create: (context) => PickupProductController()),
+        ChangeNotifierProvider(create: (context) => ReturnProductController()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -22,8 +22,10 @@ class Order {
   final String? create_by;
   final String? update_by;
   final String? deleted_at;
+  final String? status;
   final Product? product;
   bool? selected;
+  final int? No;
 
   Order(
     this.id,
@@ -44,6 +46,8 @@ class Order {
     this.deleted_at,
     this.product,
     this.selected,
+    this.No,
+    this.status,
   );
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
