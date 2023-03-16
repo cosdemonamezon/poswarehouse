@@ -248,11 +248,12 @@ class appTextFormField extends StatelessWidget {
 }
 
 class appTextTowFormField extends StatelessWidget {
-  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.controller, this.labelText});
+  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.controller, this.labelText, this.validator});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
   final TextEditingController? controller;
+  final FormFieldValidator<String>? validator;
   String? labelText;
   @override
   Widget build(BuildContext context) {
@@ -270,6 +271,7 @@ class appTextTowFormField extends StatelessWidget {
           ),
           prefixIcon: preIcon != null ? Icon(preIcon) : null,
           suffixIcon: sufPress != null ? IconButton(onPressed: sufPress, icon: Icon(sufIcon)) : null),
+          validator: validator,
     );
   }
 }

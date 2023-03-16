@@ -31,6 +31,7 @@ class CreateOrderOffLine extends StatefulWidget {
 
 class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   GlobalKey globalKey = GlobalKey();
+  final GlobalKey<FormState> _addFormKey = GlobalKey<FormState>();
   TextEditingController textPriceController = TextEditingController();
   TextEditingController textTotalController = TextEditingController();
   final TextEditingController? datePick = TextEditingController();
@@ -74,7 +75,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     _printerInitail();
     textPriceController.text;
     setState(() {
-      radioButtonItem = checkListItems[0]['title'];
+      radioButtonItem = checkListItems[0]['valuetitle'];
       id = id = int.parse(checkListItems[0]["id"].toString());
       datePick!.text = dateTime.formatTo('yyyy-MM-dd');
     });
@@ -210,832 +211,769 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                        flex: 6,
-                        child: SizedBox(
-                          //height: size.height,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.list_alt_rounded),
-                                    Text(
-                                      "ข้อมูลลูกค้า",
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 25,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Form(
+              key: _addFormKey,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 6,
+                          child: SizedBox(
+                            //height: size.height,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
-                                      SizedBox(
-                                        width: size.width * 0.24,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              height: size.height * 0.06,
-                                              child: appTextTowFormField(
-                                                labelText: 'รหัสสมาชิก',
-                                                sufPress: () {},
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.06,
-                                              child: appTextTowFormField(
-                                                labelText: 'ชื่อลูกค้า',
-                                                controller: name,
-                                                sufPress: () {},
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.06,
-                                              child: appTextTowFormField(
-                                                labelText: 'อีเมล',
-                                                controller: email,
-                                                sufPress: () {},
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: size.width * 0.24,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              height: size.height * 0.06,
-                                              child: appTextTowFormField(
-                                                controller: datePick,
-                                                labelText: 'วันที่',
-                                                sufPress: () async {
-                                                  final _pick = await pickDate();
-                                                  if (_pick != null) {
-                                                    setState(() {
-                                                      datePick!.text = _pick.formatTo('yyyy-MM-dd');
-                                                    });
-                                                  } else {}
-                                                },
-                                                sufIcon: Icons.calendar_month,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.06,
-                                              child: appTextTowFormField(
-                                                labelText: 'ที่อยู่',
-                                                controller: address,
-                                                sufPress: () {},
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.06,
-                                              child: appTextTowFormField(
-                                                labelText: 'เบอร์โทร',
-                                                controller: phone,
-                                                sufPress: () {},
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      Icon(Icons.list_alt_rounded),
+                                      Text(
+                                        "ข้อมูลลูกค้า",
+                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                                      )
                                     ],
                                   ),
-                                ),
-                                Divider(
-                                  thickness: 1.5,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 25),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.shopping_bag),
-                                          Text(
-                                            "สินค้า",
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.06,
-                                        width: size.width * 0.12,
-                                        child: RawKeyboardListener(
-                                          focusNode: mainFocusNode,
-                                          autofocus: true,
-                                          onKey: (RawKeyEvent event) {
-                                            if (event.runtimeType.toString() == 'RawKeyUpEvent') {
-                                              //print(event.logicalKey.keyLabel);
-                                              setState(() {
-                                                if (event.logicalKey.keyLabel != 'Enter' &&
-                                                    event.logicalKey.keyLabel != 'Shift Left') {
-                                                  searchProduct.text += event.logicalKey.keyLabel;
-                                                } else if (event.logicalKey.keyLabel == 'Enter') {
-                                                  //test.clear();
-                                                  print('55555');
-                                                  test01(searchProduct.text);
-                                                  searchProduct.clear();
-                                                  return;
-                                                }
-                                              });
-                                              //print(event.runtimeType.toString());
-                                              //print(event.logicalKey.keyLabel);
-                                            }
-                                          },
-                                          child: TextFormField(
-                                            controller: searchProduct,
-                                            onFieldSubmitted: (_) async {},
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            final _select = await showDialog<List<Product>>(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return TestProduct();
-                                                // return ProductDialog(
-                                                //   title: '',
-                                                //   description: '',
-                                                //   allProduct: controller.allProduct!.data,
-                                                //   productPage: controller.allProduct,
-                                                //   press: () {
-                                                //     Navigator.pop(context);
-                                                //   },
-                                                //   pressSelect: () async {},
-                                                // );
-                                              },
-                                            );
-                                            if (_select != null && _select.isNotEmpty) {
-                                              setState(() {
-                                                final List<NewOrders> select = _select
-                                                    .map((e) => NewOrders(
-                                                        e.id.toString(),
-                                                        am,
-                                                        double.parse(e.cost!),
-                                                        double.parse(e.cost!),
-                                                        double.parse(e.price_for_retail!),
-                                                        int.parse(e.unit_id!),
-                                                        controller.units!.data![0],
-                                                        e,
-                                                        false))
-                                                    .toList();
-
-                                                listneworder.addAll(select);
-                                              });
-                                              inspect(listneworder);
-                                            } else {
-                                              print('object Na data of Select');
-                                            }
-                                          },
-                                          child: Container(
-                                            width: size.width * 0.1,
-                                            height: size.height * 0.05,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
-                                            child: Center(
-                                              child: Text(
-                                                'เพิ่มสินค้า',
-                                                style: TextStyle(
-                                                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  SizedBox(
+                                    height: size.height * 0.01,
                                   ),
-                                ),
-
-                                ///--------------------------\\\\
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: List.generate(
-                                    checkListItems.length,
-                                    (index) => SizedBox(
-                                      child: Row(
-                                        children: [
-                                          Radio(
-                                            value: int.parse(checkListItems[index]["id"].toString()),
-                                            groupValue: id,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                radioButtonItem = '${checkListItems[index]["valuetitle"]}';
-                                                id = int.parse(checkListItems[index]["id"].toString());
-                                                if (listneworder.isNotEmpty) {
-                                                  if (id == 1) {
-                                                    for (var i = 0; i < listneworder.length; i++) {
-                                                      // listneworder[i].price_per_unit = checkListItems[index]["cost"];
-                                                      listneworder[i].cost = double.parse(
-                                                          controller.allProduct!.data![index].price_for_retail!);
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 25,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                          width: size.width * 0.24,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                                child: appTextTowFormField(
+                                                  labelText: 'รหัสสมาชิก',
+                                                  sufPress: () {},
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                                child: appTextTowFormField(
+                                                  labelText: 'ชื่อลูกค้า',
+                                                  controller: name,
+                                                  sufPress: () {},
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                                child: appTextTowFormField(
+                                                  labelText: 'อีเมล',
+                                                  controller: email,
+                                                  sufPress: () {},
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.24,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                                child: appTextTowFormField(
+                                                  controller: datePick,
+                                                  labelText: 'วันที่',
+                                                  sufPress: () async {
+                                                    final _pick = await pickDate();
+                                                    if (_pick != null) {
+                                                      setState(() {
+                                                        datePick!.text = _pick.formatTo('yyyy-MM-dd');
+                                                      });
+                                                    } else {}
+                                                  },
+                                                  sufIcon: Icons.calendar_month,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                                child: appTextTowFormField(
+                                                  labelText: 'ที่อยู่',
+                                                  controller: address,
+                                                  sufPress: () {},
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                                child: appTextTowFormField(
+                                                  labelText: 'เบอร์โทร',
+                                                  controller: phone,
+                                                  sufPress: () {},
+                                                  validator: (val) {
+                                                    if (val == null || val.isEmpty) {
+                                                      return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                                    } else if (RegExp(r'\s').hasMatch(val)) {
+                                                      return 'รูปแบบไม่ถูกต้อง';
                                                     }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 1.5,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 25),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.shopping_bag),
+                                            Text(
+                                              "สินค้า",
+                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: size.height * 0.06,
+                                          width: size.width * 0.12,
+                                          child: RawKeyboardListener(
+                                            focusNode: mainFocusNode,
+                                            autofocus: true,
+                                            onKey: (RawKeyEvent event) {
+                                              if (event.runtimeType.toString() == 'RawKeyUpEvent') {
+                                                //print(event.logicalKey.keyLabel);
+                                                setState(() {
+                                                  if (event.logicalKey.keyLabel != 'Enter' &&
+                                                      event.logicalKey.keyLabel != 'Shift Left') {
+                                                    searchProduct.text += event.logicalKey.keyLabel;
+                                                  } else if (event.logicalKey.keyLabel == 'Enter') {
+                                                    //test.clear();
+                                                    print('55555');
+                                                    test01(searchProduct.text);
+                                                    searchProduct.clear();
+                                                    return;
                                                   }
-                                                  if (id == 2) {
-                                                    for (var i = 0; i < listneworder.length; i++) {
-                                                      // listneworder[i].price_per_unit = checkListItems[index]["cost"];
-                                                      listneworder[i].cost = double.parse(
-                                                          controller.allProduct!.data![index].price_for_wholesale!);
-                                                    }
-                                                  }
-                                                  if (id == 3) {
-                                                    for (var i = 0; i < listneworder.length; i++) {
-                                                      // listneworder[i].price_per_unit = checkListItems[index]["cost"];
-                                                      listneworder[i].cost = double.parse(
-                                                          controller.allProduct!.data![index].price_for_box!);
-                                                    }
-                                                  } else {}
-                                                }
-                                              });
+                                                });
+                                                //print(event.runtimeType.toString());
+                                                //print(event.logicalKey.keyLabel);
+                                              }
                                             },
+                                            child: TextFormField(
+                                              controller: searchProduct,
+                                              onFieldSubmitted: (_) async {},
+                                            ),
                                           ),
-                                          Text(
-                                            '${checkListItems[index]["title"]}',
-                                            style: TextStyle(fontSize: 17.0),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                /////////////////\\\\\\\\\\\\\
-                                Container(
-                                  width: size.width * 0.68,
-                                  height: size.height * 0.35,
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                                  //color: Colors.amber,
-                                  child: SingleChildScrollView(
-                                    child: listneworder.isNotEmpty
-                                        ? SizedBox(
-                                            width: double.infinity,
-                                            child: DataTable(
-                                                dataRowHeight: size.height * 0.08,
-                                                horizontalMargin: 2,
-                                                columnSpacing: 30,
-                                                columns: <DataColumn>[
-                                                  DataColumn(
-                                                    label: Text(''),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Text('รหัส'),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Text('ชื่อสินค้า'),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Text('รูปภาพ'),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Center(child: Text('ราคาทุน')),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Center(child: Text('ราคา')),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Text('จำนวน'),
-                                                  ),
-                                                  DataColumn(
-                                                    label: Text('หน่วย'),
-                                                  ),
-                                                ],
-                                                rows: List<DataRow>.generate(
-                                                    listneworder.length,
-                                                    (index) => DataRow(
-                                                          color: MaterialStateProperty.resolveWith<Color?>(
-                                                              (Set<MaterialState> states) {
-                                                            // All rows will have the same selected color.
-                                                            if (states.contains(MaterialState.selected)) {
-                                                              return Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary
-                                                                  .withOpacity(0.08);
-                                                            }
-                                                            // Even rows will have a grey color.
-                                                            if (index.isEven) {
-                                                              return Colors.grey.withOpacity(0.3);
-                                                            }
-                                                            return null; // Use default value for other states and odd rows.
-                                                          }),
-                                                          cells: <DataCell>[
-                                                            DataCell(IconButton(
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    listneworder.removeAt(index);
-                                                                  });
-                                                                },
-                                                                icon: Icon(Icons.delete))),
-                                                            DataCell(Text('${listneworder[index].product!.code}')),
-                                                            DataCell(Text('${listneworder[index].product!.name}')),
-                                                            DataCell(SizedBox(
-                                                              width: size.width * 0.05,
-                                                              height: size.height * 0.07,
-                                                              child: listneworder[index].product!.image != null
-                                                                  ? Image.network(
-                                                                      '${listneworder[index].product!.image}',
-                                                                      fit: BoxFit.fill)
-                                                                  : Image.asset(
-                                                                      'assets/images/noimage.jpg',
-                                                                      fit: BoxFit.fill,
-                                                                    ),
-                                                            )),
-                                                            DataCell(
-                                                              InkWell(
-                                                                onTap: () async {
-                                                                  final selectPriceCost = await showDialog<String>(
-                                                                    context: context,
-                                                                    builder: (BuildContext context) =>
-                                                                        InputNumberDialog(),
-                                                                  );
-                                                                  if (selectPriceCost != null) {
-                                                                    setState(() {
-                                                                      listneworder[index].cost =
-                                                                          double.parse(selectPriceCost);
-                                                                    });
-                                                                    inspect(listneworder);
-                                                                  } else {}
-                                                                },
-                                                                child: Container(
-                                                                  width: size.width * 0.03,
-                                                                  child: Center(
-                                                                      child: Text('${listneworder[index].cost}')),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            DataCell(
-                                                              InkWell(
-                                                                onTap: () async {
-                                                                  final selectPrice = await showDialog<String>(
-                                                                    context: context,
-                                                                    builder: (BuildContext context) =>
-                                                                        InputNumberDialog(),
-                                                                  );
-                                                                  if (selectPrice != null) {
-                                                                    setState(() {
-                                                                      listneworder[index].price_per_unit =
-                                                                          double.parse(selectPrice);
-                                                                    });
-                                                                    inspect(listneworder);
-                                                                  } else {}
-                                                                },
-                                                                child: Container(
-                                                                  width: size.width * 0.03,
-                                                                  child: Center(
-                                                                      child: Text(
-                                                                          '${listneworder[index].price_per_unit}')),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            // DataCell(Center(
-                                                            //     child: Text(
-                                                            //         '${listneworder[index].product!.price_for_retail}'))),
-                                                            // DataCell(Center(
-                                                            //     child: Text(
-                                                            //         '${listneworder[index].product!.price_for_wholesale}'))),
-                                                            // DataCell(Center(
-                                                            //     child: Text(
-                                                            //         '${listneworder[index].product!.price_for_box}'))),
-                                                            // DataCell(Center(
-                                                            //     child: Text(
-                                                            //         '${listneworder[index].product!.remain}'))),
-                                                            DataCell(
-                                                              InkWell(
-                                                                onTap: () async {
-                                                                  final selectNumber = await showDialog<String>(
-                                                                    context: context,
-                                                                    builder: (BuildContext context) =>
-                                                                        InputNumberDialog(),
-                                                                  );
-                                                                  if (selectNumber != null) {
-                                                                    setState(() {
-                                                                      listneworder[index].qty = int.parse(selectNumber);
-                                                                    });
-                                                                    inspect(listneworder);
-                                                                  } else {}
-                                                                },
-                                                                child: Container(
-                                                                  width: size.width * 0.025,
-                                                                  child:
-                                                                      Center(child: Text('${listneworder[index].qty}')),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            DataCell(SizedBox(
-                                                              width: size.width * 0.04,
-                                                              child: Row(
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () async {
-                                                                      final selectUnit = await showDialog<Unit>(
-                                                                        context: context,
-                                                                        builder: (BuildContext context) => UnitDialog(
-                                                                          units: controller.units!.data!,
-                                                                        ),
-                                                                      );
-                                                                      if (selectUnit != null) {
-                                                                        setState(() {
-                                                                          listneworder[index].unit_id = selectUnit.id;
-                                                                          listneworder[index].unit = selectUnit;
-                                                                        });
-                                                                      } else {}
-                                                                    },
-                                                                    child: Container(
-                                                                      width: size.width * 0.025,
-                                                                      child: Center(
-                                                                          child: Text(
-                                                                              '${listneworder[index].unit!.name}')),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            )),
-                                                          ],
-                                                        ))),
-                                          )
-                                        : SizedBox(),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      width: size.width * 0.22,
-                                      //color: Colors.red,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'จำนวนทั้งหมด',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Text(
-                                                '${newQty(listneworder)}',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'รวม',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Text(
-                                                '${sum(listneworder)}',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                          // Row(
-                                          //   mainAxisAlignment:
-                                          //       MainAxisAlignment.spaceBetween,
-                                          //   children: [
-                                          //     Text(
-                                          //       'ภาษีมูลค่าเพิ่ม',
-                                          //       style: TextStyle(
-                                          //           fontSize: 16,
-                                          //           fontWeight: FontWeight.bold),
-                                          //     ),
-                                          //     Text(
-                                          //       '${sumVat(listneworder)}',
-                                          //       style: TextStyle(
-                                          //           fontSize: 16,
-                                          //           fontWeight: FontWeight.bold),
-                                          //     )
-                                          //   ],
-                                          // ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'รวมทั้งหมด',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Text(
-                                                '${newtotal(listneworder)}',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-
-                    //////
-                    Expanded(
-                        flex: 4,
-                        child: SizedBox(
-                          //height: size.height,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              controller.orderProduct != null
-                                  ? Text(
-                                      'ยอดที่ต้องชำระทั้งหมด',
-                                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                                    )
-                                  : Text(
-                                      'ยอดที่ต้องชำระทั้งหมด',
-                                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                                    ),
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              SizedBox(
-                                height: size.height * 0.10,
-                                child: TextField(
-                                  controller: textTotalController,
-                                  readOnly: true,
-                                  enabled: false,
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(fontSize: 45.0),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              Text(
-                                'ช่องรับเงิน', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.10,
-                                child: TextField(
-                                  controller: textPriceController,
-                                  readOnly: true,
-                                  enabled: false,
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(fontSize: 45.0),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                  ),
-                                ),
-                              ),
-                              // SizedBox(
-                              //   height: size.height * 0.10,
-                              //   child: Container(
-                              //     decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                              //     child: Row(
-                              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Text(
-                              //           'เงินทอน',
-                              //           style: TextStyle(fontSize: 45.0),
-                              //         ),
-                              //         Text(
-                              //           '${changPrice}',
-                              //           style: TextStyle(fontSize: 45.0),
-                              //         )
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
-                              Divider(
-                                thickness: 2,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  numberPadAdd('50'),
-                                  numberPadAdd('100'),
-                                  numberPadAdd('500'),
-                                  numberPadAdd('1000'),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  numberPad('7'),
-                                  numberPad('8'),
-                                  numberPad('9'),
-                                  //numberPad('CE', clear: true),
-                                  numberPad('Del', delete: true),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  numberPad('4'),
-                                  numberPad('5'),
-                                  numberPad('6'),
-                                  numberPad('.'),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  numberPad('1'),
-                                  numberPad('2'),
-                                  numberPad('3'),
-                                  numberPad('0'),
-                                ],
-                              ),
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  controller.orderProduct == null
-                                      ? Padding(
+                                        ),
+                                        Padding(
                                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                           child: GestureDetector(
                                             onTap: () async {
-                                              if (listneworder.isNotEmpty) {
-                                                try {
-                                                  for (var i = 0; i < listneworder.length; i++) {
-                                                    setState(() {
-                                                      if (radioButtonItem == 'retail') {
-                                                        listneworder[i].cost = 15;
-                                                      } else if (radioButtonItem == 'wholesale') {
-                                                        listneworder[i].cost = 13;
-                                                      } else {
-                                                        listneworder[i].cost = 14;
-                                                      }
-                                                    });
-                                                    LoadingDialog.open(context);
-                                                    await context.read<ProductController>().createNewOrder(
-                                                        datePick!.text,
-                                                        name!.text,
-                                                        phone!.text,
-                                                        email!.text,
-                                                        address!.text,
-                                                        radioButtonItem,
-                                                        listneworder);
-                                                    if (controller.orderProduct != null) {
-                                                      LoadingDialog.close(context);
-                                                      setState(() {
-                                                        textTotalController.text = controller.orderProduct!.selling_price!.toString();
-                                                      });
-                                                      showDialog(
-                                                        context: context,
-                                                        barrierDismissible: false,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialogYes(
-                                                            title: 'สำเร็จ',
-                                                            description: 'ดำเนินการสำเร็จ',
-                                                            pressYes: () {
-                                                              Navigator.pop(context, true);
-                                                            },
-                                                          );
-                                                        },
-                                                      );
-                                                    } else {
-                                                      showDialog(
-                                                        context: context,
-                                                        barrierDismissible: false,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialogYes(
-                                                            title: 'แจ้งเตือน',
-                                                            description: 'เกิดข้อผิดพลาด',
-                                                            pressYes: () {
-                                                              Navigator.pop(context, true);
-                                                            },
-                                                          );
-                                                        },
-                                                      );
-                                                    }
-                                                    LoadingDialog.close(context);
-                                                  }
-                                                } on Exception catch (e) {
-                                                  showDialog(
-                                                    context: context,
-                                                    barrierDismissible: false,
-                                                    builder: (BuildContext context) {
-                                                      return AlertDialogYes(
-                                                        title: 'แจ้งเตือน',
-                                                        description: e.toString(),
-                                                        pressYes: () {
-                                                          Navigator.pop(context, true);
-                                                        },
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              } else {}
+                                              final _select = await showDialog<List<Product>>(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (BuildContext context) {
+                                                  return TestProduct();
+                                                  // return ProductDialog(
+                                                  //   title: '',
+                                                  //   description: '',
+                                                  //   allProduct: controller.allProduct!.data,
+                                                  //   productPage: controller.allProduct,
+                                                  //   press: () {
+                                                  //     Navigator.pop(context);
+                                                  //   },
+                                                  //   pressSelect: () async {},
+                                                  // );
+                                                },
+                                              );
+                                              if (_select != null && _select.isNotEmpty) {
+                                                setState(() {
+                                                  final List<NewOrders> select = _select
+                                                      .map((e) => NewOrders(
+                                                          e.id.toString(),
+                                                          am,
+                                                          double.parse(e.cost!),
+                                                          double.parse(e.cost!),
+                                                          double.parse(e.price_for_retail!),
+                                                          int.parse(e.unit_id!),
+                                                          controller.units!.data![0],
+                                                          e,
+                                                          false))
+                                                      .toList();
+            
+                                                  listneworder.addAll(select);
+                                                });
+                                                inspect(listneworder);
+                                              } else {
+                                                print('object Na data of Select');
+                                              }
                                             },
                                             child: Container(
                                               width: size.width * 0.1,
-                                              height: size.height * 0.08,
+                                              height: size.height * 0.05,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  color: Colors.white,
-                                                  border: Border.all(color: Colors.grey)),
+                                                  borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                                               child: Center(
                                                 child: Text(
-                                                  'สร้างออร์เดอร์',
+                                                  'เพิ่มสินค้า',
                                                   style: TextStyle(
-                                                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                                      fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        )
-                                      : SizedBox(),
-                                  controller.orderProduct != null
-                                      ? Padding(
-                                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              if (textPriceController.text != "") {
-                                                try {
-                                                  LoadingDialog.open(context);
-                                                  await context.read<ProductController>().confirmNewOrder(
-                                                      controller.orderProduct!.order_no!, (textPriceController.text));
-                                                  if (controller.confirmOrder != null) {
-                                                    LoadingDialog.close(context);
-                                                    setState(() {
-                                                      changPrice = controller.confirmOrder!.change.toString();
-                                                      printer = new Printer(controller.confirmOrder);
-
-                                                        showDialog(
-                                                        context: context,
-                                                        barrierDismissible: false,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialogChangs(
-                                                            title: 'เงินทอน',
-                                                            description: '${changPrice} บาท',
-                                                            pressYes: (){
-                                                              Navigator.pop(context, true);
-                                                            },
-                                                          );
-                                                        },
-                                                      );
-                                                    });
-                                                    await PrinterService().print(printer!);
-                                                    clearValue();
-                                                    setState(() {
-                                                      controller.orderProduct = null;
-                                                      if (textPriceController.text != '') {
-                                                        //changPrice = textPriceController.text;
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+            
+                                  ///--------------------------\\\\
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: List.generate(
+                                      checkListItems.length,
+                                      (index) => SizedBox(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: int.parse(checkListItems[index]["id"].toString()),
+                                              groupValue: id,
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  radioButtonItem = '${checkListItems[index]["valuetitle"]}';
+                                                  id = int.parse(checkListItems[index]["id"].toString());
+                                                  if (listneworder.isNotEmpty) {
+                                                    if (id == 1) {
+                                                      for (var i = 0; i < listneworder.length; i++) {
+                                                        // listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                        listneworder[i].cost = double.parse(
+                                                            controller.allProduct!.data![index].price_for_retail!);
                                                       }
-                                                    });
-                                                  } else {
+                                                    }
+                                                    if (id == 2) {
+                                                      for (var i = 0; i < listneworder.length; i++) {
+                                                        // listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                        listneworder[i].cost = double.parse(
+                                                            controller.allProduct!.data![index].price_for_wholesale!);
+                                                      }
+                                                    }
+                                                    if (id == 3) {
+                                                      for (var i = 0; i < listneworder.length; i++) {
+                                                        // listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                        listneworder[i].cost = double.parse(
+                                                            controller.allProduct!.data![index].price_for_box!);
+                                                      }
+                                                    } else {}
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              '${checkListItems[index]["title"]}',
+                                              style: TextStyle(fontSize: 17.0),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+            
+                                  /////////////////\\\\\\\\\\\\\
+                                  Container(
+                                    width: size.width * 0.68,
+                                    height: size.height * 0.35,
+                                    decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                    //color: Colors.amber,
+                                    child: SingleChildScrollView(
+                                      child: listneworder.isNotEmpty
+                                          ? SizedBox(
+                                              width: double.infinity,
+                                              child: DataTable(
+                                                  dataRowHeight: size.height * 0.08,
+                                                  horizontalMargin: 2,
+                                                  columnSpacing: 30,
+                                                  columns: <DataColumn>[
+                                                    DataColumn(
+                                                      label: Text(''),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Text('รหัส'),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Text('ชื่อสินค้า'),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Text('รูปภาพ'),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Center(child: Text('ราคาทุน')),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Center(child: Text('ราคา')),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Text('จำนวน'),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Text('หน่วย'),
+                                                    ),
+                                                  ],
+                                                  rows: List<DataRow>.generate(
+                                                      listneworder.length,
+                                                      (index) => DataRow(
+                                                            color: MaterialStateProperty.resolveWith<Color?>(
+                                                                (Set<MaterialState> states) {
+                                                              // All rows will have the same selected color.
+                                                              if (states.contains(MaterialState.selected)) {
+                                                                return Theme.of(context)
+                                                                    .colorScheme
+                                                                    .primary
+                                                                    .withOpacity(0.08);
+                                                              }
+                                                              // Even rows will have a grey color.
+                                                              if (index.isEven) {
+                                                                return Colors.grey.withOpacity(0.3);
+                                                              }
+                                                              return null; // Use default value for other states and odd rows.
+                                                            }),
+                                                            cells: <DataCell>[
+                                                              DataCell(IconButton(
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      listneworder.removeAt(index);
+                                                                    });
+                                                                  },
+                                                                  icon: Icon(Icons.delete))),
+                                                              DataCell(Text('${listneworder[index].product!.code}')),
+                                                              DataCell(Text('${listneworder[index].product!.name}')),
+                                                              DataCell(SizedBox(
+                                                                width: size.width * 0.05,
+                                                                height: size.height * 0.07,
+                                                                child: listneworder[index].product!.image != null
+                                                                    ? Image.network(
+                                                                        '${listneworder[index].product!.image}',
+                                                                        fit: BoxFit.fill)
+                                                                    : Image.asset(
+                                                                        'assets/images/noimage.jpg',
+                                                                        fit: BoxFit.fill,
+                                                                      ),
+                                                              )),
+                                                              DataCell(
+                                                                InkWell(
+                                                                  onTap: () async {
+                                                                    final selectPriceCost = await showDialog<String>(
+                                                                      context: context,
+                                                                      builder: (BuildContext context) =>
+                                                                          InputNumberDialog(),
+                                                                    );
+                                                                    if (selectPriceCost != null) {
+                                                                      setState(() {
+                                                                        listneworder[index].cost =
+                                                                            double.parse(selectPriceCost);
+                                                                      });
+                                                                      inspect(listneworder);
+                                                                    } else {}
+                                                                  },
+                                                                  child: Container(
+                                                                    width: size.width * 0.03,
+                                                                    child: Center(
+                                                                        child: Text('${listneworder[index].cost}')),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              DataCell(
+                                                                InkWell(
+                                                                  onTap: () async {
+                                                                    final selectPrice = await showDialog<String>(
+                                                                      context: context,
+                                                                      builder: (BuildContext context) =>
+                                                                          InputNumberDialog(),
+                                                                    );
+                                                                    if (selectPrice != null) {
+                                                                      setState(() {
+                                                                        listneworder[index].price_per_unit =
+                                                                            double.parse(selectPrice);
+                                                                      });
+                                                                      inspect(listneworder);
+                                                                    } else {}
+                                                                  },
+                                                                  child: Container(
+                                                                    width: size.width * 0.03,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            '${listneworder[index].price_per_unit}')),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              // DataCell(Center(
+                                                              //     child: Text(
+                                                              //         '${listneworder[index].product!.price_for_retail}'))),
+                                                              // DataCell(Center(
+                                                              //     child: Text(
+                                                              //         '${listneworder[index].product!.price_for_wholesale}'))),
+                                                              // DataCell(Center(
+                                                              //     child: Text(
+                                                              //         '${listneworder[index].product!.price_for_box}'))),
+                                                              // DataCell(Center(
+                                                              //     child: Text(
+                                                              //         '${listneworder[index].product!.remain}'))),
+                                                              DataCell(
+                                                                InkWell(
+                                                                  onTap: () async {
+                                                                    final selectNumber = await showDialog<String>(
+                                                                      context: context,
+                                                                      builder: (BuildContext context) =>
+                                                                          InputNumberDialog(),
+                                                                    );
+                                                                    if (selectNumber != null) {
+                                                                      setState(() {
+                                                                        listneworder[index].qty = int.parse(selectNumber);
+                                                                      });
+                                                                      inspect(listneworder);
+                                                                    } else {}
+                                                                  },
+                                                                  child: Container(
+                                                                    width: size.width * 0.025,
+                                                                    child:
+                                                                        Center(child: Text('${listneworder[index].qty}')),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              DataCell(SizedBox(
+                                                                width: size.width * 0.04,
+                                                                child: Row(
+                                                                  children: [
+                                                                    InkWell(
+                                                                      onTap: () async {
+                                                                        final selectUnit = await showDialog<Unit>(
+                                                                          context: context,
+                                                                          builder: (BuildContext context) => UnitDialog(
+                                                                            units: controller.units!.data!,
+                                                                          ),
+                                                                        );
+                                                                        if (selectUnit != null) {
+                                                                          setState(() {
+                                                                            listneworder[index].unit_id = selectUnit.id;
+                                                                            listneworder[index].unit = selectUnit;
+                                                                          });
+                                                                        } else {}
+                                                                      },
+                                                                      child: Container(
+                                                                        width: size.width * 0.025,
+                                                                        child: Center(
+                                                                            child: Text(
+                                                                                '${listneworder[index].unit!.name}')),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )),
+                                                            ],
+                                                          ))),
+                                            )
+                                          : SizedBox(),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        width: size.width * 0.22,
+                                        //color: Colors.red,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'จำนวนทั้งหมด',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  '${newQty(listneworder)}',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'รวม',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  '${sum(listneworder)}',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                )
+                                              ],
+                                            ),
+                                            // Row(
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.spaceBetween,
+                                            //   children: [
+                                            //     Text(
+                                            //       'ภาษีมูลค่าเพิ่ม',
+                                            //       style: TextStyle(
+                                            //           fontSize: 16,
+                                            //           fontWeight: FontWeight.bold),
+                                            //     ),
+                                            //     Text(
+                                            //       '${sumVat(listneworder)}',
+                                            //       style: TextStyle(
+                                            //           fontSize: 16,
+                                            //           fontWeight: FontWeight.bold),
+                                            //     )
+                                            //   ],
+                                            // ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'รวมทั้งหมด',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  '${newtotal(listneworder)}',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )),
+            
+                      //////
+                      Expanded(
+                          flex: 4,
+                          child: SizedBox(
+                            //height: size.height,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                controller.orderProduct != null
+                                    ? Text(
+                                        'ยอดที่ต้องชำระทั้งหมด',
+                                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                                      )
+                                    : Text(
+                                        'ยอดที่ต้องชำระทั้งหมด',
+                                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                                      ),
+                                SizedBox(
+                                  height: size.height * 0.01,
+                                ),
+                                SizedBox(
+                                  height: size.height * 0.10,
+                                  child: TextField(
+                                    controller: textTotalController,
+                                    readOnly: true,
+                                    enabled: false,
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 45.0),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: size.height * 0.01,
+                                ),
+                                Text(
+                                  'ช่องรับเงิน', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: size.height * 0.10,
+                                  child: TextField(
+                                    controller: textPriceController,
+                                    readOnly: true,
+                                    enabled: false,
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 45.0),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   height: size.height * 0.10,
+                                //   child: Container(
+                                //     decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                //     child: Row(
+                                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //       children: [
+                                //         Text(
+                                //           'เงินทอน',
+                                //           style: TextStyle(fontSize: 45.0),
+                                //         ),
+                                //         Text(
+                                //           '${changPrice}',
+                                //           style: TextStyle(fontSize: 45.0),
+                                //         )
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
+                                Divider(
+                                  thickness: 2,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    numberPadAdd('50'),
+                                    numberPadAdd('100'),
+                                    numberPadAdd('500'),
+                                    numberPadAdd('1000'),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    numberPad('7'),
+                                    numberPad('8'),
+                                    numberPad('9'),
+                                    //numberPad('CE', clear: true),
+                                    numberPad('Del', delete: true),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    numberPad('4'),
+                                    numberPad('5'),
+                                    numberPad('6'),
+                                    numberPad('.'),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    numberPad('1'),
+                                    numberPad('2'),
+                                    numberPad('3'),
+                                    numberPad('0'),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: size.height * 0.01,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    controller.orderProduct == null
+                                        ? Padding(
+                                            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                if (listneworder.isNotEmpty) {
+                                                  try {
+                                                    for (var i = 0; i < listneworder.length; i++) {
+                                                      setState(() {
+                                                        if (radioButtonItem == 'retail') {
+                                                          listneworder[i].cost = 15;
+                                                        } else if (radioButtonItem == 'wholesale') {
+                                                          listneworder[i].cost = 13;
+                                                        } else {
+                                                          listneworder[i].cost = 14;
+                                                        }
+                                                      });
+                                                      LoadingDialog.open(context);
+                                                      await context.read<ProductController>().createNewOrder(
+                                                          datePick!.text,
+                                                          name!.text,
+                                                          phone!.text,
+                                                          email!.text,
+                                                          address!.text,
+                                                          radioButtonItem,
+                                                          listneworder);
+                                                      if (controller.orderProduct != null) {
+                                                        LoadingDialog.close(context);
+                                                        setState(() {
+                                                          textTotalController.text = controller.orderProduct!.selling_price!.toString();
+                                                        });
+                                                        showDialog(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialogYes(
+                                                              title: 'สำเร็จ',
+                                                              description: 'ดำเนินการสำเร็จ',
+                                                              pressYes: () {
+                                                                Navigator.pop(context, true);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                      } else {
+                                                        showDialog(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialogYes(
+                                                              title: 'แจ้งเตือน',
+                                                              description: 'เกิดข้อผิดพลาด',
+                                                              pressYes: () {
+                                                                Navigator.pop(context, true);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                      }
+                                                      LoadingDialog.close(context);
+                                                    }
+                                                  } on Exception catch (e) {
                                                     LoadingDialog.close(context);
                                                     showDialog(
                                                       context: context,
@@ -1043,7 +981,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                       builder: (BuildContext context) {
                                                         return AlertDialogYes(
                                                           title: 'แจ้งเตือน',
-                                                          description: 'เกิดข้อผิดพลาด e',
+                                                          description: e.toString(),
                                                           pressYes: () {
                                                             Navigator.pop(context, true);
                                                           },
@@ -1051,85 +989,160 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                       },
                                                     );
                                                   }
-                                                } on Exception catch (e) {
-                                                  LoadingDialog.close(context);
-                                                  setState(() {
-                                                    controller.orderProduct = null;
-                                                    textPriceController.clear();
-                                                    textTotalController.clear();
-                                                  });
-                                                  
-                                                  showDialog(
-                                                    context: context,
-                                                    barrierDismissible: false,
-                                                    builder: (BuildContext context) {
-                                                      return AlertDialogYes(
-                                                        title: 'แจ้งเตือน',
-                                                        description: e.toString(),
-                                                        pressYes: () {
-                                                          Navigator.pop(context, true);
-                                                        },
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              } else {}
-                                            },
-                                            child: Container(
-                                              width: size.width * 0.1,
-                                              height: size.height * 0.08,
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
-                                              child: Center(
-                                                child: Text(
-                                                  'ชำระเงิน',
-                                                  style: TextStyle(
-                                                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                                } else {}
+                                              },
+                                              child: Container(
+                                                width: size.width * 0.1,
+                                                height: size.height * 0.08,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    color: Colors.white,
+                                                    border: Border.all(color: Colors.grey)),
+                                                child: Center(
+                                                  child: Text(
+                                                    'สร้างออร์เดอร์',
+                                                    style: TextStyle(
+                                                        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      : SizedBox(),
-                                ],
-                              ),
-                              // Padding(
-                              //   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              //   child: GestureDetector(
-                              //     onTap: () async {
-                              //       printer = new Printer(
-                              //                             'GP-0125',
-                              //                             '12/03/2023',
-                              //                             '06.55',
-                              //                             '16',
-                              //                             '100.00',
-                              //                             '100.00',);
-                              //       await PrinterService().print(printer!);
-                              //     },
-                              //     child: Container(
-                              //       width: size.width * 0.1,
-                              //       height: size.height * 0.08,
-                              //       decoration: BoxDecoration(
-                              //           borderRadius: BorderRadius.circular(10),
-                              //           color: kPrimaryColor),
-                              //       child: Center(
-                              //         child: Text(
-                              //           'ชำระเงิน',
-                              //           style: TextStyle(
-                              //               fontSize: 18,
-                              //               fontWeight: FontWeight.bold,
-                              //               color: Colors.white),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
-                            ],
-                          ),
-                        )),
-                  ],
-                ),
-              ],
+                                          )
+                                        : SizedBox(),
+                                    controller.orderProduct != null
+                                        ? Padding(
+                                            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                if (textPriceController.text != "") {
+                                                  try {
+                                                    LoadingDialog.open(context);
+                                                    await context.read<ProductController>().confirmNewOrder(
+                                                        controller.orderProduct!.order_no!, (textPriceController.text));
+                                                    if (controller.confirmOrder != null) {
+                                                      LoadingDialog.close(context);
+                                                      setState(() {
+                                                        changPrice = controller.confirmOrder!.change.toString();
+                                                        printer = new Printer(controller.confirmOrder);
+            
+                                                          showDialog(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialogChangs(
+                                                              title: 'เงินทอน',
+                                                              description: '${changPrice} บาท',
+                                                              pressYes: (){
+                                                                Navigator.pop(context, true);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                      });
+                                                      await PrinterService().print(printer!);
+                                                      clearValue();
+                                                      setState(() {
+                                                        controller.orderProduct = null;
+                                                        if (textPriceController.text != '') {
+                                                          //changPrice = textPriceController.text;
+                                                        }
+                                                      });
+                                                    } else {
+                                                      LoadingDialog.close(context);
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible: false,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialogYes(
+                                                            title: 'แจ้งเตือน',
+                                                            description: 'เกิดข้อผิดพลาด e',
+                                                            pressYes: () {
+                                                              Navigator.pop(context, true);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                  } on Exception catch (e) {
+                                                    LoadingDialog.close(context);
+                                                    setState(() {
+                                                      controller.orderProduct = null;
+                                                      textPriceController.clear();
+                                                      textTotalController.clear();
+                                                    });
+                                                    
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (BuildContext context) {
+                                                        return AlertDialogYes(
+                                                          title: 'แจ้งเตือน',
+                                                          description: e.toString(),
+                                                          pressYes: () {
+                                                            Navigator.pop(context, true);
+                                                          },
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                } else {}
+                                              },
+                                              child: Container(
+                                                width: size.width * 0.1,
+                                                height: size.height * 0.08,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                                                child: Center(
+                                                  child: Text(
+                                                    'ชำระเงิน',
+                                                    style: TextStyle(
+                                                        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                  ],
+                                ),
+                                // Padding(
+                                //   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                //   child: GestureDetector(
+                                //     onTap: () async {
+                                //       printer = new Printer(
+                                //                             'GP-0125',
+                                //                             '12/03/2023',
+                                //                             '06.55',
+                                //                             '16',
+                                //                             '100.00',
+                                //                             '100.00',);
+                                //       await PrinterService().print(printer!);
+                                //     },
+                                //     child: Container(
+                                //       width: size.width * 0.1,
+                                //       height: size.height * 0.08,
+                                //       decoration: BoxDecoration(
+                                //           borderRadius: BorderRadius.circular(10),
+                                //           color: kPrimaryColor),
+                                //       child: Center(
+                                //         child: Text(
+                                //           'ชำระเงิน',
+                                //           style: TextStyle(
+                                //               fontSize: 18,
+                                //               fontWeight: FontWeight.bold,
+                                //               color: Colors.white),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // )
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

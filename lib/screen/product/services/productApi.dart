@@ -301,11 +301,11 @@ class ProductApi {
       headers: headers,
       body: convert.jsonEncode({
         "order_date": order_date,
-        "name": "AAAAA",
-        "phone": "0999999999",
-        "email": "client@gmail.com",
-        "address": "11/11",
-        "type": "wholesale",
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "address": address,
+        "type": type,
         "orders": orders,
       }),
     );
