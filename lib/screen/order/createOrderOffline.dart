@@ -20,6 +20,8 @@ import 'package:provider/provider.dart';
 import 'package:sunmi_printer_plus/enums.dart';
 import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
 
+import '../../widgets/testProduct.dart';
+
 class CreateOrderOffLine extends StatefulWidget {
   CreateOrderOffLine({Key? key}) : super(key: key);
 
@@ -133,7 +135,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
         builder: (BuildContext context) {
           return AlertDialogYes(
             title: 'แจ้งเตือน',
-            description: e.toString(),
+            description: 'ไม่พบสินค้า',
             pressYes: () {
               Navigator.pop(context, true);
             },
@@ -379,15 +381,17 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                               context: context,
                                               barrierDismissible: false,
                                               builder: (BuildContext context) {
-                                                return ProductDialog(
-                                                  title: '',
-                                                  description: '',
-                                                  allProduct: controller.allProduct!.data,
-                                                  press: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  pressSelect: () async {},
-                                                );
+                                                return TestProduct();
+                                                // return ProductDialog(
+                                                //   title: '',
+                                                //   description: '',
+                                                //   allProduct: controller.allProduct!.data,
+                                                //   productPage: controller.allProduct,
+                                                //   press: () {
+                                                //     Navigator.pop(context);
+                                                //   },
+                                                //   pressSelect: () async {},
+                                                // );
                                               },
                                             );
                                             if (_select != null && _select.isNotEmpty) {
@@ -395,10 +399,10 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 final List<NewOrders> select = _select
                                                     .map((e) => NewOrders(
                                                         e.id.toString(),
-                                                        0,
-                                                        0,
+                                                        am,
                                                         double.parse(e.cost!),
-                                                        15,
+                                                        double.parse(e.cost!),
+                                                        double.parse(e.price_for_retail!),
                                                         int.parse(e.unit_id!),
                                                         controller.units!.data![0],
                                                         e,
@@ -498,6 +502,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 columnSpacing: 30,
                                                 columns: <DataColumn>[
                                                   DataColumn(
+                                                    label: Text(''),
+                                                  ),
+                                                  DataColumn(
                                                     label: Text('รหัส'),
                                                   ),
                                                   DataColumn(
@@ -538,6 +545,13 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                             return null; // Use default value for other states and odd rows.
                                                           }),
                                                           cells: <DataCell>[
+                                                            DataCell(IconButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    listneworder.removeAt(index);
+                                                                  });
+                                                                },
+                                                                icon: Icon(Icons.delete))),
                                                             DataCell(Text('${listneworder[index].product!.code}')),
                                                             DataCell(Text('${listneworder[index].product!.name}')),
                                                             DataCell(SizedBox(
