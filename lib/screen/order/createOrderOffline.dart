@@ -50,9 +50,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   int id = 1;
   List<Product> selectProducts = [];
   bool printBinded = false;
-  int paperSize = 0;
-  String serialNumber = "";
-  String printerVersion = "";
+  // int paperSize = 0;
+  // String serialNumber = "";
+  // String printerVersion = "";
   Printer? printer;
   //--------------------------------------------
   DateTime dateTime = DateTime.now();
@@ -154,24 +154,24 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
 
   void _printerInitail() {
     _bindingPrinter().then((bool? isBind) async {
-      final size = await SunmiPrinter.paperSize();
-      final version = await SunmiPrinter.printerVersion();
-      final serial = await SunmiPrinter.serialNumber();
+      // final size = await SunmiPrinter.paperSize();
+      // final version = await SunmiPrinter.printerVersion();
+      // final serial = await SunmiPrinter.serialNumber();
       final printer = await SunmiPrinter.getPrinterStatus();
 
       setState(() {
         printBinded = isBind!;
-        serialNumber = serial;
-        printerVersion = version;
-        paperSize = size;
+        // serialNumber = serial;
+        // printerVersion = version;
+        // paperSize = size;
       });
       if (printer != PrinterStatus.NORMAL) {
         _printerInitail();
       }
       print('printBinded : $printBinded');
-      print('serialNumber : $serialNumber');
-      print('printerVersion : $printerVersion');
-      print('paperSize : $paperSize');
+      // print('serialNumber : $serialNumber');
+      // print('printerVersion : $printerVersion');
+      // print('paperSize : $paperSize');
       print('printer : $printer');
     });
   }
