@@ -13,6 +13,7 @@ Unit _$UnitFromJson(Map<String, dynamic> json) => Unit(
       json['update_by'] as String?,
       json['deleted_at'] as String?,
       json['No'] as int?,
+      json['selected'] as bool?,
     );
 
 Map<String, dynamic> _$UnitToJson(Unit instance) => <String, dynamic>{
@@ -22,4 +23,5 @@ Map<String, dynamic> _$UnitToJson(Unit instance) => <String, dynamic>{
       'update_by': instance.update_by,
       'deleted_at': instance.deleted_at,
       'No': instance.No,
+      'selected': instance.selected,
     };

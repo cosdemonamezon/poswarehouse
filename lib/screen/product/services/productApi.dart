@@ -211,7 +211,7 @@ class ProductApi {
     required String remain,
     required String remain_shop,
     required String min,
-    required XFile file,
+    XFile? file,
     required String code,
     required String units,
   }) async {
@@ -231,7 +231,7 @@ class ProductApi {
         'remain': remain,
         'remain_shop': remain_shop,
         'min': min,
-        'image': await MultipartFile.fromFile(file.path, filename: file.name),
+        if (file != null) 'image': MultipartFile.fromFileSync(file.path, filename: file.name),
         'code': code,
         'units': units,
       },
@@ -288,8 +288,8 @@ class ProductApi {
   }
 
   //สร้างออร์เดอร์ก่อนจ่ายเงิน
-  static Future<OrderProduct> newOrder(String order_date, String name, String phone, String email, String address,
-      String type, List<NewOrders> orders) async {
+  static Future<OrderProduct> newOrder(
+      String order_date, String name, String phone, String email, String address, String type, List<NewOrders> orders) async {
     final url = Uri.https(publicUrl, '/pos/public/api/order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(

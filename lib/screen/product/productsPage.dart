@@ -103,8 +103,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          final addpro =
-                              await Navigator.push(context, MaterialPageRoute(builder: (context) => AddProducts()));
+                          final addpro = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddProducts()));
                           if (addpro == true) {
                             _initialize();
                           } else {
@@ -190,13 +189,11 @@ class _ProductsPageState extends State<ProductsPage> {
                                                       onTap: () {
                                                         Navigator.of(context).push(MaterialPageRoute(
                                                             builder: (_) => GalleryWidget(
-                                                                  urlimage:
-                                                                      '${controller.allProduct!.data![index].image}',
+                                                                  urlimage: '${controller.allProduct!.data![index].image}',
                                                                 )));
                                                       },
-                                                      child: Image.network(
-                                                          '${controller.allProduct!.data![index].image}',
-                                                          fit: BoxFit.fill),
+                                                      child:
+                                                          Image.network('${controller.allProduct!.data![index].image}', fit: BoxFit.fill),
                                                     )
                                                   : InkWell(
                                                       onTap: () {
@@ -211,131 +208,122 @@ class _ProductsPageState extends State<ProductsPage> {
                                                       ),
                                                     ),
                                             )),
+                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].cost}'))),
+                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].price_for_retail}'))),
+                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].price_for_wholesale}'))),
+                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].price_for_box}'))),
+                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].remain}'))),
+                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].remain_shop}'))),
                                             DataCell(
-                                                Center(child: Text('${controller.allProduct!.data![index].cost}'))),
-                                            DataCell(Center(
-                                                child:
-                                                    Text('${controller.allProduct!.data![index].price_for_retail}'))),
-                                            DataCell(Center(
-                                                child: Text(
-                                                    '${controller.allProduct!.data![index].price_for_wholesale}'))),
-                                            DataCell(Center(
-                                                child: Text('${controller.allProduct!.data![index].price_for_box}'))),
-                                            DataCell(
-                                                Center(child: Text('${controller.allProduct!.data![index].remain}'))),
-                                            DataCell(
-                                                Center(child: Text('${controller.allProduct!.data![index].remain_shop}'))),
-                                            DataCell(Center(
-                                                child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    //_initialize();
-                                                    final update = await Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => EditProduct(
-                                                                  id: '${controller.allProduct!.data![index].id}',
-                                                                )));
-                                                    if (update == true) {
-                                                      _initialize();
-                                                    } else {
-                                                      print('object No data');
-                                                    }
-                                                    // showDialog<String>(
-                                                    //   context: context,
-                                                    //   builder: (BuildContext context) => AlertDialog(
-                                                    //     shape: RoundedRectangleBorder(
-                                                    //       borderRadius: BorderRadius.circular(15.0),
-                                                    //     ),
-                                                    //     // backgroundColor: Color.fromARGB(255, 95, 9, 3),
-                                                    //     title: const Text('แก้ไขหัวข้อ'),
-                                                    //     content: appTextFormField(
-                                                    //       controller: editSubTitle,
-                                                    //       sufPress: () {},
-                                                    //       readOnly: false,
-                                                    //       vertical: 0.0,
-                                                    //       horizontal: 0.0,
-                                                    //       validator: (val) {
-                                                    //         if (val == null || val.isEmpty) {
-                                                    //           return 'กรุณากรอกข้อความ';
-                                                    //         }
-                                                    //         return null;
-                                                    //       },
-                                                    //     ),
-                                                    //     actions: <Widget>[
-                                                    //       TextButton(
-                                                    //         onPressed: () {
-                                                    //           Navigator.pop(context, 'Cancel');
-                                                    //           editSubTitle!.clear();
-                                                    //         },
-                                                    //         child: const Text('ยกเลิก'),
-                                                    //       ),
-                                                    //       TextButton(
-                                                    //         onPressed: () async {
-                                                    //           LoadingDialog.open(context);
-                                                    //           await ProductApi().changeTitleSubCatagory(
-                                                    //               editSubTitle!.text,
-                                                    //               controller.allProduct!.data![index].id);
-                                                    //           if (mounted) {
-                                                    //             LoadingDialog.close(context);
-                                                    //             editSubTitle!.clear();
-                                                    //             Navigator.pop(context);
-                                                    //             await context
-                                                    //                 .read<ProductController>()
-                                                    //                 .getListProducts();
-                                                    //           }
-                                                    //         },
-                                                    //         child: const Text('แกไข้'),
-                                                    //       ),
-                                                    //     ],
-                                                    //   ),
-                                                    // );
-                                                  },
-                                                  child: Icon(Icons.edit_calendar_sharp),
-                                                ),
-                                                SizedBox(
-                                                  width: size.width * 0.01,
-                                                ),
-                                                GestureDetector(
-                                                    onTap: () {
-                                                      showDialog<String>(
-                                                        context: context,
-                                                        builder: (BuildContext context) => AlertDialog(
-                                                          shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(15.0),
-                                                          ),
-                                                          // backgroundColor: Color.fromARGB(255, 95, 9, 3),
-                                                          title: const Text('ยืนยัน'),
-                                                          content: const Text('ต้องการลบสินค้า'),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                                                              child: const Text('ยกเลิก'),
-                                                            ),
-                                                            TextButton(
-                                                              onPressed: () async {
-                                                                LoadingDialog.open(context);
-                                                                await ProductApi().deleteSubCatagory(
-                                                                    catagoryId: controller.allProduct!.data![index].id);
-                                                                if (mounted) {
-                                                                  LoadingDialog.close(context);
-                                                                  Navigator.pop(context);
-                                                                  await context
-                                                                      .read<ProductController>()
-                                                                      .getListProducts();
-                                                                }
-                                                              },
-                                                              child: const Text('ตกลง'),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
+                                              Center(
+                                                  child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      final update = await Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => EditProduct(
+                                                                    id: '${controller.allProduct!.data![index].id}',
+                                                                  )));
+                                                      if (update == true) {
+                                                        _initialize();
+                                                      } else {
+                                                        print('object No data');
+                                                      }
+                                                      // showDialog<String>(
+                                                      //   context: context,
+                                                      //   builder: (BuildContext context) => AlertDialog(
+                                                      //     shape: RoundedRectangleBorder(
+                                                      //       borderRadius: BorderRadius.circular(15.0),
+                                                      //     ),
+                                                      //     // backgroundColor: Color.fromARGB(255, 95, 9, 3),
+                                                      //     title: const Text('แก้ไขหัวข้อ'),
+                                                      //     content: appTextFormField(
+                                                      //       controller: editSubTitle,
+                                                      //       sufPress: () {},
+                                                      //       readOnly: false,
+                                                      //       vertical: 0.0,
+                                                      //       horizontal: 0.0,
+                                                      //       validator: (val) {
+                                                      //         if (val == null || val.isEmpty) {
+                                                      //           return 'กรุณากรอกข้อความ';
+                                                      //         }
+                                                      //         return null;
+                                                      //       },
+                                                      //     ),
+                                                      //     actions: <Widget>[
+                                                      //       TextButton(
+                                                      //         onPressed: () {
+                                                      //           Navigator.pop(context, 'Cancel');
+                                                      //           editSubTitle!.clear();
+                                                      //         },
+                                                      //         child: const Text('ยกเลิก'),
+                                                      //       ),
+                                                      //       TextButton(
+                                                      //         onPressed: () async {
+                                                      //           LoadingDialog.open(context);
+                                                      //           await ProductApi().changeTitleSubCatagory(
+                                                      //               editSubTitle!.text,
+                                                      //               controller.allProduct!.data![index].id);
+                                                      //           if (mounted) {
+                                                      //             LoadingDialog.close(context);
+                                                      //             editSubTitle!.clear();
+                                                      //             Navigator.pop(context);
+                                                      //             await context
+                                                      //                 .read<ProductController>()
+                                                      //                 .getListProducts();
+                                                      //           }
+                                                      //         },
+                                                      //         child: const Text('แกไข้'),
+                                                      //       ),
+                                                      //     ],
+                                                      //   ),
+                                                      // );
                                                     },
-                                                    child: Icon(Icons.delete)),
-                                              ],
-                                            ))),
+                                                    child: Icon(Icons.edit),
+                                                  ),
+                                                  SizedBox(
+                                                    width: size.width * 0.01,
+                                                  ),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        showDialog<String>(
+                                                          context: context,
+                                                          builder: (BuildContext context) => AlertDialog(
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(15.0),
+                                                            ),
+                                                            // backgroundColor: Color.fromARGB(255, 95, 9, 3),
+                                                            title: const Text('ยืนยัน'),
+                                                            content: const Text('ต้องการลบสินค้า'),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed: () => Navigator.pop(context, 'Cancel'),
+                                                                child: const Text('ยกเลิก'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () async {
+                                                                  LoadingDialog.open(context);
+                                                                  await ProductApi().deleteSubCatagory(
+                                                                      catagoryId: controller.allProduct!.data![index].id);
+                                                                  if (mounted) {
+                                                                    LoadingDialog.close(context);
+                                                                    Navigator.pop(context);
+                                                                    await context.read<ProductController>().getListProducts();
+                                                                  }
+                                                                },
+                                                                child: const Text('ตกลง'),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Icon(Icons.delete)),
+                                                ],
+                                              )),
+                                            ),
                                           ],
                                         )))
                             : SizedBox(),

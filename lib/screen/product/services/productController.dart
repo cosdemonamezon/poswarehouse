@@ -36,7 +36,7 @@ class ProductController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getDetailProduct(String id) async {
+  Future<void> getDetailProduct(String id) async {
     product = await ProductApi.getProductById(id);
     notifyListeners();
   }

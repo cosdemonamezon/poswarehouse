@@ -10,6 +10,7 @@ class Unit {
   final String? update_by;
   final String? deleted_at;
   final int? No;
+  bool? selected;
 
   Unit(
     this.id,
@@ -17,7 +18,8 @@ class Unit {
     this.create_by,
     this.update_by,
     this.deleted_at,
-    this.No
+    this.No,
+    this.selected,
   );
 
   factory Unit.fromJson(Map<String, dynamic> json) => _$UnitFromJson(json);
