@@ -143,6 +143,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                     label: Center(child: Text('คงเหลือ')),
                                   ),
                                   DataColumn(
+                                    label: Center(child: Text('คงเหลือหน้าร้าน')),
+                                  ),
+                                  DataColumn(
                                     label: Center(child: Text('')),
                                   ),
                                 ],
@@ -193,6 +196,8 @@ class _ProductsPageState extends State<ProductsPage> {
                                                 child: Text('${controller.allProduct!.data![index].price_for_box}'))),
                                             DataCell(
                                                 Center(child: Text('${controller.allProduct!.data![index].remain}'))),
+                                            DataCell(
+                                                Center(child: Text('${controller.allProduct!.data![index].remain_shop}'))),
                                             DataCell(Center(
                                                 child: Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,

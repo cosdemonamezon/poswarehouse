@@ -37,12 +37,12 @@ class OrdersController extends ChangeNotifier {
     notifyListeners();
   }
 
-  pickupNewOrders(String stock_purchase_no, List<Damageds> damageds) async {
+  Future<void> pickupNewOrders(String stock_purchase_no, List<Damageds> damageds) async {
     purchase = await OrdersApi.pickupOrders(stock_purchase_no, damageds);
     notifyListeners();
   }
 
-  getDetailPurchase(String stock_purchase_no) async {
+  Future<void> getDetailPurchase(String stock_purchase_no) async {
     purchaseOrders = await OrdersApi.getOrderById(stock_purchase_no);
     notifyListeners();
   }

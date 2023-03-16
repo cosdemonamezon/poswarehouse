@@ -203,7 +203,8 @@ class appTextFormField extends StatelessWidget {
       this.color,
       required this.readOnly,
       this.onEditingComplete,
-      this.hintText});
+      this.hintText,
+      this.initialValue});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
@@ -216,12 +217,15 @@ class appTextFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   Color? color;
   final bool readOnly;
+  String? initialValue;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       //textAlign: TextAlign.end,
       //keyboardType: TextInputType.number,
+      initialValue: initialValue,
       readOnly: readOnly,
       decoration: InputDecoration(
           hintText: hintText,
