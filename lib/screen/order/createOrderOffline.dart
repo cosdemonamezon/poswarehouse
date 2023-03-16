@@ -114,7 +114,19 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
         }
       });
     } catch (e) {
-      e.toString();
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialogYes(
+            title: 'แจ้งเตือน',
+            description: e.toString(),
+            pressYes: () {
+              Navigator.pop(context, true);
+            },
+          );
+        },
+      );
     }
   }
 
