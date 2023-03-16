@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 
 class DetailSaleItem extends StatefulWidget {
-  DetailSaleItem({Key? key}) : super(key: key);
+  DetailSaleItem({Key? key, required this.id}) : super(key: key);
+  String id;
 
   @override
   State<DetailSaleItem> createState() => _DetailSaleItemState();
 }
 
 class _DetailSaleItemState extends State<DetailSaleItem> {
+  @override
+  void initState() {
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

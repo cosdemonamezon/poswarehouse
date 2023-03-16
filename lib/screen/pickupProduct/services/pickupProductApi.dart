@@ -43,6 +43,24 @@ class PickupProductApi {
     }
   }
 
+  // Get Order By Id
+  static Future<ReceivingGoods> getOrderById(String id) async {
+    final url = Uri.https(publicUrl, '/pos/public/api/get_stock_pickout_line/$id');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return ReceivingGoods.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
   static Future<AllReceiving> getPickups({
     int start = 0,
     int length = 10,

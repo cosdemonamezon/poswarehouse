@@ -137,7 +137,7 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                                             DataCell(IconButton(
                                                 onPressed: () {
                                                   Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context) => DetailSaleItem()));
+                                                      MaterialPageRoute(builder: (context) => DetailSaleItem(id: '${controller.orders!.data![index].id}',)));
                                                 },
                                                 icon: Icon(Icons.more_vert)))
                                           ],
