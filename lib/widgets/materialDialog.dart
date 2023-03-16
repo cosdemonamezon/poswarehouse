@@ -213,3 +213,27 @@ class AlertDialogYes extends StatelessWidget {
   }
 }
 
+class AlertDialogChangs extends StatelessWidget {
+  AlertDialogChangs({Key? key, required this.description, required this.pressYes, required this.title}) : super(key: key);
+  final String title, description;
+  final VoidCallback pressYes;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Center(child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50))),
+      content: Text(
+        description, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60),),
+      actions: [
+        Center(
+          child: TextButton(
+            //textColor: Color(0xFF6200EE),
+            onPressed: pressYes,
+            child: Text('ตกลง',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
