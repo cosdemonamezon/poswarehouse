@@ -10,6 +10,8 @@ import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/purchase.dart';
+
 class OrderPage extends StatefulWidget {
   OrderPage({Key? key}) : super(key: key);
 
@@ -19,6 +21,7 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   int start = 10;
+  // List<Purchase> productData = [];
 
   @override
   void initState() {
@@ -29,7 +32,15 @@ class _OrderPageState extends State<OrderPage> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<OrdersController>().getListOrders();
+    // final _productData = context.read<OrdersController>().purchaseProduct!.data;
+    // setState(() {
+    //   productData = _productData!;
+    // });
     LoadingDialog.close(context);
+  }
+
+  Future<void> _initialize2() async {
+    await context.read<OrdersController>().getListOrders();
   }
 
   @override
@@ -57,6 +68,22 @@ class _OrderPageState extends State<OrderPage> {
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
+                          onChanged: (p0) {
+                            final suggestion = controller.purchaseProduct!.data!.where((product) {
+                              final productTitle = product.stock_purchase_no!.toLowerCase();
+                              final input = p0!.toLowerCase();
+
+                              return productTitle.contains(input);
+                            }).toList();
+
+                            setState(() {
+                              if (p0 != null) {
+                                controller.purchaseProduct!.data = suggestion;
+                              } else {
+                                _initialize2();
+                              }
+                            });
+                          },
                           preIcon: Icons.search,
                           vertical: 25.0,
                           horizontal: 10.0,
@@ -166,12 +193,13 @@ class _OrderPageState extends State<OrderPage> {
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 IconButton(
-                                                    onPressed: () async{
+                                                    onPressed: () async {
                                                       final _recive = await Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) => DetailOrderPage(
-                                                                    stock_purchase_no: '${controller.purchaseProduct!.data![index].stock_purchase_no}',
+                                                                    stock_purchase_no:
+                                                                        '${controller.purchaseProduct!.data![index].stock_purchase_no}',
                                                                   )));
                                                       if (_recive == true) {
                                                         _initialize();
@@ -180,7 +208,6 @@ class _OrderPageState extends State<OrderPage> {
                                                       }
                                                     },
                                                     icon: Icon(Icons.remove_red_eye_outlined)),
-                                                
                                               ],
                                             ))
                                           ],
@@ -227,4 +254,15 @@ class _OrderPageState extends State<OrderPage> {
       );
     });
   }
+
+  // void searchProduct(String query) {
+  //   final suggestion = widget.allProduct!.where((product) {
+  //     final productTitle = product.name!.toLowerCase();
+  //     final input = query.toLowerCase();
+
+  //     return productTitle.contains(input);
+  //   }).toList();
+
+  //   setState(() =>  purchaseProduct = suggestion);
+  // }
 }

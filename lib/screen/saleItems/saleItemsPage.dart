@@ -32,6 +32,7 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
     await context.read<PickupProductController>().getListPickupProducts();
     LoadingDialog.close(context);
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -57,6 +58,16 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
+                          onChanged: (p0) {
+                            final suggestion = controller.allReceiving!.data!.where((product) {
+                              final productTitle = product.stock_pick_out_no!.toLowerCase();
+                              final input = p0!.toLowerCase();
+
+                              return productTitle.contains(input);
+                            }).toList();
+
+                            setState(() => controller.allReceiving!.data = suggestion);
+                          },
                           preIcon: Icons.search,
                           vertical: 25.0,
                           horizontal: 10.0,
@@ -86,58 +97,60 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                   height: size.height * 0.02,
                 ),
                 controller.allReceiving != null
-                ?SizedBox(
-                  width: double.infinity,
-                  child: controller.allReceiving!.data!.isNotEmpty
-                  ?DataTable(
-                      columns: <DataColumn>[
-                        DataColumn(
-                          label: Text('#'),
-                        ),
-                        DataColumn(
-                          label: Text('รหัส'),
-                        ),
-                        DataColumn(
-                          label: Text('วันที่'),
-                        ),
-                        
-                        DataColumn(
-                          label: Text(''),
-                        ),
-                      ],
-                      rows: List<DataRow>.generate(
-                          controller.allReceiving!.data!.length,
-                          (index) => DataRow(
-                                color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                  // All rows will have the same selected color.
-                                  if (states.contains(MaterialState.selected)) {
-                                    return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                                  }
-                                  // Even rows will have a grey color.
-                                  if (index.isEven) {
-                                    return Colors.grey.withOpacity(0.3);
-                                  }
-                                  return null; // Use default value for other states and odd rows.
-                                }),
-                                cells: <DataCell>[
-                                  DataCell(Text('${controller.allReceiving!.data![index].No}')),
-                                  DataCell(Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
-                                  DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),                                  
-                                  DataCell(IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) => DetailSaleItem()));
-                                      },
-                                      icon: Icon(Icons.more_vert)))
-                                ],
-                                // selected: selected[index],
-                                // onSelectChanged: (bool? value) {
-                                //   setState(() {
-                                //     selected[index] = value!;
-                                //   });
-                                // },
-                              ))):SizedBox(),
-                ):SizedBox(),
+                    ? SizedBox(
+                        width: double.infinity,
+                        child: controller.allReceiving!.data!.isNotEmpty
+                            ? DataTable(
+                                columns: <DataColumn>[
+                                    DataColumn(
+                                      label: Text('#'),
+                                    ),
+                                    DataColumn(
+                                      label: Text('รหัส'),
+                                    ),
+                                    DataColumn(
+                                      label: Text('วันที่'),
+                                    ),
+                                    DataColumn(
+                                      label: Text(''),
+                                    ),
+                                  ],
+                                rows: List<DataRow>.generate(
+                                    controller.allReceiving!.data!.length,
+                                    (index) => DataRow(
+                                          color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                                            // All rows will have the same selected color.
+                                            if (states.contains(MaterialState.selected)) {
+                                              return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                                            }
+                                            // Even rows will have a grey color.
+                                            if (index.isEven) {
+                                              return Colors.grey.withOpacity(0.3);
+                                            }
+                                            return null; // Use default value for other states and odd rows.
+                                          }),
+                                          cells: <DataCell>[
+                                            DataCell(Text('${controller.allReceiving!.data![index].No}')),
+                                            DataCell(
+                                                Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
+                                            DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
+                                            DataCell(IconButton(
+                                                onPressed: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context) => DetailSaleItem()));
+                                                },
+                                                icon: Icon(Icons.more_vert)))
+                                          ],
+                                          // selected: selected[index],
+                                          // onSelectChanged: (bool? value) {
+                                          //   setState(() {
+                                          //     selected[index] = value!;
+                                          //   });
+                                          // },
+                                        )))
+                            : SizedBox(),
+                      )
+                    : SizedBox(),
                 // controller.allProduct != null
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -170,5 +183,6 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
           ),
         ),
       );
-  });}
+    });
+  }
 }

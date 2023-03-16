@@ -137,10 +137,7 @@ class ProductApi {
     required String code,
     required String units,
   }) async {
-    final headers = {
-      'Authorization': 'Bearer',
-      'Content-Type': 'multipart/form-data'
-    };
+    final headers = {'Authorization': 'Bearer', 'Content-Type': 'multipart/form-data'};
     var formData = FormData.fromMap(
       {
         'category_product_id': category_product_id,
@@ -201,10 +198,7 @@ class ProductApi {
     required String code,
     required String units,
   }) async {
-    final headers = {
-      'Authorization': 'Bearer',
-      'Content-Type': 'multipart/form-data'
-    };
+    final headers = {'Authorization': 'Bearer', 'Content-Type': 'multipart/form-data'};
     var formData = FormData.fromMap(
       {
         'id': id,
@@ -231,7 +225,6 @@ class ProductApi {
         data: formData,
         options: Options(headers: headers),
       );
-      
     } on DioError catch (e) {
       throw (e.response?.data['message']);
     }
@@ -248,10 +241,7 @@ class ProductApi {
       '/pos-api/public/api/sub_category/$catagoryId',
     );
 
-    final response = await http.delete(url, headers: {
-      'Authorization': 'Bearer ',
-      'Content-Type': 'application/json'
-    });
+    final response = await http.delete(url, headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
 
     if (response.statusCode == 201) {
     } else {
@@ -265,17 +255,13 @@ class ProductApi {
     String title,
     int catagoryId,
   ) async {
-    final url =
-        Uri.http(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
+    final url = Uri.http(publicUrl, '/pos-api/public/api/sub_category/$catagoryId');
 
     final response = await http.put(url,
         body: jsonEncode({
           "name": title,
         }),
-        headers: {
-          'Authorization': 'Bearer ',
-          'Content-Type': 'application/json'
-        });
+        headers: {'Authorization': 'Bearer ', 'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {
       return true;
@@ -285,14 +271,8 @@ class ProductApi {
   }
 
   //สร้างออร์เดอร์ก่อนจ่ายเงิน
-  static Future<OrderProduct> newOrder(
-      String order_date,
-      String name,
-      String phone,
-      String email,
-      String address,
-      String type,
-      List<NewOrders> orders) async {
+  static Future<OrderProduct> newOrder(String order_date, String name, String phone, String email, String address,
+      String type, List<NewOrders> orders) async {
     final url = Uri.http(publicUrl, '/pos-api/public/api/order');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -325,8 +305,7 @@ class ProductApi {
     final response = await http.post(
       url,
       headers: headers,
-      body: convert.jsonEncode(
-          {"order_no": order_no, "payment": "cash", "amount": amount}),
+      body: convert.jsonEncode({"order_no": order_no, "payment": "cash", "amount": amount}),
     );
 
     if (response.statusCode == 200) {

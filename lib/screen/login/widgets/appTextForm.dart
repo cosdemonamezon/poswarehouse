@@ -190,13 +190,26 @@ class _AppTextFormEmailState extends State<AppTextFormEmail> {
 }
 
 class appTextFormField extends StatelessWidget {
-  appTextFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.onChanged, required this.horizontal, required this.vertical, this.controller, this.validator,this.color, required this.readOnly, this.onEditingComplete});
+  appTextFormField(
+      {super.key,
+      this.preIcon,
+      this.sufIcon,
+      required this.sufPress,
+      this.onChanged,
+      required this.horizontal,
+      required this.vertical,
+      this.controller,
+      this.validator,
+      this.color,
+      required this.readOnly,
+      this.onEditingComplete,
+      this.hintText});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
   void Function(String?)? onChanged;
   VoidCallback? onEditingComplete;
-  
+  final String? hintText;
   final double vertical;
   final double horizontal;
   final TextEditingController? controller;
@@ -211,8 +224,8 @@ class appTextFormField extends StatelessWidget {
       //keyboardType: TextInputType.number,
       readOnly: readOnly,
       decoration: InputDecoration(
-          contentPadding:
-              EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
+          hintText: hintText,
+          contentPadding: EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
           filled: true,
           fillColor: color,
           border: OutlineInputBorder(
@@ -221,20 +234,17 @@ class appTextFormField extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          prefixIcon: preIcon != null ? Icon(preIcon) :null,
-          suffixIcon: sufPress != null
-          ?IconButton(
-            onPressed: sufPress,
-            icon: Icon(sufIcon)):null),
-          validator: validator,
-          onChanged: onChanged,
-          onEditingComplete: onEditingComplete,
+          prefixIcon: preIcon != null ? Icon(preIcon) : null,
+          suffixIcon: sufPress != null ? IconButton(onPressed: sufPress, icon: Icon(sufIcon)) : null),
+      validator: validator,
+      onChanged: onChanged,
+      onEditingComplete: onEditingComplete,
     );
   }
 }
 
 class appTextTowFormField extends StatelessWidget {
-  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress,  this.controller, this.labelText});
+  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.controller, this.labelText});
   IconData? preIcon;
   IconData? sufIcon;
   VoidCallback sufPress;
@@ -246,7 +256,7 @@ class appTextTowFormField extends StatelessWidget {
       controller: controller,
       textAlign: TextAlign.start,
       decoration: InputDecoration(
-        labelText: '${labelText}',
+          labelText: '${labelText}',
           filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
@@ -254,11 +264,8 @@ class appTextTowFormField extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          prefixIcon: preIcon != null ? Icon(preIcon) :null,
-          suffixIcon: sufPress != null
-          ?IconButton(
-            onPressed: sufPress,
-            icon: Icon(sufIcon)):null),
+          prefixIcon: preIcon != null ? Icon(preIcon) : null,
+          suffixIcon: sufPress != null ? IconButton(onPressed: sufPress, icon: Icon(sufIcon)) : null),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/extension/dateExtension.dart';
@@ -58,6 +59,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   int total = 0;
   int vat = 0;
   int alltotal = 0;
+  int am = 1;
+  List<NewOrders> selectA = [];
+  List<Product> edd = [];
 
   @override
   void initState() {
@@ -76,7 +80,42 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   Future<void> _initialize() async {
     LoadingDialog.open(context);
     await context.read<ProductController>().getListProducts();
+
     LoadingDialog.close(context);
+  }
+
+  Future<void> test01(String productcode) async {
+    print(productcode);
+    // await context.read<ProductController>().getListProducts();
+
+    try {
+      final abc = await context.read<ProductController>().allProduct!.data;
+      await context.read<ProductController>().getDetailProduct(productcode);
+
+      final product = context.read<ProductController>().product!;
+      setState(() {
+        final found = listneworder.firstWhereOrNull((p) => p.product?.id == product.id);
+        inspect(found);
+        if (found != null) {
+          found.qty = found.qty! + 1;
+        } else {
+          final newOrder = NewOrders(
+            product.id.toString(),
+            am,
+            0,
+            product.cost,
+            15,
+            product.unit_id!,
+            context.read<ProductController>().units!.data![0],
+            product,
+            false,
+          );
+          listneworder.add(newOrder);
+        }
+      });
+    } catch (e) {
+      e.toString();
+    }
   }
 
   Future<void> _unitinitialize() async {
@@ -281,30 +320,29 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                         width: size.width * 0.12,
                                         child: RawKeyboardListener(
                                           focusNode: mainFocusNode,
-                                          autofocus:true,
-                                          onKey: (RawKeyEvent event) {                
-                                            
+                                          autofocus: true,
+                                          onKey: (RawKeyEvent event) {
                                             if (event.runtimeType.toString() == 'RawKeyUpEvent') {
                                               //print(event.logicalKey.keyLabel);
                                               setState(() {
-                                                if (event.logicalKey.keyLabel != 'Enter' && event.logicalKey.keyLabel != 'Shift Left') {
+                                                if (event.logicalKey.keyLabel != 'Enter' &&
+                                                    event.logicalKey.keyLabel != 'Shift Left') {
                                                   searchProduct.text += event.logicalKey.keyLabel;
-                                                } else {
+                                                } else if (event.logicalKey.keyLabel == 'Enter') {
                                                   //test.clear();
                                                   print('55555');
+                                                  test01(searchProduct.text);
+                                                  searchProduct.clear();
+                                                  return;
                                                 }
                                               });
                                               //print(event.runtimeType.toString());
                                               //print(event.logicalKey.keyLabel);
                                             }
-                                      
-                                                                          
                                           },
                                           child: TextFormField(
                                             controller: searchProduct,
-                                            onFieldSubmitted: (_) async {
-                                              
-                                            },
+                                            onFieldSubmitted: (_) async {},
                                           ),
                                         ),
                                       ),
@@ -330,8 +368,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                             if (_select != null && _select.isNotEmpty) {
                                               setState(() {
                                                 final List<NewOrders> select = _select
-                                                    .map((e) => NewOrders(e.id.toString(), 0, 0, e.cost!, 15,
-                                                        e.unit_id!, controller.units!.data![0], e, false))
+                                                    .map((e) => NewOrders(e.id.toString(), 0, 0, e.cost, 15, e.unit_id!,
+                                                        controller.units!.data![0], e, false))
                                                     .toList();
 
                                                 listneworder.addAll(select);
@@ -375,6 +413,23 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                               setState(() {
                                                 radioButtonItem = '${checkListItems[index]["valuetitle"]}';
                                                 id = int.parse(checkListItems[index]["id"].toString());
+                                                if (listneworder.isNotEmpty) {
+                                                  if (id == 1) {
+                                                    for (var i = 0; i < listneworder.length; i++) {
+                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                    }
+                                                  }
+                                                  if (id == 2) {
+                                                    for (var i = 0; i < listneworder.length; i++) {
+                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                    }
+                                                  }
+                                                  if (id == 3) {
+                                                    for (var i = 0; i < listneworder.length; i++) {
+                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                    }
+                                                  } else {}
+                                                }
                                               });
                                             },
                                           ),
@@ -413,7 +468,6 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   DataColumn(
                                                     label: Center(child: Text('ราคา')),
                                                   ),
-                                                  
                                                   DataColumn(
                                                     label: Text('จำนวน'),
                                                   ),
@@ -440,7 +494,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                             return null; // Use default value for other states and odd rows.
                                                           }),
                                                           cells: <DataCell>[
-                                                            DataCell(Text('${listneworder[index].product!.No}')),
+                                                            DataCell(Text('${listneworder[index].product!.code}')),
                                                             DataCell(Text('${listneworder[index].product!.name}')),
                                                             DataCell(SizedBox(
                                                               width: size.width * 0.05,
