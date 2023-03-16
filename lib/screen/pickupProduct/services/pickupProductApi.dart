@@ -18,6 +18,7 @@ class PickupProductApi {
   static Future<Orders> getOrders({
     int start = 0,
     int length = 10,
+    String? search = '',
   }) async {
     final url = Uri.https(publicUrl, '/pos/public/api/order_page');
     var headers = {'Content-Type': 'application/json'};
@@ -31,7 +32,7 @@ class PickupProductApi {
         ],
         "start": start,
         "length": length,
-        "search": {"value": "", "regex": false}
+        "search": {"value": search, "regex": false}
       }),
     );
 

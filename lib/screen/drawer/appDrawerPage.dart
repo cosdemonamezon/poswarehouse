@@ -116,7 +116,7 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
           Divider(),
           ListTile(
             title:
-                Center(child: Text("คืนสินค้า", style: TextStyle(fontSize: 16))),
+                Center(child: Text("สินค้าชำรุด", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.settings),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {

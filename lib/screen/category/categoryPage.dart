@@ -167,7 +167,6 @@ class _CategoryPageState extends State<CategoryPage> {
                                             DataCell(Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
-                                                IconButton(onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
                                                 IconButton(
                                                   onPressed: () {
                                                     showDialog<String>(
@@ -219,7 +218,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                                       ),
                                                     );
                                                   },
-                                                  icon: Icon(Icons.edit_calendar_sharp),
+                                                  icon: Icon(Icons.edit),
                                                 ),
                                                 IconButton(
                                                   onPressed: () {

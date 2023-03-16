@@ -4,10 +4,11 @@ import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
 import 'package:poswarehouse/screen/returnproduct/createReturnProduct.dart';
 import 'package:poswarehouse/screen/returnproduct/detailReturnProduct.dart';
+import 'package:poswarehouse/screen/returnproduct/returnProductController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
 
-import '../pickupProduct/services/pickupProductController.dart';
+import 'returnProductDetailPage.dart';
 
 class ReturnProductPage extends StatefulWidget {
   ReturnProductPage({Key? key}) : super(key: key);
@@ -18,8 +19,7 @@ class ReturnProductPage extends StatefulWidget {
 
 class _ReturnProductPageState extends State<ReturnProductPage> {
   int start = 0;
-  static const int numItems = 10;
-  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+
   @override
   void initState() {
     super.initState();
@@ -27,20 +27,18 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
   }
 
   Future<void> _initialize() async {
-    LoadingDialog.open(context);
-    await context.read<PickupProductController>().getListPickupProducts();
-    LoadingDialog.close(context);
+    context.read<ReturnProductController>().initialinze();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer<PickupProductController>(
-      builder: (context, controller, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('คืนสินค้า'),
-        ),
-        body: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('สินค้าชำรุด'),
+      ),
+      body: Consumer<ReturnProductController>(builder: (context, controller, child) {
+        return SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -51,45 +49,48 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                        width: size.width * 0.64,
-                        height: size.height * 0.08,
-                        child: appTextFormField(
-                          sufPress: () {},
-                          readOnly: false,
-                          preIcon: Icons.search,
-                          vertical: 25.0,
-                          horizontal: 10.0,
-                        )),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: GestureDetector(
-                        onTap: () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateReturnProduct()));
-                        },
-                        child: Container(
-                          width: size.width * 0.2,
-                          height: size.height * 0.08,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
-                          child: Center(
-                            child: Text(
-                              'สร้างรายการคืนสินค้า',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                            ),
-                          ),
-                        ),
+                    Expanded(
+                      flex: 3,
+                      child: appTextFormField(
+                        sufPress: () {},
+                        readOnly: false,
+                        preIcon: Icons.search,
+                        vertical: 25.0,
+                        horizontal: 10.0,
                       ),
                     ),
+                    // Flexible(
+                    //   flex: 1,
+                    //   child: Padding(
+                    //     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    //     child: GestureDetector(
+                    //       onTap: () async {
+                    //         Navigator.push(context, MaterialPageRoute(builder: (context) => CreateReturnProduct()));
+                    //       },
+                    //       child: Container(
+                    //         width: size.width * 0.2,
+                    //         height: size.height * 0.08,
+                    //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
+                    //         child: Center(
+                    //           child: Text(
+                    //             'สร้างรายการคืนสินค้า',
+                    //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                controller.allReceiving != null
+                controller.purchaseDamages.isNotEmpty
                     ? Container(
                         decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                         width: double.infinity,
-                        child: controller.allReceiving!.data!.isNotEmpty
+                        child: controller.purchaseDamages.isNotEmpty
                             ? DataTable(
                                 dataRowHeight: size.height * 0.08,
                                 columns: <DataColumn>[
@@ -107,7 +108,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      'วันที่',
+                                      'หมายเหตุ',
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                   ),
@@ -122,7 +123,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                   ),
                                 ],
                                 rows: List<DataRow>.generate(
-                                    controller.allReceiving!.data!.length,
+                                    controller.purchaseDamages.length,
                                     (index) => DataRow(
                                           color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                             // All rows will have the same selected color.
@@ -136,22 +137,18 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                             return null; // Use default value for other states and odd rows.
                                           }),
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.allReceiving!.data![index].No}')),
-                                            DataCell(
-                                                Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
-                                            DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
+                                            DataCell(Text('${controller.purchaseDamages[index]}')),
+                                            DataCell(Text('${controller.purchaseDamages[index].stock_purchase_no}')),
+                                            DataCell(Text(controller.purchaseDamages[index].remark ?? '-')),
                                             DataCell(Chip(
                                                 labelPadding: EdgeInsets.all(2.0),
-                                                shape:
-                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                                 labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
                                                 elevation: 6.0,
                                                 shadowColor: Colors.grey[60],
                                                 backgroundColor:
-                                                    controller.allReceiving!.data![index].status == 'Receive'
-                                                        ? Colors.green
-                                                        : Colors.red,
-                                                label: Text('${controller.allReceiving!.data![index].status}'))),
+                                                    controller.purchaseDamages[index].status == 'Finish' ? Colors.green : Colors.red[100],
+                                                label: Text('${controller.purchaseDamages[index].status}'))),
                                             DataCell(Row(
                                               children: [
                                                 IconButton(
@@ -159,23 +156,21 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                       Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
-                                                              builder: (context) => DetailReturnProduct(
+                                                              builder: (context) => ReturnProductDetailPage(
                                                                     stock_purchase_no:
-                                                                        '${controller.allReceiving!.data![index].stock_pick_out_no}',
+                                                                        '${controller.purchaseDamages[index].stock_purchase_no}',
                                                                   )));
                                                     },
                                                     icon: Icon(Icons.remove_red_eye_outlined)),
-                                                IconButton(onPressed: () {}, icon: Icon(Icons.edit_calendar_outlined)),
-                                                IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
                                               ],
                                             ))
                                           ],
-                                          selected: selected[index],
-                                          onSelectChanged: (bool? value) {
-                                            setState(() {
-                                              selected[index] = value!;
-                                            });
-                                          },
+                                          // selected: selected[index],
+                                          // onSelectChanged: (bool? value) {
+                                          //   setState(() {
+                                          //     selected[index] = value!;
+                                          //   });
+                                          // },
                                         )))
                             : SizedBox(),
                       )
@@ -210,8 +205,8 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
               ],
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

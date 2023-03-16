@@ -58,15 +58,17 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
-                          onChanged: (p0) {
-                            final suggestion = controller.allReceiving!.data!.where((product) {
-                              final productTitle = product.stock_pick_out_no!.toLowerCase();
-                              final input = p0!.toLowerCase();
+                          onChanged: (v) async {
+                            // print(v);
+                            // final suggestion = controller.allReceiving!.data!.where((product) {
+                            //   final productTitle = product.stock_pick_out_no!.toLowerCase();
+                            //   final input = v!.toLowerCase();
 
-                              return productTitle.contains(input);
-                            }).toList();
+                            //   return productTitle.contains(input);
+                            // }).toList();
 
-                            setState(() => controller.allReceiving!.data = suggestion);
+                            // setState(() => controller.allReceiving!.data = suggestion);
+                            await context.read<PickupProductController>().getListOrders(search: v);
                           },
                           preIcon: Icons.search,
                           vertical: 25.0,
@@ -131,8 +133,7 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                                           }),
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.orders!.data![index].id}')),
-                                            DataCell(
-                                                Text('${controller.orders!.data![index].order_no}')),
+                                            DataCell(Text('${controller.orders!.data![index].order_no}')),
                                             DataCell(Text('${controller.orders!.data![index].created_at}')),
                                             DataCell(Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
@@ -156,33 +157,32 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                             : SizedBox(),
                       )
                     : SizedBox(),
-                // controller.allProduct != null
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: size.width * 0.22,
-                      child: NumberPaginator(
-                        // numberPages: controller.allProduct!.last_page!,
-                        config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
-                        numberPages: 1,
-                        onPageChange: (p0) async {
-                          LoadingDialog.open(context);
-                          setState(() {
-                            start = ((p0 - 1) * start) + 10;
-                            print(start);
-                          });
-                          // await context.read<ProductController>().getListProducts(start: start);
-                          if (!mounted) {
-                            return;
-                          }
-                          LoadingDialog.close(context);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                // : SizedBox.shrink(),
+                controller.orders != null
+                    ? SizedBox(
+                        width: size.width * 0.22,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NumberPaginator(
+                              numberPages: controller.orders!.last_page!,
+                              config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
+                              onPageChange: (p0) async {
+                                LoadingDialog.open(context);
+                                setState(() {
+                                  start = ((p0 - 1) * start) + 10;
+                                  print(start);
+                                });
+                                await context.read<PickupProductController>().getListOrders(start: start);
+                                if (!mounted) {
+                                  return;
+                                }
+                                LoadingDialog.close(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),
