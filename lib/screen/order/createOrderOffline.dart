@@ -77,8 +77,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     });
   }
 
-  clearValue(){
-    
+  clearValue() {
     setState(() {
       name!.clear();
       phone!.clear();
@@ -128,7 +127,19 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
         }
       });
     } catch (e) {
-      e.toString();
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialogYes(
+            title: 'แจ้งเตือน',
+            description: e.toString(),
+            pressYes: () {
+              Navigator.pop(context, true);
+            },
+          );
+        },
+      );
     }
   }
 
@@ -851,97 +862,98 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   controller.orderProduct == null
-                                  ?Padding(
-                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        if (listneworder.isNotEmpty) {
-                                          try {
-                                            for (var i = 0; i < listneworder.length; i++) {
-                                              setState(() {
-                                                if (radioButtonItem == 'retail') {
-                                                  listneworder[i].cost = 15;
-                                                } else if (radioButtonItem == 'wholesale') {
-                                                  listneworder[i].cost = 13;
-                                                } else {
-                                                  listneworder[i].cost = 14;
+                                      ? Padding(
+                                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              if (listneworder.isNotEmpty) {
+                                                try {
+                                                  for (var i = 0; i < listneworder.length; i++) {
+                                                    setState(() {
+                                                      if (radioButtonItem == 'retail') {
+                                                        listneworder[i].cost = 15;
+                                                      } else if (radioButtonItem == 'wholesale') {
+                                                        listneworder[i].cost = 13;
+                                                      } else {
+                                                        listneworder[i].cost = 14;
+                                                      }
+                                                    });
+                                                    LoadingDialog.open(context);
+                                                    await context.read<ProductController>().createNewOrder(
+                                                        datePick!.text,
+                                                        name!.text,
+                                                        phone!.text,
+                                                        email!.text,
+                                                        address!.text,
+                                                        radioButtonItem,
+                                                        listneworder);
+                                                    if (controller.orderProduct != null) {
+                                                      LoadingDialog.close(context);
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible: false,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialogYes(
+                                                            title: 'สำเร็จ',
+                                                            description: 'ดำเนินการสำเร็จ',
+                                                            pressYes: () {
+                                                              Navigator.pop(context, true);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    } else {
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible: false,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialogYes(
+                                                            title: 'แจ้งเตือน',
+                                                            description: 'เกิดข้อผิดพลาด',
+                                                            pressYes: () {
+                                                              Navigator.pop(context, true);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                    LoadingDialog.close(context);
+                                                  }
+                                                } on Exception catch (e) {
+                                                  showDialog(
+                                                    context: context,
+                                                    barrierDismissible: false,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialogYes(
+                                                        title: 'แจ้งเตือน',
+                                                        description: e.toString(),
+                                                        pressYes: () {
+                                                          Navigator.pop(context, true);
+                                                        },
+                                                      );
+                                                    },
+                                                  );
                                                 }
-                                              });
-                                              LoadingDialog.open(context);
-                                              await context.read<ProductController>().createNewOrder(
-                                                  datePick!.text,
-                                                  name!.text,
-                                                  phone!.text,
-                                                  email!.text,
-                                                  address!.text,
-                                                  radioButtonItem,
-                                                  listneworder);
-                                              if (controller.orderProduct != null) {
-                                                LoadingDialog.close(context);
-                                                showDialog(
-                                                  context: context,
-                                                  barrierDismissible: false,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialogYes(
-                                                      title: 'สำเร็จ',
-                                                      description: 'ดำเนินการสำเร็จ',
-                                                      pressYes: () {
-                                                        Navigator.pop(context, true);
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                showDialog(
-                                                  context: context,
-                                                  barrierDismissible: false,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialogYes(
-                                                      title: 'แจ้งเตือน',
-                                                      description: 'เกิดข้อผิดพลาด',
-                                                      pressYes: () {
-                                                        Navigator.pop(context, true);
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              }
-                                              LoadingDialog.close(context);
-                                            }
-                                          } on Exception catch (e) {
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return AlertDialogYes(
-                                                  title: 'แจ้งเตือน',
-                                                  description: e.toString(),
-                                                  pressYes: () {
-                                                    Navigator.pop(context, true);
-                                                  },
-                                                );
-                                              },
-                                            );
-                                          }
-                                        } else {}
-                                      },
-                                      child: Container(
-                                        width: size.width * 0.1,
-                                        height: size.height * 0.08,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.white,
-                                            border: Border.all(color: Colors.grey)),
-                                        child: Center(
-                                          child: Text(
-                                            'สร้างออร์เดอร์',
-                                            style: TextStyle(
-                                                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                              } else {}
+                                            },
+                                            child: Container(
+                                              width: size.width * 0.1,
+                                              height: size.height * 0.08,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  color: Colors.white,
+                                                  border: Border.all(color: Colors.grey)),
+                                              child: Center(
+                                                child: Text(
+                                                  'สร้างออร์เดอร์',
+                                                  style: TextStyle(
+                                                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ):SizedBox(),
+                                        )
+                                      : SizedBox(),
                                   controller.orderProduct != null
                                       ? Padding(
                                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -983,8 +995,12 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
 
                                                     setState(() {
                                                       controller.orderProduct = null;
+<<<<<<< HEAD
                                                       if (textPriceController.text !='')
                                                       {
+=======
+                                                      if (textPriceController.text != '') {
+>>>>>>> 1a75f1d5238e0816c4977054a3806d8261704aa0
                                                         changPrice = textPriceController.text;
                                                       }
                                                     });
