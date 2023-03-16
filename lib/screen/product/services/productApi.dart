@@ -16,10 +16,7 @@ import 'package:poswarehouse/models/units.dart';
 class ProductApi {
   const ProductApi();
 
-  static Future<AllProduct> getProducts({
-    int start = 0,
-    int length = 10,
-  }) async {
+  static Future<AllProduct> getProducts({int start = 0, int length = 10, String? search = ''}) async {
     final url = Uri.https(publicUrl, '/pos/public/api/product_page');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.post(
@@ -33,7 +30,7 @@ class ProductApi {
         ],
         "start": start,
         "length": length,
-        "search": {"value": "", "regex": false}
+        "search": {"value": search, "regex": false}
       }),
     );
 
@@ -51,6 +48,26 @@ class ProductApi {
     String id,
   ) async {
     final url = Uri.https(publicUrl, '/pos/public/api/product/$id');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return Product.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  //get by id productCode
+  static Future<Product> getProductByIdCode(
+    String code,
+  ) async {
+    final url = Uri.https(publicUrl, '/pos/public/api/get_by_product_code/$code');
     var headers = {'Content-Type': 'application/json'};
     final response = await http.get(
       url,

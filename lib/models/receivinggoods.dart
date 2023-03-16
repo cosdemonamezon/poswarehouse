@@ -21,25 +21,23 @@ class ReceivingGoods {
   final String? update_by;
   final Product? product;
   final List<Order>? orders;
-  
 
-  ReceivingGoods(    
-    this.id,
-    this.stock_pick_out_no,
-    this.product_id,
-    this.unit_id,
-    this.price,
-    this.qty,
-    this.pick_out_date,
-    this.status,
-    this.remark,
-    this.created_at,
-    this.updated_at,
-    this.create_by,
-    this.update_by,
-    this.product,
-    this.orders
-  );
+  ReceivingGoods(
+      this.id,
+      this.stock_pick_out_no,
+      this.product_id,
+      this.unit_id,
+      this.price,
+      this.qty,
+      this.pick_out_date,
+      this.status,
+      this.remark,
+      this.created_at,
+      this.updated_at,
+      this.create_by,
+      this.update_by,
+      this.product,
+      this.orders);
 
   factory ReceivingGoods.fromJson(Map<String, dynamic> json) => _$ReceivingGoodsFromJson(json);
 

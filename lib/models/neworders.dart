@@ -8,9 +8,9 @@ part 'neworders.g.dart';
 class NewOrders {
   String product_id;
   int? qty;
-  int? price_per_unit;
-  int? cost;
-  int? price;
+  double? price_per_unit;
+  double? cost;
+  double? price;
   int unit_id;
   Unit? unit;
   Product? product;

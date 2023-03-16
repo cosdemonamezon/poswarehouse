@@ -6,7 +6,7 @@ part 'allProduct.g.dart';
 @JsonSerializable()
 class AllProduct {
   final int current_page;
-  final List<Product>? data;
+  List<Product>? data;
   final String? first_page_url;
   final int? from;
   final int? last_page;
@@ -16,18 +16,8 @@ class AllProduct {
   final int? to;
   final int? total;
 
-  AllProduct(
-    this.current_page,
-    this.data,
-    this.first_page_url,
-    this.from,
-    this.last_page,
-    this.last_page_url,
-    this.next_page_url,
-    this.per_page,
-    this.to,
-    this.total
-  );
+  AllProduct(this.current_page, this.data, this.first_page_url, this.from, this.last_page, this.last_page_url,
+      this.next_page_url, this.per_page, this.to, this.total);
 
   factory AllProduct.fromJson(Map<String, dynamic> json) => _$AllProductFromJson(json);
 
