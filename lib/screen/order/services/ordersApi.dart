@@ -59,6 +59,7 @@ class OrdersApi {
   static Future<PurchaseProduct> getOrders({
     int start = 0,
     int length = 10,
+    String? search = '',
   }) async {
     final url = Uri.https(publicUrl, '/pos/public/api/stock_purchase_page');
     var headers = {'Content-Type': 'application/json'};
@@ -72,7 +73,7 @@ class OrdersApi {
         ],
         "start": start,
         "length": length,
-        "search": {"value": "", "regex": false}
+        "search": {"value": search, "regex": false}
       }),
     );
 

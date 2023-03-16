@@ -39,9 +39,9 @@ class _OrderPageState extends State<OrderPage> {
     LoadingDialog.close(context);
   }
 
-  Future<void> _initialize2() async {
-    await context.read<OrdersController>().getListOrders();
-  }
+  // Future<void> _initialize2() async {
+  //   await context.read<OrdersController>().getListOrders();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,21 +68,22 @@ class _OrderPageState extends State<OrderPage> {
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
-                          onChanged: (p0) {
-                            final suggestion = controller.purchaseProduct!.data!.where((e) {
-                              final productTitle = e.stock_purchase_no!.toLowerCase();
-                              final input = p0!.toLowerCase();
+                          onChanged: (p0) async {
+                            // final suggestion = controller.purchaseProduct!.data!.where((e) {
+                            //   final productTitle = e.stock_purchase_no!.toLowerCase();
+                            //   final input = p0!.toLowerCase();
 
-                              return productTitle.contains(input);
-                            }).toList();
+                            //   return productTitle.contains(input);
+                            // }).toList();
 
-                            setState(() {
-                              if (p0 != null) {
-                                controller.purchaseProduct!.data = suggestion;
-                              } else {
-                                _initialize2();
-                              }
-                            });
+                            // setState(() {
+                            //   if (p0 != null) {
+                            //     controller.purchaseProduct!.data = suggestion;
+                            //   } else {
+                            //     _initialize2();
+                            //   }
+                            // });
+                            await context.read<OrdersController>().getListOrders(search: p0);
                           },
                           preIcon: Icons.search,
                           vertical: 25.0,

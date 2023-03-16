@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
@@ -90,11 +90,11 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
 
     try {
       final abc = await context.read<ProductController>().allProduct!.data;
-      await context.read<ProductController>().getDetailProduct(productcode);
+      await context.read<ProductController>().getDetailProductCode(productcode);
 
-      final product = context.read<ProductController>().product!;
+      final product = context.read<ProductController>().productCode!;
       setState(() {
-        final found = listneworder.firstWhereOrNull((p) => p.product?.id == product.id);
+        final found = listneworder.firstWhereOrNull((p) => p.product?.code == product.code);
         inspect(found);
         if (found != null) {
           found.qty = found.qty! + 1;
@@ -102,9 +102,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
           final newOrder = NewOrders(
             product.id.toString(),
             am,
-            0,
-            int.parse(product.cost!),
-            15,
+            double.parse(product.cost!),
+            double.parse(product.cost!),
+            double.parse(product.price_for_retail!),
             int.parse(product.unit_id!),
             context.read<ProductController>().units!.data![0],
             product,
@@ -170,7 +170,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     return Consumer<ProductController>(builder: (context, controller, child) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('สร้างรายการขาย(Test)'),
+          title: Text('สร้างรายการขาย'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -368,8 +368,16 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                             if (_select != null && _select.isNotEmpty) {
                                               setState(() {
                                                 final List<NewOrders> select = _select
-                                                    .map((e) => NewOrders(e.id.toString(), 0, 0, int.parse(e.cost!), 15,
-                                                        int.parse(e.unit_id!), controller.units!.data![0], e, false))
+                                                    .map((e) => NewOrders(
+                                                        e.id.toString(),
+                                                        0,
+                                                        0,
+                                                        double.parse(e.cost!),
+                                                        15,
+                                                        int.parse(e.unit_id!),
+                                                        controller.units!.data![0],
+                                                        e,
+                                                        false))
                                                     .toList();
 
                                                 listneworder.addAll(select);
@@ -416,17 +424,23 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 if (listneworder.isNotEmpty) {
                                                   if (id == 1) {
                                                     for (var i = 0; i < listneworder.length; i++) {
-                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                      // listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                      listneworder[i].cost = double.parse(
+                                                          controller.allProduct!.data![index].price_for_retail!);
                                                     }
                                                   }
                                                   if (id == 2) {
                                                     for (var i = 0; i < listneworder.length; i++) {
-                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                      // listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                      listneworder[i].cost = double.parse(
+                                                          controller.allProduct!.data![index].price_for_wholesale!);
                                                     }
                                                   }
                                                   if (id == 3) {
                                                     for (var i = 0; i < listneworder.length; i++) {
-                                                      listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                      // listneworder[i].price_per_unit = checkListItems[index]["cost"];
+                                                      listneworder[i].cost = double.parse(
+                                                          controller.allProduct!.data![index].price_for_box!);
                                                     }
                                                   } else {}
                                                 }
@@ -455,6 +469,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                             width: double.infinity,
                                             child: DataTable(
                                                 dataRowHeight: size.height * 0.08,
+                                                horizontalMargin: 2,
+                                                columnSpacing: 30,
                                                 columns: <DataColumn>[
                                                   DataColumn(
                                                     label: Text('รหัส'),
@@ -464,6 +480,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   ),
                                                   DataColumn(
                                                     label: Text('รูปภาพ'),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Center(child: Text('ราคาทุน')),
                                                   ),
                                                   DataColumn(
                                                     label: Center(child: Text('ราคา')),
@@ -511,6 +530,29 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                             DataCell(
                                                               InkWell(
                                                                 onTap: () async {
+                                                                  final selectPriceCost = await showDialog<String>(
+                                                                    context: context,
+                                                                    builder: (BuildContext context) =>
+                                                                        InputNumberDialog(),
+                                                                  );
+                                                                  if (selectPriceCost != null) {
+                                                                    setState(() {
+                                                                      listneworder[index].cost =
+                                                                          double.parse(selectPriceCost);
+                                                                    });
+                                                                    inspect(listneworder);
+                                                                  } else {}
+                                                                },
+                                                                child: Container(
+                                                                  width: size.width * 0.03,
+                                                                  child: Center(
+                                                                      child: Text('${listneworder[index].cost}')),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            DataCell(
+                                                              InkWell(
+                                                                onTap: () async {
                                                                   final selectPrice = await showDialog<String>(
                                                                     context: context,
                                                                     builder: (BuildContext context) =>
@@ -519,13 +561,13 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                   if (selectPrice != null) {
                                                                     setState(() {
                                                                       listneworder[index].price_per_unit =
-                                                                          int.parse(selectPrice);
+                                                                          double.parse(selectPrice);
                                                                     });
                                                                     inspect(listneworder);
                                                                   } else {}
                                                                 },
                                                                 child: Container(
-                                                                  width: size.width * 0.05,
+                                                                  width: size.width * 0.03,
                                                                   child: Center(
                                                                       child: Text(
                                                                           '${listneworder[index].price_per_unit}')),
@@ -560,14 +602,14 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                   } else {}
                                                                 },
                                                                 child: Container(
-                                                                  width: size.width * 0.05,
+                                                                  width: size.width * 0.025,
                                                                   child:
                                                                       Center(child: Text('${listneworder[index].qty}')),
                                                                 ),
                                                               ),
                                                             ),
                                                             DataCell(SizedBox(
-                                                              width: size.width * 0.06,
+                                                              width: size.width * 0.04,
                                                               child: Row(
                                                                 children: [
                                                                   InkWell(
@@ -586,7 +628,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                       } else {}
                                                                     },
                                                                     child: Container(
-                                                                      width: size.width * 0.03,
+                                                                      width: size.width * 0.025,
                                                                       child: Center(
                                                                           child: Text(
                                                                               '${listneworder[index].unit!.name}')),

@@ -152,7 +152,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           if (_select != null && _select.isNotEmpty) {
                             setState(() {
                               final List<NewOrders> select = _select
-                                  .map((e) => NewOrders(e.id.toString(), 0, 0, int.parse(e.cost!), 15,
+                                  .map((e) => NewOrders(e.id.toString(), 0, 0, double.parse(e.cost!), 15,
                                       int.parse(e.unit_id!), controller.units!.data![0], e, false))
                                   .toList();
                               listneworder.addAll(select);

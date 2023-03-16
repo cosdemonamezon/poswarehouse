@@ -8,10 +8,10 @@ part 'receivinggoods.g.dart';
 class ReceivingGoods {
   final int id;
   final String? stock_pick_out_no;
-  final int? product_id;
-  final int? unit_id;
+  final String? product_id;
+  final String? unit_id;
   final String? price;
-  final int? qty;
+  final String? qty;
   final String? pick_out_date;
   final String? status;
   final String? remark;
@@ -21,25 +21,23 @@ class ReceivingGoods {
   final String? update_by;
   final Product? product;
   final List<Order>? orders;
-  
 
-  ReceivingGoods(    
-    this.id,
-    this.stock_pick_out_no,
-    this.product_id,
-    this.unit_id,
-    this.price,
-    this.qty,
-    this.pick_out_date,
-    this.status,
-    this.remark,
-    this.created_at,
-    this.updated_at,
-    this.create_by,
-    this.update_by,
-    this.product,
-    this.orders
-  );
+  ReceivingGoods(
+      this.id,
+      this.stock_pick_out_no,
+      this.product_id,
+      this.unit_id,
+      this.price,
+      this.qty,
+      this.pick_out_date,
+      this.status,
+      this.remark,
+      this.created_at,
+      this.updated_at,
+      this.create_by,
+      this.update_by,
+      this.product,
+      this.orders);
 
   factory ReceivingGoods.fromJson(Map<String, dynamic> json) => _$ReceivingGoodsFromJson(json);
 

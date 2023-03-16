@@ -9,9 +9,9 @@ part of 'neworders.dart';
 NewOrders _$NewOrdersFromJson(Map<String, dynamic> json) => NewOrders(
       json['product_id'] as String,
       json['qty'] as int?,
-      json['cost'] as int?,
-      json['price'] as int?,
-      json['price_per_unit'] as int?,
+      (json['cost'] as num?)?.toDouble(),
+      (json['price'] as num?)?.toDouble(),
+      (json['price_per_unit'] as num?)?.toDouble(),
       json['unit_id'] as int,
       json['unit'] == null
           ? null
