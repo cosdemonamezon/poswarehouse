@@ -66,8 +66,8 @@ class _TestProductState extends State<TestProduct> {
                               // padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
                               child: TextField(
                                 controller: search,
-                                onChanged: (v) async {
-                                  await context.read<ProductController>().getListProducts(search: v);
+                                onChanged: (value) async {
+                                  await context.read<ProductController>().getListProducts(search: value);
                                 },
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
