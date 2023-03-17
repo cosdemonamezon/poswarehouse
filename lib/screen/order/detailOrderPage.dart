@@ -244,7 +244,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                                 cells: <DataCell>[
                                                   DataCell(Text('${purchaseOrder!.orders![index].id}')),
                                                   DataCell(Text('${purchaseOrder!.orders![index].stock_purchase_no}')),
-                                                  DataCell(Text('${purchaseOrder!.orders![index].product_id}')),
+                                                  DataCell(Text('${purchaseOrder!.orders![index].product!.code}')),
                                                   DataCell(Text('${purchaseOrder!.orders![index].qty}')),
                                                   DataCell(Text('${purchaseOrder!.orders![index].price}')),
                                                   DataCell(

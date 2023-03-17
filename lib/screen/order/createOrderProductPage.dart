@@ -202,9 +202,9 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                 DataColumn(
                                   label: Text(''),
                                 ),
-                                DataColumn(
-                                  label: Text('เลขที่'),
-                                ),
+                                // DataColumn(
+                                //   label: Text('เลขที่'),
+                                // ),
                                 DataColumn(
                                   label: Text('รหัสสินค้า'),
                                 ),
@@ -234,7 +234,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                           if (index.isEven) {
                                             return Colors.grey.withOpacity(0.3);
                                           }
-                                          return null; 
+                                          return null;
                                         }),
                                         cells: <DataCell>[
                                           DataCell(IconButton(
@@ -244,7 +244,6 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 });
                                               },
                                               icon: Icon(Icons.delete))),
-                                          DataCell(Text('${listneworder[index].product!.No}')),
                                           DataCell(Text('${listneworder[index].product!.code}')),
                                           DataCell(Text('${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
@@ -266,7 +265,9 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                               onTap: () async {
                                                 final selectNumber = await showDialog<String>(
                                                   context: context,
-                                                  builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}',),
+                                                  builder: (BuildContext context) => InputNumberDialog(
+                                                    code: '${listneworder[index].product!.code}',
+                                                  ),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
