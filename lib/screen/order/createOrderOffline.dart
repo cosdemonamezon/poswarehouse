@@ -603,7 +603,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                   onTap: () async {
                                                                     final selectPrice = await showDialog<String>(
                                                                       context: context,
-                                                                      builder: (BuildContext context) => InputNumberDialog(),
+                                                                      builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}'),
                                                                     );
                                                                     if (selectPrice != null) {
                                                                       setState(() {
@@ -635,7 +635,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                   onTap: () async {
                                                                     final selectNumber = await showDialog<String>(
                                                                       context: context,
-                                                                      builder: (BuildContext context) => InputNumberDialog(),
+                                                                      builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}'),
                                                                     );
                                                                     if (selectNumber != null) {
                                                                       setState(() {
@@ -660,6 +660,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                           context: context,
                                                                           builder: (BuildContext context) => UnitDialog(
                                                                             units: controller.units!.data!,
+                                                                            code: '${listneworder[index].product!.code}',
                                                                           ),
                                                                         );
                                                                         if (selectUnit != null) {

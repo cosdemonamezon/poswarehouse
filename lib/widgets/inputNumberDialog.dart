@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class InputNumberDialog extends StatefulWidget {
-  InputNumberDialog(
-      {Key? key, this.code})
-      : super(key: key);
+  InputNumberDialog({Key? key, this.code}) : super(key: key);
   String? code;
 
   @override
@@ -17,6 +15,7 @@ class _InputNumberDialogState extends State<InputNumberDialog> {
     super.dispose();
     numberPick!.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -25,7 +24,10 @@ class _InputNumberDialogState extends State<InputNumberDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('ใส่ตัวเลข', style: TextStyle(fontSize: 16),),
+          Text(
+            'ใส่ตัวเลข',
+            style: TextStyle(fontSize: 16),
+          ),
           Container(
             decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
             child: TextFormField(
@@ -45,15 +47,19 @@ class _InputNumberDialogState extends State<InputNumberDialog> {
       ),
       actions: [
         TextButton(
-          //textColor: Color(0xFF6200EE),
-          onPressed: (){
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: BorderSide(color: Colors.grey, width: 2)))),
+          onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('ยกเลิก'),
+          child: Text('ยกเลิก', style: TextStyle(color: Colors.red),),
         ),
         TextButton(
-          //textColor: Color(0xFF6200EE),
-          onPressed: (){
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: BorderSide(color: Colors.grey, width: 2)))),
+          onPressed: () {
             if (numberPick!.text != "") {
               Navigator.pop(context, numberPick!.text);
             }

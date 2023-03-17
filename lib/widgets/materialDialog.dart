@@ -52,9 +52,7 @@ class _DialogOkState extends State<DialogOk> {
               ),
               SizedBox(height: size.height * 0.02),
               Center(
-                child: Text('เพิ่มหมวดหมู่',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: Text('เพิ่มหมวดหมู่', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               ),
               SizedBox(height: size.height * 0.04),
               Row(
@@ -68,8 +66,7 @@ class _DialogOkState extends State<DialogOk> {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child: Text(
                           'ชื่อประเภทสินค้า',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
@@ -79,8 +76,7 @@ class _DialogOkState extends State<DialogOk> {
                         child: TextFormField(
                           controller: widget.warehouseName,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                             filled: true,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -137,16 +133,11 @@ class _DialogOkState extends State<DialogOk> {
                   child: Container(
                     width: size.width * 0.1,
                     height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                     child: Center(
                       child: Text(
                         'บันทึก',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                   ),
@@ -162,8 +153,7 @@ class _DialogOkState extends State<DialogOk> {
 }
 
 class AlertDialogYesNo extends StatelessWidget {
-  AlertDialogYesNo(
-      {Key? key, required this.description, required this.pressYes, required this.title, required this.pressNo})
+  AlertDialogYesNo({Key? key, required this.description, required this.pressYes, required this.title, required this.pressNo})
       : super(key: key);
   final String title, description;
   final VoidCallback pressYes;
@@ -199,14 +189,22 @@ class AlertDialogYes extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Center(child: Text(title)),
-      content: Text(description),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(description),
+        ],
+      ),
       actions: [
         Center(
           child: TextButton(
-            //textColor: Color(0xFF6200EE),
-            onPressed: pressYes,
-            child: Text('ตกลง'),
-          ),
+              //textColor: Color(0xFF6200EE),
+              onPressed: pressYes,
+              child: Text('ตกลง'),
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: BorderSide(color: Colors.grey))))),
         ),
       ],
     );
@@ -223,17 +221,18 @@ class AlertDialogChangs extends StatelessWidget {
     return AlertDialog(
       title: Center(child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50))),
       content: Text(
-        description, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60),),
+        description,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60),
+      ),
       actions: [
         Center(
           child: TextButton(
             //textColor: Color(0xFF6200EE),
             onPressed: pressYes,
-            child: Text('ตกลง',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
+            child: Text('ตกลง', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
           ),
         ),
       ],
     );
   }
 }
-
