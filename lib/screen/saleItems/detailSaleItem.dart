@@ -201,7 +201,7 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                                   DataCell(
                                       Text('${controller.order!.selling_price}')),
                                   DataCell(
-                                      Text('${controller.order!.selling_price}')),
+                                      Text('${sum(orderline)}')),
                                 ],
                               ))):SizedBox(),
                 ):SizedBox(),

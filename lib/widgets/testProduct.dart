@@ -28,8 +28,10 @@ class _TestProductState extends State<TestProduct> {
   Future<void> _initialize() async {
     await context.read<ProductController>().getListProducts();
     setState(() {
-      images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length,
+      if (context.read<ProductController>().allProduct != null) {
+        images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length,
           (index) => context.read<ProductController>().allProduct!.data![index].image!);
+      }      
       //images.add(context.read<ProductController>().allProduct.data);
       // product2 = context.read<ProductController>().allProduct!.data!;
     });
@@ -67,7 +69,7 @@ class _TestProductState extends State<TestProduct> {
                               child: TextField(
                                 controller: search,
                                 onChanged: (value) async {
-                                  await context.read<ProductController>().getListProducts(search: value);
+                                  await context.read<ProductController>().getSearchProducts(search: value);
                                 },
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -104,7 +106,8 @@ class _TestProductState extends State<TestProduct> {
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                                Container(
+                                controller.allProduct != null
+                                ?Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                                   child: controller.allProduct!.data!.isNotEmpty
@@ -180,7 +183,7 @@ class _TestProductState extends State<TestProduct> {
                                                           child:
                                                               Text('${controller.allProduct!.data![index].remain}'))),
                                                     ],
-                                                    selected: selected[index],
+                                                    selected: controller.allProduct!.data![index].selected ?? false,
                                                     onSelectChanged: (bool? value) {
                                                       setState(() {
                                                         selected[index] = value!;
@@ -195,7 +198,7 @@ class _TestProductState extends State<TestProduct> {
                                                     },
                                                   )))
                                       : SizedBox(),
-                                ),
+                                ): SizedBox(),
                               ],
                             ),
                           ),
@@ -211,11 +214,12 @@ class _TestProductState extends State<TestProduct> {
                                       config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                                       onPageChange: (p0) async {
                                         LoadingDialog.open(context);
-                                        setState(() {
-                                          start = ((p0 - 1) * start) + 10;
-                                          print(start);
-                                        });
-                                        await context.read<ProductController>().getListProducts(start: start);
+                                        // setState(() {
+                                        //   //start = ((p0 - 1) * start) + 10;
+                                        //   start = ((p0) + start) + 10;
+                                        //   print(start);
+                                        // });
+                                        await context.read<ProductController>().getSearchProducts(start: p0 * 10);
                                         if (!mounted) {
                                           return;
                                         }

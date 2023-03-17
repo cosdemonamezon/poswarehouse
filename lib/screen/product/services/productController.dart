@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/models/allProduct.dart';
 import 'package:poswarehouse/models/confirmorder.dart';
@@ -22,6 +24,7 @@ class ProductController extends ChangeNotifier {
   Product? product;
   Product? productCode;
 
+  //get สินค้าทั้งหมด
   getListProducts({
     int start = 0,
     int length = 10,
@@ -33,6 +36,31 @@ class ProductController extends ChangeNotifier {
       search: search,
     );
     // allProduct!.data!.sort((a, b) => b.id.compareTo(a.id));
+    notifyListeners();
+  }
+
+  //ใช้สำหรับ ค้นหา สินค้า
+  getSearchProducts({
+    int start = 0,
+    int length = 10,
+    String? search = '',
+  }) async {
+    final _searchData = await ProductApi.getProducts(
+      start: start,
+      length: length,
+      search: search,
+    );
+    if (allProduct != null) {
+      final _selected = allProduct!.data!.where((p) => p.selected ?? false).toList();
+      final _newdataNoselect = _searchData.data!.where((element) => !(_selected.map((e) => e.id).toList()).contains(element.id)).toList();
+      //allProduct!.data
+      inspect(_selected);
+      inspect(_newdataNoselect);
+      allProduct!.data = [];
+      allProduct!.data!.addAll([..._selected,..._newdataNoselect]);
+    } else {
+      
+    }    
     notifyListeners();
   }
 

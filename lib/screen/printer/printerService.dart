@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poswarehouse/models/printer.dart';
@@ -12,6 +14,8 @@ class PrinterService {
   Future<void> print(Printer printer) async {
     await SunmiPrinter.initPrinter();
     await SunmiPrinter.startTransactionPrint(true);
+    const utf8Encoder = Utf8Encoder();
+    
 
     //Uint8List byte = await _getImageFromAsset('assets/images/asha.jpg');
     // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
@@ -47,7 +51,13 @@ class PrinterService {
     await SunmiPrinter.line();
     await SunmiPrinter.setCustomFontSize(18);
     for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
-      await SunmiPrinter.printRow(cols: [
+    //final encodedStr = utf8Encoder.convert('${printer.confirmOrder!.orders![i].product!.name}');
+      
+    //   bytes += generator.textEncoded(Uint8List.fromList([
+    //   ...[0x1C, 0x26, 0x1C, 0x43, 0xFF],
+    //   ...encodedStr
+    // ]));
+      await SunmiPrinter.printRow(cols: [        
         ColumnMaker(
           text: '${printer.confirmOrder!.orders![i].product!.code}',
           width: 27,

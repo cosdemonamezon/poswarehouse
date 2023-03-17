@@ -56,8 +56,9 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
   }
 
   double sum(List<Order> orders) => orders.fold(0, (previous, o) => previous + (int.parse(o.qty!) * double.parse(o.price!)));
-  double sumVat(List<Order> orders) => double.parse((sum(orders) * (vat / 100)).toStringAsFixed(2));
-  double total(List<Order> orders) => sum(orders) + sumVat(orders);
+  //double sumVat(List<Order> orders) => double.parse((sum(orders) * (vat / 100)).toStringAsFixed(2));
+  //double total(List<Order> orders) => sum(orders) + sumVat(orders);
+  double total(List<Order> orders) => sum(orders);
 
   @override
   Widget build(BuildContext context) {
@@ -333,7 +334,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'รวม',
+                                                'ราคารวม',
                                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                               ),
                                               Text(
@@ -343,22 +344,22 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                             ],
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 10),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'ภาษีมูลค่าเพิ่ม $vat%',
-                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                              ),
-                                              Text(
-                                                '${sumVat(purchaseOrder!.orders!)}',
-                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                        // Padding(
+                                        //   padding: EdgeInsets.symmetric(horizontal: 10),
+                                        //   child: Row(
+                                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //     children: [
+                                        //       Text(
+                                        //         'ภาษีมูลค่าเพิ่ม $vat%',
+                                        //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        //       ),
+                                        //       Text(
+                                        //         '${sumVat(purchaseOrder!.orders!)}',
+                                        //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        //       )
+                                        //     ],
+                                        //   ),
+                                        // ),
                                         Container(
                                           decoration: BoxDecoration(
                                             color: Color.fromARGB(255, 245, 250, 255),
