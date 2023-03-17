@@ -72,7 +72,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
     _unitinitialize();
-    _printerInitail();
+    //_printerInitail();
     textPriceController.text;
     setState(() {
       radioButtonItem = checkListItems[0]['valuetitle'];
@@ -187,7 +187,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
 
   double sum(List<NewOrders> orders) => orders.fold(0, (previous, o) => previous + (o.qty! * o.price_per_unit!));
   double sumVat(List<NewOrders> orders) => double.parse((sum(orders) * (vat / 100)).toStringAsFixed(2));
-  double newtotal(List<NewOrders> orders) => sum(orders) + sumVat(orders);
+  //double newtotal(List<NewOrders> orders) => sum(orders) + sumVat(orders);
+  double newtotal(List<NewOrders> orders) => sum(orders);
   int newQty(List<NewOrders> orders) => orders.fold(0, (previousValue, e) => previousValue + e.qty!);
 
   @override

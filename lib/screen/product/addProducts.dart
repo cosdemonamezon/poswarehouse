@@ -141,7 +141,7 @@ class _AddProductsState extends State<AddProducts> {
                                 horizontal: 10.0,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                    return 'กรุณาระบุราคายกลัง';
                                   }
                                   return null;
                                 },
@@ -164,7 +164,7 @@ class _AddProductsState extends State<AddProducts> {
                                 horizontal: 10.0,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                    return 'กรุณาระบุราคาทุน';
                                   }
                                   return null;
                                 },
@@ -232,13 +232,18 @@ class _AddProductsState extends State<AddProducts> {
                                     )
                                   : SizedBox()
                               : SizedBox(),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2),
-                            child: Text(
-                              'คลังสินค้า',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                          ),
+                          ///////////////////////////----
+                          controllerCategory.getCategoryId != null
+                              ? controllerCategory.getCategoryId!.isNotEmpty
+                                  ? Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 2),
+                                      child: Text(
+                                        'คลังสินค้า',
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                      ),
+                                    )
+                                  : SizedBox.shrink()
+                              : SizedBox.shrink(),
                           controllerCategory.getCategoryId != null
                               ? controllerCategory.getCategoryId!.isNotEmpty
                                   ? context.read<CategoryController>().getCategoryId!.isNotEmpty
@@ -315,7 +320,7 @@ class _AddProductsState extends State<AddProducts> {
                                 horizontal: 10.0,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                    return 'กรุณาระบุชื่อสินค้า';
                                   }
                                   return null;
                                 },
@@ -338,7 +343,7 @@ class _AddProductsState extends State<AddProducts> {
                                 horizontal: 10.0,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'กรุณากรอกรายละเอียดสินค้า';
+                                    return 'กรุณาระบุรายละเอียดสินค้า';
                                   }
                                   return null;
                                 },
@@ -361,7 +366,7 @@ class _AddProductsState extends State<AddProducts> {
                                 horizontal: 10.0,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                    return 'กรุณาระบุราคาขายปลีก';
                                   }
                                   return null;
                                 },
@@ -384,7 +389,7 @@ class _AddProductsState extends State<AddProducts> {
                                 horizontal: 10.0,
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                    return 'กกรุณาระบุราคาขายส่ง';
                                   }
                                   return null;
                                 },
@@ -499,8 +504,10 @@ class _AddProductsState extends State<AddProducts> {
                             for (var i = 0; i < add.length; i++) {
                               selectlist = selectlist + add[i] + ',';
                             }
-                            selectlist = selectlist.substring(0, selectlist.length - 1);
-                            inspect(selectlist);
+                            if (selectlist != "") {
+                              selectlist = selectlist.substring(0, selectlist.length - 1);
+                            }
+                            //inspect(selectlist);
                             //selectlist = '';
                           });
                           if (image != null && addProductFormKey.currentState!.validate()) {
@@ -550,7 +557,21 @@ class _AddProductsState extends State<AddProducts> {
                               );
                             }
                           } else {
-                            print('object Data is not mat');
+                            if (image == null) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialogYes(
+                                    title: 'แจ้งเตือน',
+                                    description: 'โปรดเลือกรูปสินค้าก่อนทำรายการ',
+                                    pressYes: () {
+                                      Navigator.pop(context, true);
+                                    },
+                                  );
+                                },
+                              );
+                            }
                           }
                         },
                         child: Container(
