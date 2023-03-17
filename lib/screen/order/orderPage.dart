@@ -64,7 +64,7 @@ class _OrderPageState extends State<OrderPage> {
                   children: [
                     SizedBox(
                         width: size.width * 0.64,
-                        height: size.height * 0.08,
+                        height: size.height * 0.07,
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
@@ -103,7 +103,7 @@ class _OrderPageState extends State<OrderPage> {
                         },
                         child: Container(
                           width: size.width * 0.1,
-                          height: size.height * 0.08,
+                          height: size.height * 0.07,
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
                           child: Center(
                             child: Text(
