@@ -14,6 +14,7 @@ import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:poswarehouse/widgets/inputNumberDialog.dart';
 import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:poswarehouse/widgets/productDialog.dart';
+import 'package:poswarehouse/widgets/testProduct.dart';
 import 'package:poswarehouse/widgets/unitDialog.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
 
   List<NewOrders> listneworder = [];
   NewOrders? order;
+  int amqty = 1;
 
   @override
   void initState() {
@@ -61,8 +63,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer2<ProductController, PickupProductController>(
-        builder: (context, controller, pickupController, child) {
+    return Consumer2<ProductController, PickupProductController>(builder: (context, controller, pickupController, child) {
       return Scaffold(
         appBar: AppBar(
           title: Text('สร้างรายการเบิกสินค้า'),
@@ -116,7 +117,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                   ],
                 ),
                 SizedBox(
-                  height: size.height * 0.02,
+                  height: size.height * 0.01,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,23 +139,16 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                             context: context,
                             barrierDismissible: false,
                             builder: (BuildContext context) {
-                              return ProductDialog(
-                                title: '',
-                                description: '',
-                                allProduct: controller.allProduct!.data,
-                                press: () {
-                                  Navigator.pop(context);
-                                },
-                                pressSelect: () async {},
-                              );
+                              return TestProduct();
                             },
                           );
                           if (_select != null && _select.isNotEmpty) {
                             setState(() {
                               final List<NewOrders> select = _select
-                                  .map((e) => NewOrders(e.id.toString(), 0, 0, double.parse(e.cost!), 15,
-                                      int.parse(e.unit_id!), controller.units!.data![0], e, false))
+                                  .map((e) => NewOrders(e.id.toString(), amqty, double.parse(e.cost!), double.parse(e.cost!),
+                                      double.parse(e.price_for_retail!), int.parse(e.unit_id!), controller.units!.data![0], e, false))
                                   .toList();
+
                               listneworder.addAll(select);
                             });
                             inspect(listneworder);
@@ -178,11 +172,11 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                   ],
                 ),
                 SizedBox(
-                  height: size.height * 0.03,
+                  height: size.height * 0.02,
                 ),
                 Container(
                   width: double.infinity,
-                  height: size.height * 0.40,
+                  height: size.height * 0.42,
                   decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                   //color: Colors.amber,
                   child: listneworder.isNotEmpty
@@ -190,9 +184,18 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           child: SizedBox(
                           width: double.infinity,
                           child: DataTable(
+                              dataRowHeight: size.height * 0.08,
+                              horizontalMargin: 2,
+                              columnSpacing: 30,
                               columns: <DataColumn>[
                                 DataColumn(
-                                  label: Text('รหัส'),
+                                  label: Text(''),
+                                ),
+                                DataColumn(
+                                  label: Text('เลขที่'),
+                                ),
+                                DataColumn(
+                                  label: Text('รหัสสินค้า'),
                                 ),
                                 DataColumn(
                                   label: Center(child: Text('ชื่อสินค้า')),
@@ -225,14 +228,21 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                           return null; // Use default value for other states and odd rows.
                                         }),
                                         cells: <DataCell>[
+                                          DataCell(IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  listneworder.removeAt(index);
+                                                });
+                                              },
+                                              icon: Icon(Icons.delete))),
                                           DataCell(Text('${listneworder[index].product!.No}')),
+                                          DataCell(Text('${listneworder[index].product!.code}')),
                                           DataCell(Text('${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
-                                            height: size.height * 0.10,
+                                            height: size.height * 0.07,
                                             child: listneworder[index].product!.image != null
-                                                ? Image.network('${listneworder[index].product!.image}',
-                                                    fit: BoxFit.fill)
+                                                ? Image.network('${listneworder[index].product!.image}', fit: BoxFit.fill)
                                                 : Image.asset(
                                                     'assets/images/noimage.jpg',
                                                     fit: BoxFit.fill,
@@ -247,7 +257,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                               onTap: () async {
                                                 final selectNumber = await showDialog<String>(
                                                   context: context,
-                                                  builder: (BuildContext context) => InputNumberDialog(),
+                                                  builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}',),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
@@ -297,7 +307,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                         ),
                 ),
                 SizedBox(
-                  height: size.height * 0.08,
+                  height: size.height * 0.05,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -312,9 +322,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           width: size.width * 0.2,
                           height: size.height * 0.08,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey)),
+                              borderRadius: BorderRadius.circular(10), color: Colors.white, border: Border.all(color: Colors.grey)),
                           child: Center(
                             child: Text(
                               'ยกเลิก',
@@ -339,9 +347,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                           //inspect(listneworder);
                           if (listneworder.isNotEmpty) {
                             try {
-                              await context
-                                  .read<PickupProductController>()
-                                  .creatOrderPickOut(datePick!.text, listneworder);
+                              await context.read<PickupProductController>().creatOrderPickOut(datePick!.text, listneworder);
                               if (pickupController.pickOutStockPurchase != null) {
                                 print('object Create Success****');
                                 //Navigator.pop(context, true);
@@ -349,8 +355,7 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => DetailPickProducts(
-                                              stock_purchase_no:
-                                                  '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
+                                              stock_purchase_no: '${pickupController.pickOutStockPurchase!.stock_pick_out_no}',
                                             )));
                               } else {
                                 print('object Error Data');

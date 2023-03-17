@@ -160,39 +160,26 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                                       label: Text('รหัส'),
                                     ),
                                     DataColumn(
-                                      label: Text('รหัสสินค้า'),
-                                    ),
-                                    DataColumn(
                                       label: Text('จำนวน'),
-                                    ),
-                                    DataColumn(
-                                      label: Text(''),
                                     ),
                                   ],
                                 rows: List<DataRow>.generate(
                                     controller.receivingGoods!.orders!.length,
                                     (index) => DataRow(
                                           color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                            // All rows will have the same selected color.
                                             if (states.contains(MaterialState.selected)) {
                                               return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                             }
-                                            // Even rows will have a grey color.
                                             if (index.isEven) {
                                               return Colors.grey.withOpacity(0.3);
                                             }
-                                            return null; // Use default value for other states and odd rows.
+                                            return null; 
                                           }),
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.receivingGoods!.orders![index].id}')),
                                             DataCell(Text('${controller.receivingGoods!.orders![index].stock_pick_out_no}')),
-                                            DataCell(Text('${controller.receivingGoods!.orders![index].product_id}')),
                                             DataCell(Text('${controller.receivingGoods!.orders![index].qty}')),
-                                            DataCell(Row(
-                                              children: [
-                                                IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-                                              ],
-                                            ))
+                                            
                                           ],
                                           // selected: selected[index],
                                           // onSelectChanged: (bool? value) {

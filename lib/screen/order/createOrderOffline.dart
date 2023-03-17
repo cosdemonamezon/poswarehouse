@@ -592,7 +592,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                     final selectPriceCost = await showDialog<String>(
                                                                       context: context,
                                                                       builder: (BuildContext context) =>
-                                                                          InputNumberDialog(),
+                                                                          InputNumberDialog(code: '${listneworder[index].product!.code}',),
                                                                     );
                                                                     if (selectPriceCost != null) {
                                                                       setState(() {
