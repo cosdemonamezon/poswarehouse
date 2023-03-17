@@ -243,7 +243,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                                 });
                                               },
                                               icon: Icon(Icons.delete))),
-                                          DataCell(Text('${listneworder[index].product!.No}')),
+                                          DataCell(Text('${listneworder[index].product!.code}')),
                                           DataCell(Text('${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
