@@ -203,7 +203,10 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                   label: Text(''),
                                 ),
                                 DataColumn(
-                                  label: Text('รหัส'),
+                                  label: Text('เลขที่'),
+                                ),
+                                DataColumn(
+                                  label: Text('รหัสสินค้า'),
                                 ),
                                 DataColumn(
                                   label: Center(child: Text('ชื่อสินค้า')),
@@ -225,15 +228,13 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                   listneworder.length,
                                   (index) => DataRow(
                                         color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                          // All rows will have the same selected color.
                                           if (states.contains(MaterialState.selected)) {
                                             return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                           }
-                                          // Even rows will have a grey color.
                                           if (index.isEven) {
                                             return Colors.grey.withOpacity(0.3);
                                           }
-                                          return null; // Use default value for other states and odd rows.
+                                          return null; 
                                         }),
                                         cells: <DataCell>[
                                           DataCell(IconButton(
@@ -244,6 +245,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                               },
                                               icon: Icon(Icons.delete))),
                                           DataCell(Text('${listneworder[index].product!.No}')),
+                                          DataCell(Text('${listneworder[index].product!.code}')),
                                           DataCell(Text('${listneworder[index].product!.name}')),
                                           DataCell(SizedBox(
                                             width: size.width * 0.05,
@@ -264,17 +266,11 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                               onTap: () async {
                                                 final selectNumber = await showDialog<String>(
                                                   context: context,
-                                                  builder: (BuildContext context) => InputNumberDialog(),
+                                                  builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}',),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
                                                     listneworder[index].qty = int.parse(selectNumber);
-                                                    // selectProducts[index]. = int.parse(selectNumber);
-                                                    // qtyText.insert(index, selectNumber);
-                                                    // qtyText.removeAt(index + 1);
-                                                    // order = new NewOrders(selectProducts[index].id.toString(),int.parse(qtyText[index]),int.parse(selectProducts[index].price_for_retail.toString()),selectProducts[index].unit!.id);
-                                                    // listneworder.insert(index, order!);
-                                                    // listneworder.removeAt(index + 1);
                                                   });
                                                   inspect(listneworder);
                                                 } else {}

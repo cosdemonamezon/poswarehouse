@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class InputNumberDialog extends StatefulWidget {
   InputNumberDialog(
-      {Key? key, })
+      {Key? key, this.code})
       : super(key: key);
+  String? code;
 
   @override
   State<InputNumberDialog> createState() => _InputNumberDialogState();
@@ -19,21 +20,28 @@ class _InputNumberDialogState extends State<InputNumberDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('ใส่ตัวเลข'),
-      content: Container(
-        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-        child: TextFormField(
-          keyboardType: TextInputType.number,
-          controller: numberPick,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
+      title: Text('รหัสสินค้า: ${widget.code}'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('ใส่ตัวเลข', style: TextStyle(fontSize: 16),),
+          Container(
+            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              controller: numberPick,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
       actions: [
         TextButton(
