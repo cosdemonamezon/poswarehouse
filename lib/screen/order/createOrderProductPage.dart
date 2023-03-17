@@ -202,9 +202,9 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                                 DataColumn(
                                   label: Text(''),
                                 ),
-                                DataColumn(
-                                  label: Text('เลขที่'),
-                                ),
+                                // DataColumn(
+                                //   label: Text('เลขที่'),
+                                // ),
                                 DataColumn(
                                   label: Text('รหัสสินค้า'),
                                 ),
