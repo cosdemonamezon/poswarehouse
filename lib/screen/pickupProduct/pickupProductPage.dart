@@ -58,6 +58,9 @@ class _PickupProductPageState extends State<PickupProductPage> {
                         child: appTextFormField(
                           sufPress: () {},
                           readOnly: false,
+                          onChanged: (p0) async {
+                            await context.read<PickupProductController>().getListPickupProducts(search: p0);
+                          },
                           preIcon: Icons.search,
                           vertical: 25.0,
                           horizontal: 10.0,
@@ -66,8 +69,7 @@ class _PickupProductPageState extends State<PickupProductPage> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: GestureDetector(
                         onTap: () async {
-                          final go = await Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => CeatePickupOrderPage()));
+                          final go = await Navigator.push(context, MaterialPageRoute(builder: (context) => CeatePickupOrderPage()));
                           if (go == true) {
                             _initialize();
                           } else {
@@ -144,19 +146,17 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                           }),
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.allReceiving!.data![index].No}')),
-                                            DataCell(
-                                                Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
+                                            DataCell(Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
                                             DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
                                             DataCell(Chip(
                                                 labelPadding: EdgeInsets.all(2.0),
                                                 elevation: 6.0,
                                                 shadowColor: Colors.grey[60],
-                                                backgroundColor:
-                                                    controller.allReceiving!.data![index].status == 'Ordered'
-                                                        ? Colors.orange
-                                                        : controller.allReceiving!.data![index].status == 'Receive'
-                                                            ? Colors.green
-                                                            : Colors.red,
+                                                backgroundColor: controller.allReceiving!.data![index].status == 'Ordered'
+                                                    ? Colors.orange
+                                                    : controller.allReceiving!.data![index].status == 'Receive'
+                                                        ? Colors.green
+                                                        : Colors.red,
                                                 label: Text('${controller.allReceiving!.data![index].status}'))),
                                             DataCell(Row(
                                               children: [

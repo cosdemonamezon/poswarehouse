@@ -27,7 +27,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
   }
 
   Future<void> _initialize() async {
-    context.read<ReturnProductController>().initialinze();
+    await context.read<ReturnProductController>().initialinze();
   }
 
   @override
@@ -54,6 +54,9 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                       child: appTextFormField(
                         sufPress: () {},
                         readOnly: false,
+                        onChanged: (p0) async {
+                          await context.read<ReturnProductController>().initialinze(search: p0);
+                        },
                         preIcon: Icons.search,
                         vertical: 25.0,
                         horizontal: 10.0,

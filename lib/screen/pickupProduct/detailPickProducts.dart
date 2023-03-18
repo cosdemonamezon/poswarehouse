@@ -160,6 +160,9 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                                       label: Text('รหัส'),
                                     ),
                                     DataColumn(
+                                      label: Text('รหัสสินค้า'),
+                                    ),
+                                    DataColumn(
                                       label: Text('จำนวน'),
                                     ),
                                   ],

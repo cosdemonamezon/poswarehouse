@@ -171,10 +171,10 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                                             label: Text('#'),
                                           ),
                                           DataColumn(
-                                            label: Text('รหัสสินค้า'),
+                                            label: Text('รหัส'),
                                           ),
                                           DataColumn(
-                                            label: Text('ชื่อสินค้า'),
+                                            label: Text('รหัสสินค้า'),
                                           ),
                                           DataColumn(
                                             label: Text('จำนวน'),

@@ -26,8 +26,13 @@ class PickupProductController extends ChangeNotifier {
   getListPickupProducts({
     int start = 0,
     int length = 10,
+    String? search = '',
   }) async {
-    allReceiving = await PickupProductApi.getPickups();
+    allReceiving = await PickupProductApi.getPickups(
+      start: start,
+      length: length,
+      search: search,
+    );
     notifyListeners();
   }
 
@@ -44,7 +49,7 @@ class PickupProductController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getDetailOrders(String id) async{
+  getDetailOrders(String id) async {
     order = await PickupProductApi.getOrderById(id);
     notifyListeners();
   }

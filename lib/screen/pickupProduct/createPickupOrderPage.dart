@@ -257,7 +257,9 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                               onTap: () async {
                                                 final selectNumber = await showDialog<String>(
                                                   context: context,
-                                                  builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}',),
+                                                  builder: (BuildContext context) => InputNumberDialog(
+                                                    code: '${listneworder[index].product!.code}',
+                                                  ),
                                                 );
                                                 if (selectNumber != null) {
                                                   setState(() {
@@ -267,7 +269,9 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                                                 } else {}
                                               },
                                               child: Container(
+                                                decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                                                 width: size.width * 0.05,
+                                                height: size.height * 0.05,
                                                 child: Center(child: Text('${listneworder[index].qty}')),
                                               ),
                                             ),
