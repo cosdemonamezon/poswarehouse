@@ -98,9 +98,11 @@ class _CeatePickupOrderPageState extends State<CeatePickupOrderPage> {
                               readOnly: false,
                               sufPress: () async {
                                 final _pick = await pickDate();
-                                setState(() {
-                                  datePick!.text = _pick!.formatTo('yyyy-MM-dd');
-                                });
+                                if (_pick != null) {
+                                  setState(() {
+                                    datePick!.text = _pick.formatTo('yyyy-MM-dd');
+                                  });
+                                }
                               },
                               sufIcon: Icons.calendar_month,
                               vertical: 25.0,

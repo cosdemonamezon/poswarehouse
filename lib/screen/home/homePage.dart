@@ -140,11 +140,14 @@ class _HomePageState extends State<HomePage> {
                                 series: <ChartSeries>[
                                   LineSeries<ChartData, String>(
                                     dataSource: [
-                                      ChartData('Jan', 35),
-                                      ChartData('Feb', 28),
-                                      ChartData('Mar', 34),
-                                      ChartData('Apr', 32),
-                                      ChartData('May', 40)
+                                      ChartData('Jan', 10),
+                                      ChartData('Feb', 20),
+                                      ChartData('Mar', 22),
+                                      ChartData('Apr', 12),
+                                      ChartData('May', 9),
+                                      ChartData('Jun', 15),
+                                      ChartData('Jul', 18),
+                                      ChartData('Og', 100)
                                     ],
                                     xValueMapper: (ChartData data, _) => data.x,
                                     yValueMapper: (ChartData data, _) => data.y,
