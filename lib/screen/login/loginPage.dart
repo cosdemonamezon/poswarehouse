@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/home/homePage.dart';
+import 'package:poswarehouse/screen/login/loginService.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
+import 'package:poswarehouse/widgets/LoadingDialog.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -33,8 +36,6 @@ class _LoginPageState extends State<LoginPage> {
                     fit: BoxFit.fitWidth,
                   )),
             ),
-            
-            
             SizedBox(
               height: size.height * 0.08,
             ),
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-                    child: AppTextFormNumber(
+                    child: AppTextForm(
                       controller: username,
                       hintText: 'กรอกชื่อผู้ใช้',
                       validator: (val) {
@@ -64,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
-                      sty: TextStyle(),
                     ),
                   ),
                   Padding(
@@ -103,7 +103,38 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: GestureDetector(
                       onTap: () async {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                        // try {
+                        // LoadingDialog.open(context);
+                        await LoginService.login(username.text, password.text);
+                        if (mounted) {
+                          // LoadingDialog.close(context);
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                            (route) => false,
+                          );
+                        }
+                        // } catch (e) {
+                        //   LoadingDialog.close(context);
+                        //   showDialog<String>(
+                        //     context: context,
+                        //     builder: (BuildContext context) => AlertDialog(
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(15.0),
+                        //       ),
+                        //       // backgroundColor: Color.fromARGB(255, 95, 9, 3),
+                        //       title: Text('Error'),
+                        //       content: Text(e.toString()),
+                        //       actions: <Widget>[
+                        //         TextButton(
+                        //           onPressed: () => Navigator.pop(context),
+                        //           child: const Text('ตกลง'),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   );
+                        // }
                       },
                       child: Container(
                         width: size.width * 0.5,
