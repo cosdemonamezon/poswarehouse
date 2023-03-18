@@ -152,40 +152,39 @@ class _ReturnProductDetailPageState extends State<ReturnProductDetailPage> {
                                     ),
                                     DataColumn(
                                       label: Text('รหัส'),
+                                    ),                                    
+                                    DataColumn(
+                                      label: Text('จำนวน'),
+                                    ),
+                                    DataColumn(
+                                      label: Text('ราคา'),
                                     ),
                                     DataColumn(
                                       label: Text('หมายเหตุ'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('จำนวน'),
                                     ),
                                   ],
                                 rows: List<DataRow>.generate(
                                     controller.purchaseDamage?.orders?.length ?? 0,
                                     (index) => DataRow(
                                           color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                            // All rows will have the same selected color.
+                                            
                                             if (states.contains(MaterialState.selected)) {
                                               return Theme.of(context).colorScheme.primary.withOpacity(0.08);
                                             }
-                                            // Even rows will have a grey color.
+                                            
                                             if (index.isEven) {
                                               return Colors.grey.withOpacity(0.3);
                                             }
-                                            return null; // Use default value for other states and odd rows.
+                                            return null; 
                                           }),
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.purchaseDamage?.orders?[index].id}')),
-                                            DataCell(Text('${controller.purchaseDamage?.orders?[index].stock_purchase_no}')),
-                                            DataCell(Text(controller.purchaseDamage?.orders?[index].remark ?? '')),
+                                            DataCell(Text('${controller.purchaseDamage?.orders?[index].stock_purchase_no}')),                                            
                                             DataCell(Text('${controller.purchaseDamage?.orders?[index].qty}')),
+                                            DataCell(Text('${controller.purchaseDamage?.orders?[index].price}')),
+                                            DataCell(Text(controller.purchaseDamage?.orders?[index].remark ?? '')),
                                           ],
-                                          // selected: selected[index],
-                                          // onSelectChanged: (bool? value) {
-                                          //   setState(() {
-                                          //     selected[index] = value!;
-                                          //   });
-                                          // },
+                                          
                                         )))
                             : SizedBox.shrink(),
                       ),

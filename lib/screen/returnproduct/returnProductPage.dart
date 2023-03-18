@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
-import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/screen/login/widgets/appTextForm.dart';
-import 'package:poswarehouse/screen/returnproduct/createReturnProduct.dart';
-import 'package:poswarehouse/screen/returnproduct/detailReturnProduct.dart';
 import 'package:poswarehouse/screen/returnproduct/returnProductController.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
@@ -153,6 +150,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                     controller.purchaseDamages[index].status == 'Finish' ? Colors.green : Colors.red[100],
                                                 label: Text('${controller.purchaseDamages[index].status}'))),
                                             DataCell(Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 IconButton(
                                                     onPressed: () {
@@ -168,12 +166,7 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                               ],
                                             ))
                                           ],
-                                          // selected: selected[index],
-                                          // onSelectChanged: (bool? value) {
-                                          //   setState(() {
-                                          //     selected[index] = value!;
-                                          //   });
-                                          // },
+                                          
                                         )))
                             : SizedBox(),
                       )
