@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
 
+import '../../models/allDamageds.dart';
 import '../../models/order.dart';
 import 'returnProductService.dart';
 
 class ReturnProductController extends ChangeNotifier {
-  ReturnProductController({this.api = const ReturnProductService()});
+  ReturnProductController({this.api = const ReturnProductApi()});
 
-  ReturnProductService api;
+  ReturnProductApi api;
 
-  List<Order> purchaseDamages = [];
+  // List<Order> purchaseDamages = [];
+  AllDamageds? purchaseDamagesList;
   Order? purchaseDamage;
 
-  Future<void> initialinze({
+  // Future<void> initialinze({
+  //   int start = 0,
+  //   int length = 10,
+  //   String? search = '',
+  // }) async {
+  //   purchaseDamagesList = await api.getPurchaseDamages(
+  //     start: start,
+  //     length: length,
+  //     search: search,
+  //   );
+  //   notifyListeners();
+  // }
+
+  getListPurchaseDamages({
     int start = 0,
     int length = 10,
     String? search = '',
   }) async {
-    purchaseDamages = await api.getPurchaseDamages(
+    purchaseDamagesList = await ReturnProductApi.getPurchaseDamages(
       start: start,
       length: length,
       search: search,
