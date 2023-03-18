@@ -88,92 +88,6 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-<<<<<<< HEAD
-                controller.purchaseDamages.isNotEmpty
-                    ? Container(
-                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                        width: double.infinity,
-                        child: controller.purchaseDamages.isNotEmpty
-                            ? DataTable(
-                                dataRowHeight: size.height * 0.08,
-                                columns: <DataColumn>[
-                                  DataColumn(
-                                    label: Text(
-                                      '#',
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'รหัส',
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'หมายเหตุ',
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'สถานะ',
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(''),
-                                  ),
-                                ],
-                                rows: List<DataRow>.generate(
-                                    controller.purchaseDamages.length,
-                                    (index) => DataRow(
-                                          color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                            // All rows will have the same selected color.
-                                            if (states.contains(MaterialState.selected)) {
-                                              return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                                            }
-                                            // Even rows will have a grey color.
-                                            if (index.isEven) {
-                                              return Colors.grey.withOpacity(0.3);
-                                            }
-                                            return null; // Use default value for other states and odd rows.
-                                          }),
-                                          cells: <DataCell>[
-                                            DataCell(Text('${controller.purchaseDamages[index]}')),
-                                            DataCell(Text('${controller.purchaseDamages[index].stock_purchase_no}')),
-                                            DataCell(Text(controller.purchaseDamages[index].remark ?? '-')),
-                                            DataCell(Chip(
-                                                labelPadding: EdgeInsets.all(2.0),
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                                labelStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
-                                                elevation: 6.0,
-                                                shadowColor: Colors.grey[60],
-                                                backgroundColor:
-                                                    controller.purchaseDamages[index].status == 'Finish' ? Colors.green : Colors.red[100],
-                                                label: Text('${controller.purchaseDamages[index].status}'))),
-                                            DataCell(Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) => ReturnProductDetailPage(
-                                                                    stock_purchase_no:
-                                                                        '${controller.purchaseDamages[index].stock_purchase_no}',
-                                                                  )));
-                                                    },
-                                                    icon: Icon(Icons.remove_red_eye_outlined)),
-                                              ],
-                                            ))
-                                          ],
-                                          
-                                        )))
-                            : SizedBox(),
-                      )
-=======
                 controller.purchaseDamagesList != null
                     ? controller.purchaseDamagesList!.data!.isNotEmpty
                         ? Container(
@@ -255,17 +169,11 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                   ],
                                                 ))
                                               ],
-                                              // selected: selected[index],
-                                              // onSelectChanged: (bool? value) {
-                                              //   setState(() {
-                                              //     selected[index] = value!;
-                                              //   });
-                                              // },
+                                              
                                             )))
                                 : SizedBox(),
                           )
                         : SizedBox()
->>>>>>> 5695a2e7c4946505289a81015aa55df0f58dab55
                     : SizedBox(),
                 controller.purchaseDamagesList != null
                     ? Row(

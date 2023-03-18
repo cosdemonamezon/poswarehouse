@@ -1,8 +1,8 @@
-import '../../constants/constants.dart';
+import '../../../constants/constants.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
-import '../../models/login.dart';
+import '../../../models/login.dart';
 
 class LoginService {
   const LoginService();
