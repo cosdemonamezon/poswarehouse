@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:poswarehouse/widgets/GalleryWidget.dart';
+import 'package:poswarehouse/widgets/materialDialog.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
@@ -30,8 +32,8 @@ class _TestProductState extends State<TestProduct> {
     setState(() {
       if (context.read<ProductController>().allProduct != null) {
         images = List<String>.generate(context.read<ProductController>().allProduct!.data!.length,
-          (index) => context.read<ProductController>().allProduct!.data![index].image!);
-      }      
+            (index) => context.read<ProductController>().allProduct!.data![index].image!);
+      }
       //images.add(context.read<ProductController>().allProduct.data);
       // product2 = context.read<ProductController>().allProduct!.data!;
     });
@@ -102,103 +104,115 @@ class _TestProductState extends State<TestProduct> {
                         ),
                         Container(
                           //color: Colors.blue,
-                          height: size.height * 0.46,
+                          height: size.height * 0.465,
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 controller.allProduct != null
-                                ?Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                                  child: controller.allProduct!.data!.isNotEmpty
-                                      ? DataTable(
-                                          columns: <DataColumn>[
-                                              DataColumn(
-                                                label: Text('รหัส'),
-                                              ),
-                                              DataColumn(
-                                                label: Text('ชื่อสินค้า'),
-                                              ),
-                                              DataColumn(
-                                                label: Text('รูปภาพ'),
-                                              ),
-                                              DataColumn(
-                                                label: Center(child: Text('ราคาทุน')),
-                                              ),
-                                              DataColumn(
-                                                label: Center(child: Text('ราคาขายส่ง')),
-                                              ),
-                                              DataColumn(
-                                                label: Center(child: Text('ราคาขายปลีก')),
-                                              ),
-                                              DataColumn(
-                                                label: Center(child: Text('ราคายกลัง')),
-                                              ),
-                                              DataColumn(
-                                                label: Center(child: Text('คงเหลือ')),
-                                              ),
-                                            ],
-                                          rows: List<DataRow>.generate(
-                                              controller.allProduct!.data!.length,
-                                              (index) => DataRow(
-                                                    color: MaterialStateProperty.resolveWith<Color?>(
-                                                        (Set<MaterialState> states) {
-                                                      // All rows will have the same selected color.
-                                                      if (states.contains(MaterialState.selected)) {
-                                                        return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                                                      }
-                                                      // Even rows will have a grey color.
-                                                      if (index.isEven) {
-                                                        return Colors.grey.withOpacity(0.3);
-                                                      }
-                                                      return null; // Use default value for other states and odd rows.
-                                                    }),
-                                                    cells: <DataCell>[
-                                                      DataCell(Text('${controller.allProduct!.data![index].code}')),
-                                                      DataCell(Text('${controller.allProduct!.data![index].name}')),
-                                                      DataCell(SizedBox(
-                                                        width: size.width * 0.08,
-                                                        height: size.height * 0.10,
-                                                        child: controller.allProduct!.data![index].image != null
-                                                            ? Image.network(
-                                                                '${controller.allProduct!.data![index].image}',
-                                                                fit: BoxFit.fill)
-                                                            : Image.asset(
-                                                                'assets/images/noimage.jpg',
-                                                                fit: BoxFit.fill,
-                                                              ),
-                                                      )),
-                                                      DataCell(Center(
-                                                          child: Text('${controller.allProduct!.data![index].cost}'))),
-                                                      DataCell(Center(
-                                                          child: Text(
-                                                              '${controller.allProduct!.data![index].price_for_retail}'))),
-                                                      DataCell(Center(
-                                                          child: Text(
-                                                              '${controller.allProduct!.data![index].price_for_wholesale}'))),
-                                                      DataCell(Center(
-                                                          child: Text(
-                                                              '${controller.allProduct!.data![index].price_for_box}'))),
-                                                      DataCell(Center(
-                                                          child:
-                                                              Text('${controller.allProduct!.data![index].remain}'))),
-                                                    ],
-                                                    selected: controller.allProduct!.data![index].selected ?? false,
-                                                    onSelectChanged: (bool? value) {
-                                                      setState(() {
-                                                        selected[index] = value!;
-                                                        controller.allProduct!.data![index].selected = value;
-                                                        // if (widget.selectProducts != null) {
-                                                        //   widget.selectProducts!.add(products.data![index]);
-                                                        //   newSelectProducts = widget.selectProducts!;
-                                                        // } else {
-                                                        //   newSelectProducts.add(products.data![index]);
-                                                        // }
-                                                      });
-                                                    },
-                                                  )))
-                                      : SizedBox(),
-                                ): SizedBox(),
+                                    ? Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                                        child: controller.allProduct!.data!.isNotEmpty
+                                            ? DataTable(
+                                                dataRowHeight: size.height * 0.08,
+                                                horizontalMargin: 2,
+                                                columnSpacing: 30,
+                                                columns: <DataColumn>[
+                                                  DataColumn(
+                                                    label: Text('รหัส'),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text('ชื่อสินค้า'),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Text('รูปภาพ'),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Center(child: Text('ราคาทุน')),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Center(child: Text('ราคาขายส่ง')),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Center(child: Text('ราคาขายปลีก')),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Center(child: Text('ราคายกลัง')),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Center(child: Text('คงเหลือ')),
+                                                  ),
+                                                ],
+                                                rows: List<DataRow>.generate(
+                                                    controller.allProduct!.data!.length,
+                                                    (index) => DataRow(
+                                                          color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                                                            // All rows will have the same selected color.
+                                                            if (states.contains(MaterialState.selected)) {
+                                                              return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                                                            }
+                                                            // Even rows will have a grey color.
+                                                            if (index.isEven) {
+                                                              return Colors.grey.withOpacity(0.3);
+                                                            }
+                                                            return null; // Use default value for other states and odd rows.
+                                                          }),
+                                                          cells: <DataCell>[
+                                                            DataCell(Text('${controller.allProduct!.data![index].code}')),
+                                                            DataCell(Text('${controller.allProduct!.data![index].name}')),
+                                                            DataCell(SizedBox(
+                                                              width: size.width * 0.08,
+                                                              height: size.height * 0.07,
+                                                              child: controller.allProduct!.data![index].image != null
+                                                                  ? InkWell(
+                                                                    onTap: (){
+                                                                      Navigator.of(context).push(MaterialPageRoute(
+                                                                      builder: (_) => GalleryWidget(
+                                                                            urlimage: '${controller.allProduct!.data![index].image}',
+                                                                          )));
+                                                                    },
+                                                                    child: Image.network('${controller.allProduct!.data![index].image}',
+                                                                        fit: BoxFit.fill),
+                                                                  )
+                                                                  : InkWell(
+                                                                      onTap: () {
+                                                                        Navigator.of(context).push(MaterialPageRoute(
+                                                                            builder: (_) => GalleryWidget(
+                                                                                  urlimage: 'assets/images/noimage.jpg',
+                                                                                )));
+                                                                      },
+                                                                      child: Image.asset(
+                                                                        'assets/images/noimage.jpg',
+                                                                        fit: BoxFit.fill,
+                                                                      ),
+                                                                    ),
+                                                            )),
+                                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].cost}'))),
+                                                            DataCell(Center(
+                                                                child: Text('${controller.allProduct!.data![index].price_for_retail}'))),
+                                                            DataCell(Center(
+                                                                child: Text('${controller.allProduct!.data![index].price_for_wholesale}'))),
+                                                            DataCell(Center(
+                                                                child: Text('${controller.allProduct!.data![index].price_for_box}'))),
+                                                            DataCell(Center(child: Text('${controller.allProduct!.data![index].remain}'))),
+                                                          ],
+                                                          selected: controller.allProduct!.data![index].selected ?? false,
+                                                          onSelectChanged: (bool? value) {
+                                                            setState(() {
+                                                              selected[index] = value!;
+                                                              controller.allProduct!.data![index].selected = value;
+                                                              // if (widget.selectProducts != null) {
+                                                              //   widget.selectProducts!.add(products.data![index]);
+                                                              //   newSelectProducts = widget.selectProducts!;
+                                                              // } else {
+                                                              //   newSelectProducts.add(products.data![index]);
+                                                              // }
+                                                            });
+                                                          },
+                                                        )))
+                                            : SizedBox(),
+                                      )
+                                    : SizedBox(),
                               ],
                             ),
                           ),
@@ -230,14 +244,29 @@ class _TestProductState extends State<TestProduct> {
                                 ),
                               )
                             : SizedBox.shrink(),
-                        SizedBox(height: size.height * 0.05),
+                        SizedBox(height: size.height * 0.03),
                         Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: GestureDetector(
                             onTap: () async {
-                              final list =
-                                  controller.allProduct!.data!.where((element) => element.selected == true).toList();
-                              Navigator.pop(context, list);
+                              final list = controller.allProduct!.data!.where((element) => element.selected == true).toList();
+                              if (list.isNotEmpty) {
+                                Navigator.pop(context, list);
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return AlertDialogYes(
+                                      title: 'ยังไม่ได้เลือกสินค้า',
+                                      description: 'โปรดเลือกสินค้าก่อนทำรายการ',
+                                      pressYes: () {
+                                        Navigator.pop(context, true);
+                                      },
+                                    );
+                                  },
+                                );
+                              }
                             },
                             child: Container(
                               width: size.width * 0.1,

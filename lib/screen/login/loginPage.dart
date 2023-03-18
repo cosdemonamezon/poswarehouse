@@ -33,60 +33,10 @@ class _LoginPageState extends State<LoginPage> {
                     fit: BoxFit.fitWidth,
                   )),
             ),
+            
+            
             SizedBox(
-              height: size.height * 0.05,
-            ),
-
-            // Container(
-            //   color: Colors.amber,
-            //   width: size.width * 0.40,
-            //   height: size.height * 0.08,
-            //   child: TextFormField(
-            //     controller: test,
-            //     autofocus: true,
-            //     //readOnly: true,
-            //     //showCursor: true,
-            //     //obscureText: true,
-            //     keyboardType: TextInputType.none,
-            //     decoration: InputDecoration(
-            //       fillColor: Color(0xFFF3F6FA),
-            //       contentPadding: EdgeInsets.all(15.0),
-            //       //filled: true,
-            //       border: OutlineInputBorder(
-            //         borderSide: BorderSide.none,
-            //         borderRadius: BorderRadius.all(
-            //           Radius.circular(10),
-            //         ),
-            //       ),
-            //     ),
-            //     onEditingComplete: ()async{
-            //       print("onEditingComplete ${test.text}");
-            //       setState(() {
-            //         //test.text = '';
-            //       });
-            //     },
-            //     // onFieldSubmitted: (value) async{
-            //     //   setState(() {
-            //     //     test.text = value;
-            //     //   });
-            //     //   print("onFieldSubmitted ${test.text}");
-            //     // },
-            //     // onChanged: (value){
-            //     //   setState(() {
-            //     //     test.text = value;
-            //     //   });
-            //     //   print("onChanged ${test.text}");
-            //     // },
-            //     // onSaved: (value){
-            //     //   setState(() {
-            //     //     test.text = value!;
-            //     //   });
-            //     //   print("onSaved ${test.text}");
-            //     // },
-            //   ),
-            // ),
-            SizedBox(
-              height: size.height * 0.05,
+              height: size.height * 0.08,
             ),
             SizedBox(
               width: size.width * 0.40,
@@ -108,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: 'กรอกชื่อผู้ใช้',
                       validator: (val) {
                         if (val == null || val.isEmpty) {
-                          return 'กรุณากรอกหมายเลขโทรศัพท์';
+                          return 'กรุณากรอกชื่อผู้ใช้';
                         } else if (RegExp(r'\s').hasMatch(val)) {
                           return 'รูปแบบไม่ถูกต้อง';
                         }

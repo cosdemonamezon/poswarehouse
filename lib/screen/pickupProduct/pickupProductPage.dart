@@ -119,6 +119,12 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                     ),
                                   ),
                                   DataColumn(
+                                    label: Text(
+                                      'สถานะ',
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                    ),
+                                  ),
+                                  DataColumn(
                                     label: Text(''),
                                   ),
                                 ],
@@ -141,7 +147,17 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                             DataCell(
                                                 Text('${controller.allReceiving!.data![index].stock_pick_out_no}')),
                                             DataCell(Text('${controller.allReceiving!.data![index].pick_out_date}')),
-                                            
+                                            DataCell(Chip(
+                                                labelPadding: EdgeInsets.all(2.0),
+                                                elevation: 6.0,
+                                                shadowColor: Colors.grey[60],
+                                                backgroundColor:
+                                                    controller.allReceiving!.data![index].status == 'Ordered'
+                                                        ? Colors.orange
+                                                        : controller.allReceiving!.data![index].status == 'Receive'
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                label: Text('${controller.allReceiving!.data![index].status}'))),
                                             DataCell(Row(
                                               children: [
                                                 IconButton(
@@ -160,12 +176,6 @@ class _PickupProductPageState extends State<PickupProductPage> {
                                               ],
                                             ))
                                           ],
-                                          // selected: selected[index],
-                                          // onSelectChanged: (bool? value) {
-                                          //   setState(() {
-                                          //     selected[index] = value!;
-                                          //   });
-                                          // },
                                         )))
                             : SizedBox(),
                       )
