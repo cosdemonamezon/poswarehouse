@@ -235,6 +235,10 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                                           LoadingDialog.open(context);
                                           await context.read<PickupProductController>().receiveStockPickout(purchaseId.text);
 
+                                          await context.read<PickupProductController>().getListPickupProducts();
+                                          if (!mounted) {
+                                            return;
+                                          }
                                           LoadingDialog.close(context);
                                           setState(() {});
                                           Navigator.of(context)
