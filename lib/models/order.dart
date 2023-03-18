@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:poswarehouse/models/orderline.dart';
 import 'package:poswarehouse/models/product.dart';
+import 'package:poswarehouse/models/receivinggoods.dart';
 
 part 'order.g.dart';
 
@@ -34,6 +35,7 @@ class Order {
   final List<Order>? orders;
   bool? selected;
   List<Orderline>? order_lines;
+  List<ReceivingGoods>? pick_out_lines;
   final int? No;
 
   Order(
@@ -64,6 +66,7 @@ class Order {
     this.order_lines,
     this.purchase_date,
     this.No,
+    this.pick_out_lines,
     this.orders,
   );
 

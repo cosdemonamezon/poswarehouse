@@ -38,6 +38,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) => Order(
           .toList(),
       json['purchase_date'] as String?,
       json['No'] as int?,
+      (json['pick_out_lines'] as List<dynamic>?)
+          ?.map((e) => ReceivingGoods.fromJson(e as Map<String, dynamic>))
+          .toList(),
       (json['orders'] as List<dynamic>?)
           ?.map((e) => Order.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -72,5 +75,6 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'orders': instance.orders,
       'selected': instance.selected,
       'order_lines': instance.order_lines,
+      'pick_out_lines': instance.pick_out_lines,
       'No': instance.No,
     };

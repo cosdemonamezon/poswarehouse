@@ -186,7 +186,7 @@ class _DetailPickProductsState extends State<DetailPickProducts> {
                                           cells: <DataCell>[
                                             DataCell(Text('${controller.receivingGoods!.orders![index].id}')),
                                             DataCell(Text('${controller.receivingGoods!.orders![index].stock_pick_out_no}')),
-                                            DataCell(Text('${controller.receivingGoods!.orders![index].product_id}')),
+                                            DataCell(Text('${controller.receivingGoods!.orders![index].product!.code}')),
                                             DataCell(Text('${controller.receivingGoods!.orders![index].qty}')),
                                             DataCell(Row(
                                               children: [
