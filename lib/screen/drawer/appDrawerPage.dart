@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/screen/category/categoryPage.dart';
+import 'package:poswarehouse/screen/login/loginPage.dart';
 import 'package:poswarehouse/screen/order/orderPage.dart';
 import 'package:poswarehouse/screen/pickupProduct/pickupProductPage.dart';
 import 'package:poswarehouse/screen/product/productsPage.dart';
@@ -39,40 +40,40 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
             height: size.height * 0.01,
           ),
           Center(
-            child: Text('ADMIN',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-          ),          
-          
+            child: Text(
+              'ADMIN',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+
           ListTile(
-            title: Center(
-                child: Text("รายการขาย", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("รายการขาย", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.note_alt),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>SaleItemsPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SaleItemsPage()));
             },
           ),
           Divider(),
-           ListTile(
-            title: Center(
-                child: Text("คำสั่งซื้อ", style: TextStyle(fontSize: 16))),
+          ListTile(
+            title: Center(child: Text("คำสั่งซื้อ", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.file_open_rounded),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage()));
             },
-          ),         
-          
+          ),
+
           Divider(),
           ListTile(
-            title:
-                Center(child: Text("สินค้า", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("สินค้า", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.apps),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsPage()));
             },
-          ),          
-         
+          ),
+
           // Divider(),
           // ListTile(
           //   title:
@@ -85,51 +86,52 @@ class _AppDrawerPageState extends State<AppDrawerPage> {
           // ),
           Divider(),
           ListTile(
-            title: Center(
-                child: Text("คลังสินค้า", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("คลังสินค้า", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.storefront),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>WareHousePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => WareHousePage()));
             },
           ),
           Divider(),
           ListTile(
-            title:
-                Center(child: Text("ประเภทสินค้า", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("ประเภทสินค้า", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.view_column),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage()));
             },
           ),
           Divider(),
           ListTile(
-            title:
-                Center(child: Text("เบิกสินค้า", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("เบิกสินค้า", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.settings),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PickupProductPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PickupProductPage()));
             },
           ),
           Divider(),
           ListTile(
-            title:
-                Center(child: Text("สินค้าชำรุด", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("สินค้าชำรุด", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.settings),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ReturnProductPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReturnProductPage()));
             },
           ),
           Divider(),
           ListTile(
-            title: Center(
-                child: Text("ออกจากระบบ", style: TextStyle(fontSize: 16))),
+            title: Center(child: Text("ออกจากระบบ", style: TextStyle(fontSize: 16))),
             leading: Icon(Icons.logout),
             trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false,
+              );
+            },
           ),
         ],
       ),

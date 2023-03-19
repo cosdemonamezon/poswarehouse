@@ -15,8 +15,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String year = "2023";
+  String year = "";
   String dropdownvalue = '2023';
+  DateTime now = DateTime.now();
   var items = [
     '2018',
     '2019',
@@ -35,12 +36,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState();    
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
   }
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
+    setState(() {
+      DateTime date = DateTime(now.year);
+      year = date.year.toString();
+      dropdownvalue = date.year.toString();
+    });
     await context.read<HomeController>().getAllReports(year);
     LoadingDialog.close(context);
   }
