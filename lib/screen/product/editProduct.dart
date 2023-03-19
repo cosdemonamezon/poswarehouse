@@ -63,9 +63,13 @@ class _EditProductState extends State<EditProduct> {
     await context.read<CategoryController>().getCategoryById(idCategory);
 
     final product = context.read<ProductController>().product;
+    final _subCategory = context.read<CategoryController>().getCategoryId;
 
     setState(() {
-      categoryDetail = context.read<CategoryController>().getCategoryId![0];
+      if (_subCategory!.isNotEmpty) {
+        categoryDetail = _subCategory[0];
+      }
+
       productId.text = product!.code.toString();
       productName.text = product.name.toString();
       detailProduct.text = product.detail.toString();
@@ -175,7 +179,7 @@ class _EditProductState extends State<EditProduct> {
                                       horizontal: 10.0,
                                       validator: (val) {
                                         if (val == null || val.isEmpty) {
-                                          return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                          return 'กรุณากรอกราคายกลัง';
                                         }
                                         return null;
                                       },
@@ -198,7 +202,7 @@ class _EditProductState extends State<EditProduct> {
                                       horizontal: 10.0,
                                       validator: (val) {
                                         if (val == null || val.isEmpty) {
-                                          return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                          return 'กรุณากรอกราคาทุน';
                                         }
                                         return null;
                                       },
@@ -266,13 +270,19 @@ class _EditProductState extends State<EditProduct> {
                                           )
                                         : SizedBox()
                                     : SizedBox(),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 2),
-                                  child: Text(
-                                    'คลังสินค้า',
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                  ),
-                                ),
+                                controllerCategory.getCategoryId != null
+                                    ? controllerCategory.getCategoryId!.isNotEmpty
+                                        ? context.read<CategoryController>().getCategoryId!.isNotEmpty
+                                            ? Padding(
+                                                padding: EdgeInsets.symmetric(vertical: 2),
+                                                child: Text(
+                                                  'คลังสินค้า',
+                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                                ),
+                                              )
+                                            : SizedBox.shrink()
+                                        : SizedBox.shrink()
+                                    : SizedBox.shrink(),
                                 controllerCategory.getCategoryId != null
                                     ? controllerCategory.getCategoryId!.isNotEmpty
                                         ? context.read<CategoryController>().getCategoryId!.isNotEmpty
@@ -349,7 +359,7 @@ class _EditProductState extends State<EditProduct> {
                                       horizontal: 10.0,
                                       validator: (val) {
                                         if (val == null || val.isEmpty) {
-                                          return 'กรุณากรอกหมายเลขโทรศัพท์';
+                                          return 'กรุณากรอกชื่อสินค้า';
                                         }
                                         return null;
                                       },
@@ -522,8 +532,9 @@ class _EditProductState extends State<EditProduct> {
 
                                 if (!editProductFormKey.currentState!.validate()) return;
 
-                                final selectedUnits = units?.where((u) => u.selected ?? false).toList().map((e) => e.id.toString()).join(',');
-                                
+                                final selectedUnits =
+                                    units?.where((u) => u.selected ?? false).toList().map((e) => e.id.toString()).join(',');
+
                                 //Update data
                                 LoadingDialog.open(context);
                                 try {

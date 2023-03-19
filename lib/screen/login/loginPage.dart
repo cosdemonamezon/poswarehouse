@@ -109,10 +109,11 @@ class _LoginPageState extends State<LoginPage> {
                           // try {
                           // LoadingDialog.open(context);
                           if (_loginFormKey.currentState!.validate()) {
+                            LoadingDialog.open(context);
                             try {                            
                               await LoginService.login(username.text, password.text);
                               if (mounted) {
-                                // LoadingDialog.close(context);
+                                LoadingDialog.close(context);
 
                                 Navigator.pushAndRemoveUntil(
                                   context,
@@ -121,6 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             } on Exception catch (e) {
+                              LoadingDialog.close(context);
                               showDialog(
                                 context: context,
                                 barrierDismissible: false,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/widgets/GalleryWidget.dart';
@@ -165,15 +166,23 @@ class _TestProductState extends State<TestProduct> {
                                                               height: size.height * 0.07,
                                                               child: controller.allProduct!.data![index].image != null
                                                                   ? InkWell(
-                                                                    onTap: (){
-                                                                      Navigator.of(context).push(MaterialPageRoute(
-                                                                      builder: (_) => GalleryWidget(
-                                                                            urlimage: '${controller.allProduct!.data![index].image}',
-                                                                          )));
-                                                                    },
-                                                                    child: Image.network('${controller.allProduct!.data![index].image}',
-                                                                        fit: BoxFit.fill),
-                                                                  )
+                                                                      onTap: () {
+                                                                        Navigator.of(context).push(MaterialPageRoute(
+                                                                            builder: (_) => GalleryWidget(
+                                                                                  urlimage: '${controller.allProduct!.data![index].image}',
+                                                                                )));
+                                                                      },
+                                                                      child: CachedNetworkImage(
+                                                                        imageUrl: '${controller.allProduct!.data![index].image}',
+                                                                        fit: BoxFit.fill,
+                                                                        //width: double.infinity,
+                                                                        placeholder: (context, url) => Center(
+                                                                          child: CircularProgressIndicator(
+                                                                            strokeWidth: 2.0,
+                                                                          ),
+                                                                        ),
+                                                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                                                      ))
                                                                   : InkWell(
                                                                       onTap: () {
                                                                         Navigator.of(context).push(MaterialPageRoute(

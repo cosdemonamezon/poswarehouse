@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:poswarehouse/constants/constants.dart';
@@ -192,9 +193,17 @@ class _ProductsPageState extends State<ProductsPage> {
                                                                   urlimage: '${controller.allProduct!.data![index].image}',
                                                                 )));
                                                       },
-                                                      child:
-                                                          Image.network('${controller.allProduct!.data![index].image}', fit: BoxFit.fill),
-                                                    )
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: '${controller.allProduct!.data![index].image}',
+                                                        fit: BoxFit.fill,
+                                                        //width: double.infinity,
+                                                        placeholder: (context, url) => Center(
+                                                          child: CircularProgressIndicator(
+                                                            strokeWidth: 2.0,
+                                                          ),
+                                                        ),
+                                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                                      ))
                                                   : InkWell(
                                                       onTap: () {
                                                         Navigator.of(context).push(MaterialPageRoute(
@@ -285,7 +294,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                                     child: Icon(Icons.edit),
                                                   ),
                                                   SizedBox(
-                                                    width: size.width * 0.01,
+                                                    width: size.width * 0.02,
                                                   ),
                                                   GestureDetector(
                                                       onTap: () {
@@ -296,12 +305,12 @@ class _ProductsPageState extends State<ProductsPage> {
                                                               borderRadius: BorderRadius.circular(15.0),
                                                             ),
                                                             // backgroundColor: Color.fromARGB(255, 95, 9, 3),
-                                                            title: const Text('ยืนยัน'),
-                                                            content: const Text('ต้องการลบสินค้า'),
+                                                            title: Text('ยืนยัน'),
+                                                            content: Text('ต้องการลบสินค้า'),
                                                             actions: <Widget>[
                                                               TextButton(
                                                                 onPressed: () => Navigator.pop(context, 'Cancel'),
-                                                                child: const Text('ยกเลิก'),
+                                                                child: Text('ยกเลิก'),
                                                               ),
                                                               TextButton(
                                                                 onPressed: () async {
@@ -314,7 +323,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                                                     await context.read<ProductController>().getListProducts();
                                                                   }
                                                                 },
-                                                                child: const Text('ตกลง'),
+                                                                child: Text('ตกลง'),
                                                               ),
                                                             ],
                                                           ),
@@ -342,11 +351,11 @@ class _ProductsPageState extends State<ProductsPage> {
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
-                                setState(() {
-                                  start = ((p0 - 1) * start) + 10;
-                                  print(start);
-                                });
-                                await context.read<ProductController>().getListProducts(start: start);
+                                // setState(() {
+                                //   start = ((p0 - 1) * start) + 10;
+                                //   print(start);
+                                // });
+                                await context.read<ProductController>().getListProducts(start: p0 * 10);
                                 if (!mounted) {
                                   return;
                                 }
