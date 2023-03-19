@@ -168,11 +168,11 @@ class _SaleItemsPageState extends State<SaleItemsPage> {
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
-                                setState(() {
-                                  start = ((p0 - 1) * start) + 10;
-                                  print(start);
-                                });
-                                await context.read<PickupProductController>().getListOrders(start: start);
+                                // setState(() {
+                                //   start = ((p0 - 1) * start) + 10;
+                                //   print(start);
+                                // });
+                                await context.read<PickupProductController>().getListOrders(start: p0 * 10);
                                 if (!mounted) {
                                   return;
                                 }

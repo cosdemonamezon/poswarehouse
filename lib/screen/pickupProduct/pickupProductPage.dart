@@ -191,12 +191,12 @@ class _PickupProductPageState extends State<PickupProductPage> {
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
-                                setState(() {
-                                  start = ((p0 - 1) * start) + 10;
-                                  print(start);
-                                });
+                                // setState(() {
+                                //   start = ((p0 - 1) * start) + 10;
+                                //   print(start);
+                                // });
                                 await context.read<PickupProductController>().getListPickupProducts(
-                                      start: start,
+                                      start: p0 * 10,
                                     );
                                 if (!mounted) {
                                   return;

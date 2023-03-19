@@ -186,11 +186,11 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
-                                setState(() {
-                                  start = ((p0 - 1) * start) + 10;
-                                  print(start);
-                                });
-                                await context.read<ReturnProductController>().getListPurchaseDamages(start: start);
+                                // setState(() {
+                                //   start = ((p0 - 1) * start) + 10;
+                                //   print(start);
+                                // });
+                                await context.read<ReturnProductController>().getListPurchaseDamages(start: p0 * 10);
                                 if (!mounted) {
                                   return;
                                 }

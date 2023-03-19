@@ -233,11 +233,11 @@ class _OrderPageState extends State<OrderPage> {
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
-                                setState(() {
-                                  start = ((p0 - 1) * start) + 10;
-                                  print(start);
-                                });
-                                await context.read<OrdersController>().getListOrders(start: start);
+                                // setState(() {
+                                //   start = ((p0 - 1) * start) + 10;
+                                //   print(start);
+                                // });
+                                await context.read<OrdersController>().getListOrders(start: p0 * 10);
                                 if (!mounted) {
                                   return;
                                 }
