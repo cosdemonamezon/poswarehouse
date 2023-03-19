@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:poswarehouse/screen/category/services/categoryController.dart';
+import 'package:poswarehouse/screen/home/services/homeController.dart';
 import 'package:poswarehouse/screen/login/loginPage.dart';
 import 'package:poswarehouse/screen/order/services/ordersController.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
     initializeDateFormatting('th');
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => HomeController()),
         ChangeNotifierProvider(create: (context) => ProductController()),
         ChangeNotifierProvider(create: (context) => CategoryController()),
         ChangeNotifierProvider(create: (context) => OrdersController()),
