@@ -34,7 +34,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   Future<void> _initialize() async {
     LoadingDialog.open(context);
-    await context.read<CategoryController>().getListCategorys();
+    //await context.read<CategoryController>().getListCategorys();
     await context.read<CategoryController>().getListCategorys2();
     LoadingDialog.close(context);
   }
@@ -143,26 +143,26 @@ class _CategoryPageState extends State<CategoryPage> {
                                 rows: List<DataRow>.generate(
                                     controller.allTypeProduct2!.data!.length,
                                     (index) => DataRow(
-                                          // color: MaterialStateProperty
-                                          //     .resolveWith<Color?>(
-                                          //         (Set<MaterialState> states) {
-                                          //   // All rows will have the same selected color.
-                                          //   if (states.contains(
-                                          //       MaterialState.selected)) {
-                                          //     return Theme.of(context)
-                                          //         .colorScheme
-                                          //         .primary
-                                          //         .withOpacity(0.08);
-                                          //   }
-                                          //   // Even rows will have a grey color.
-                                          //   if (index.isEven) {
-                                          //     return Colors.grey
-                                          //         .withOpacity(0.3);
-                                          //   }
-                                          //   return null; // Use default value for other states and odd rows.
-                                          // }),
+                                          color: MaterialStateProperty
+                                              .resolveWith<Color?>(
+                                                  (Set<MaterialState> states) {
+                                            // All rows will have the same selected color.
+                                            if (states.contains(
+                                                MaterialState.selected)) {
+                                              return Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                                  .withOpacity(0.08);
+                                            }
+                                            // Even rows will have a grey color.
+                                            if (index.isEven) {
+                                              return Colors.grey
+                                                  .withOpacity(0.3);
+                                            }
+                                            return null; // Use default value for other states and odd rows.
+                                          }),
                                           cells: <DataCell>[
-                                            DataCell(Text('${controller.allTypeProduct2!.data![index].id}')),
+                                            DataCell(Text('${controller.allTypeProduct2!.data![index].No}')),
                                             DataCell(Text('${controller.allTypeProduct2!.data![index].name}')),
                                             DataCell(Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
@@ -272,7 +272,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       )
                     : SizedBox(),
                 // controller.allProduct != null
-                Row(
+                controller.allTypeProduct2 != null
+                ?Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(
@@ -282,11 +283,11 @@ class _CategoryPageState extends State<CategoryPage> {
                         config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                         onPageChange: (p0) async {
                           LoadingDialog.open(context);
-                          setState(() {
-                            start = ((p0 - 1) * start) + 10;
-                            print(start);
-                          });
-                          await context.read<CategoryController>().getListCategorys2(start: start);
+                          // setState(() {
+                          //   start = ((p0 - 1) * start) + 10;
+                          //   print(start);
+                          // });
+                          await context.read<CategoryController>().getListCategorys2(start: p0 * 10);
                           if (!mounted) {
                             return;
                           }
@@ -295,7 +296,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       ),
                     ),
                   ],
-                ),
+                ): SizedBox.shrink(),
                 // : SizedBox.shrink(),
               ],
             ),

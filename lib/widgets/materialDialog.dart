@@ -33,7 +33,7 @@ class _DialogOkState extends State<DialogOk> {
       ),
       child: SizedBox(
         width: size.width * 0.70,
-        height: size.height * 0.50,
+        height: size.height * 0.55,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
