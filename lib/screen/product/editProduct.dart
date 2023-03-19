@@ -60,8 +60,8 @@ class _EditProductState extends State<EditProduct> {
     await context.read<ProductController>().getDetailProduct(widget.id);
 
     final idCategory = context.read<ProductController>().product!.category_product!.id;
-    await context.read<CategoryController>().getCategoryById(idCategory);
-
+    await context.read<CategoryController>().getCategoryById(idCategory);    
+    await context.read<CategoryController>().getCategory(idCategory);
     final product = context.read<ProductController>().product;
     final _subCategory = context.read<CategoryController>().getCategoryId;
 
@@ -69,7 +69,6 @@ class _EditProductState extends State<EditProduct> {
       if (_subCategory!.isNotEmpty) {
         categoryDetail = _subCategory[0];
       }
-
       productId.text = product!.code.toString();
       productName.text = product.name.toString();
       detailProduct.text = product.detail.toString();
@@ -77,7 +76,12 @@ class _EditProductState extends State<EditProduct> {
       retailPrice.text = product.price_for_retail.toString();
       wholesalePrice.text = product.price_for_wholesale.toString();
       pricePerCarton.text = product.price_for_box.toString();
-      //categoryValue = product.;
+
+      final _category = context.read<CategoryController>().allTypeProduct;
+      final _selectCategory = context.read<CategoryController>().selectCategory;
+      final b = _category!.where((element) => element.id == _selectCategory!.id).toList();
+      categoryValue = b[0];
+      
       images = product.image!;
 
       for (var unit in units!) {
@@ -99,10 +103,18 @@ class _EditProductState extends State<EditProduct> {
 
   Future<void> categoryinitialize() async {
     await context.read<CategoryController>().getListCategorys();
+    //final idCategory = context.read<ProductController>().product!.category_product!.id;
+    //await context.read<CategoryController>().getCategory(idCategory);
     //final idCategory = context.read<CategoryController>().allTypeProduct![0].id;
     //await context.read<CategoryController>().getCategoryById(idCategory);
     setState(() {
-      categoryValue = context.read<CategoryController>().allTypeProduct![0];
+      // final _category = context.read<CategoryController>().allTypeProduct;
+      // final _selectCategory = context.read<CategoryController>().selectCategory;
+      // final b = _category!.where((element) => element.id == _selectCategory!.id).toList();
+      // categoryValue = b[0];
+      //final a = _category!.contains(_selectCategory);
+      //categoryValue = context.read<CategoryController>().allTypeProduct![0];
+      //categoryValue = context.read<CategoryController>().selectCategory;
       //categoryDetail = context.read<CategoryController>().getCategoryId![0];
     });
     unitsitialize();
@@ -217,57 +229,59 @@ class _EditProductState extends State<EditProduct> {
                                 ),
                                 controllerCategory.allTypeProduct != null
                                     ? controllerCategory.allTypeProduct!.isNotEmpty
-                                        ? Container(
-                                            height: size.height * 0.07,
-                                            width: size.width * 0.45,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
-                                                color: Color.fromARGB(255, 238, 238, 238),
-                                                borderRadius: BorderRadius.circular(10)),
-                                            child: DropdownButtonHideUnderline(
-                                              child: DropdownButton<TypeProduct>(
-                                                value: categoryValue,
-                                                icon: Padding(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                                  child: Icon(
-                                                    Icons.keyboard_arrow_down,
-                                                    size: 25,
+                                        ? categoryValue != null
+                                            ? Container(
+                                                height: size.height * 0.07,
+                                                width: size.width * 0.45,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(color: Color.fromARGB(255, 238, 238, 238)),
+                                                    color: Color.fromARGB(255, 238, 238, 238),
+                                                    borderRadius: BorderRadius.circular(10)),
+                                                child: DropdownButtonHideUnderline(
+                                                  child: DropdownButton<TypeProduct>(
+                                                    value: categoryValue,
+                                                    icon: Padding(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10),
+                                                      child: Icon(
+                                                        Icons.keyboard_arrow_down,
+                                                        size: 25,
+                                                      ),
+                                                    ),
+                                                    elevation: 16,
+                                                    isDense: false,
+                                                    isExpanded: true,
+                                                    style: TextStyle(color: Colors.black, fontSize: 16),
+                                                    underline: Container(
+                                                      height: 2,
+                                                      color: Colors.deepPurpleAccent,
+                                                    ),
+                                                    onChanged: (TypeProduct? typeValue) async {
+                                                      // This is called when the user selects an item.
+                                                      await context.read<CategoryController>().getCategoryById(typeValue!.id);
+                                                      setState(() {
+                                                        categoryValue = typeValue;
+                                                        if (context.read<CategoryController>().getCategoryId!.isNotEmpty) {
+                                                          categoryDetail = context.read<CategoryController>().getCategoryId![0];
+                                                        }
+                                                        {
+                                                          return;
+                                                        }
+                                                      });
+                                                    },
+                                                    items: controllerCategory.allTypeProduct!
+                                                        .map<DropdownMenuItem<TypeProduct>>((TypeProduct typeValue) {
+                                                      return DropdownMenuItem<TypeProduct>(
+                                                        value: typeValue,
+                                                        child: Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: 10),
+                                                          child: Text('${typeValue.name}'),
+                                                        ),
+                                                      );
+                                                    }).toList(),
                                                   ),
                                                 ),
-                                                elevation: 16,
-                                                isDense: false,
-                                                isExpanded: true,
-                                                style: TextStyle(color: Colors.black, fontSize: 16),
-                                                underline: Container(
-                                                  height: 2,
-                                                  color: Colors.deepPurpleAccent,
-                                                ),
-                                                onChanged: (TypeProduct? typeValue) async {
-                                                  // This is called when the user selects an item.
-                                                  await context.read<CategoryController>().getCategoryById(typeValue!.id);
-                                                  setState(() {
-                                                    categoryValue = typeValue;
-                                                    if (context.read<CategoryController>().getCategoryId!.isNotEmpty) {
-                                                      categoryDetail = context.read<CategoryController>().getCategoryId![0];
-                                                    }
-                                                    {
-                                                      return;
-                                                    }
-                                                  });
-                                                },
-                                                items: controllerCategory.allTypeProduct!
-                                                    .map<DropdownMenuItem<TypeProduct>>((TypeProduct typeValue) {
-                                                  return DropdownMenuItem<TypeProduct>(
-                                                    value: typeValue,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.symmetric(horizontal: 10),
-                                                      child: Text('${typeValue.name}'),
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
-                                          )
+                                              )
+                                            : SizedBox()
                                         : SizedBox()
                                     : SizedBox(),
                                 controllerCategory.getCategoryId != null
@@ -490,7 +504,7 @@ class _EditProductState extends State<EditProduct> {
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      final img = await picker.pickImage(source: ImageSource.camera);
+                                      final img = await picker.pickImage(source: ImageSource.gallery);
                                       setState(() {
                                         image = img;
                                         images = "";

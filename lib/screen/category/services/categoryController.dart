@@ -14,6 +14,7 @@ class CategoryController extends ChangeNotifier {
   List<TypeProduct>? allTypeProduct;
   List<SubCategory>? getCategoryId;
   TypeProduct? nameCategory;
+  TypeProduct? selectCategory;
 
   getListCategorys2({
     int start = 0,
@@ -40,6 +41,11 @@ class CategoryController extends ChangeNotifier {
 
   getCategoryById(int? id) async {
     getCategoryId = (await CategoryApi.getCategorysById(id)).sub_categorys;
+    notifyListeners();
+  }
+
+   getCategory(int? id) async {
+    selectCategory = await CategoryApi.getCategorysById(id);
     notifyListeners();
   }
 }

@@ -469,22 +469,22 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                     if (id == 1) {
                                                       for (var i = 0; i < listneworder.length; i++) {
                                                         // listneworder[i].price_per_unit = checkListItems[index]["cost"];
-                                                        listneworder[i].cost =
-                                                            double.parse(controller.allProduct!.data![index].price_for_retail!);
+                                                        listneworder[i].price_per_unit =
+                                                            double.parse(controller.allProduct!.data![i].price_for_retail!);
                                                       }
                                                     }
                                                     if (id == 2) {
                                                       for (var i = 0; i < listneworder.length; i++) {
                                                         // listneworder[i].price_per_unit = checkListItems[index]["cost"];
-                                                        listneworder[i].cost =
-                                                            double.parse(controller.allProduct!.data![index].price_for_wholesale!);
+                                                        listneworder[i].price_per_unit =
+                                                            double.parse(controller.allProduct!.data![i].price_for_wholesale!);
                                                       }
                                                     }
                                                     if (id == 3) {
                                                       for (var i = 0; i < listneworder.length; i++) {
                                                         // listneworder[i].price_per_unit = checkListItems[index]["cost"];
-                                                        listneworder[i].cost =
-                                                            double.parse(controller.allProduct!.data![index].price_for_box!);
+                                                        listneworder[i].price_per_unit =
+                                                            double.parse(controller.allProduct!.data![i].price_for_box!);
                                                       }
                                                     } else {}
                                                   }
