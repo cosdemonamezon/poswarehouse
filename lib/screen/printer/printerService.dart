@@ -53,10 +53,9 @@ class PrinterService {
     for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
     //final encodedStr = utf8Encoder.convert('${printer.confirmOrder!.orders![i].product!.name}');
       
-    //   bytes += generator.textEncoded(Uint8List.fromList([
-    //   ...[0x1C, 0x26, 0x1C, 0x43, 0xFF],
-    //   ...encodedStr
-    // ]));
+      int qty = int.parse('${printer.confirmOrder!.orders![i].qty}');
+      double price = double.parse('${printer.confirmOrder!.orders![i].price_per_unit}');
+      double price_per_unit = price * qty;
       await SunmiPrinter.printRow(cols: [        
         ColumnMaker(
           text: '${printer.confirmOrder!.orders![i].product!.code}',
@@ -69,7 +68,8 @@ class PrinterService {
           align: SunmiPrintAlign.RIGHT,
         ),
         ColumnMaker(
-          text: '${printer.confirmOrder!.orders![i].price_per_unit}',
+          text: '${price_per_unit}',
+          //text: '${printer.confirmOrder!.orders![i].price_per_unit}',
           width: 7,
           align: SunmiPrintAlign.RIGHT,
         ),
