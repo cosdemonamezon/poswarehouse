@@ -23,7 +23,7 @@ class Order {
   final String? code;
   final String? price_per_unit;
   final String? price;
-  final String? qty;
+  String? qty;
   String? remark;
   final String? created_at;
   final String? updated_at;

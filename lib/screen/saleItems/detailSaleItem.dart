@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:poswarehouse/models/client.dart';
+import 'package:poswarehouse/models/confirmorder.dart';
+import 'package:poswarehouse/models/order.dart';
 import 'package:poswarehouse/models/orderline.dart';
+import 'package:poswarehouse/models/printer.dart';
 import 'package:poswarehouse/screen/pickupProduct/services/pickupProductController.dart';
+import 'package:poswarehouse/screen/printer/printerService.dart';
+import 'package:poswarehouse/screen/printer/printerService2.dart';
 import 'package:poswarehouse/widgets/LoadingDialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sunmi_printer_plus/enums.dart';
+import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
 
 class DetailSaleItem extends StatefulWidget {
   DetailSaleItem({Key? key, required this.id}) : super(key: key);
@@ -15,15 +23,23 @@ class DetailSaleItem extends StatefulWidget {
 class _DetailSaleItemState extends State<DetailSaleItem> {
   List<Orderline> orderline = [];
   int vat = 0;
+  Printer? printer;
+  bool printBinded = false;
+  ConfirmOrder? confirmOrder;
+  Client? client;
+  int change = 0;
+  List<Order>? ordersList = [];
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
+    _printerInitail();
   }
 
   int newQty(List<Orderline> orders) => orders.fold(0, (previousValue, e) => previousValue + int.parse(e.qty!));
   double sum(List<Orderline> orders) => orders.fold(0,
-      (previous, o) => previous + (int.parse(o.qty!) * int.parse(context.read<PickupProductController>().order!.selling_price.toString())));
+      (previous, o) => previous + (int.parse(o.qty!) * int.parse(o.price_per_unit.toString())));
+  double sumcol(Orderline order) => int.parse(order.qty.toString()) * double.parse(order.price_per_unit.toString());
   double sumVat(List<Orderline> orders) => double.parse((sum(orders) * (vat / 100)).toStringAsFixed(2));
   double newtotal(List<Orderline> orders) => sum(orders) + sumVat(orders);
 
@@ -31,9 +47,59 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
     LoadingDialog.open(context);
     await context.read<PickupProductController>().getDetailOrders(widget.id);
     setState(() {
+      ordersList = [context.read<PickupProductController>().order!];
+      final qtynew = newQty(context.read<PickupProductController>().order!.order_lines!);
+      ordersList![0].qty = qtynew.toString();
+      change = int.parse(context.read<PickupProductController>().order!.amount.toString()) - int.parse(context.read<PickupProductController>().order!.selling_price.toString());
       orderline = context.read<PickupProductController>().order!.order_lines!;
+      confirmOrder = ConfirmOrder(
+        1,
+        context.read<PickupProductController>().order!.order_no,
+        context.read<PickupProductController>().order!.client_id,
+        '',
+        context.read<PickupProductController>().order!.type,
+        context.read<PickupProductController>().order!.status,
+        context.read<PickupProductController>().order!.payment,
+        context.read<PickupProductController>().order!.amount,
+        context.read<PickupProductController>().order!.selling_price,
+        '',
+        '',
+        change,
+        client,
+        ordersList
+      );
+      printer = Printer(confirmOrder);
     });
     LoadingDialog.close(context);
+  }
+
+  Future<bool?> _bindingPrinter() async {
+    final bool? result = await SunmiPrinter.bindingPrinter();
+    return result;
+  }
+
+  void _printerInitail() {
+    _bindingPrinter().then((bool? isBind) async {
+      // final size = await SunmiPrinter.paperSize();
+      // final version = await SunmiPrinter.printerVersion();
+      // final serial = await SunmiPrinter.serialNumber();
+      final printer = await SunmiPrinter.getPrinterStatus();
+
+      setState(() {
+        printBinded = isBind!;
+        // serialNumber = serial;
+        // printerVersion = version;
+        // paperSize = size;
+      });
+      if (printer != PrinterStatus.NORMAL) {
+        _printerInitail();
+      }
+      print('printBinded : $printBinded');
+      // print('serialNumber : $serialNumber');
+      // print('printerVersion : $printerVersion');
+      // print('paperSize : $paperSize');
+      print('printer : $printer');
+    });
   }
 
   @override
@@ -54,7 +120,7 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                         height: size.height * 0.02,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Row(
                             children: [
@@ -71,6 +137,11 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                               ),
                             ],
                           ),
+                          IconButton(onPressed: () async{
+                            if (printer != null) {
+                              await PrinterService2().print(printer!);
+                            }                            
+                          }, icon: Icon(Icons.print_rounded, size: 35,))
                         ],
                       ),
                       SizedBox(
@@ -177,10 +248,13 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                                             label: Text('รหัสสินค้า'),
                                           ),
                                           DataColumn(
-                                            label: Text('จำนวน'),
+                                            label: Text('ชื่อสินค้า'),
                                           ),
                                           DataColumn(
-                                            label: Text('ราคาขาย'),
+                                            label: SizedBox(width: size.width*0.04,child: Text('จำนวน')),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(width: size.width*0.10,child: Center(child: Text('ราคาขายต่อหน่วย'))),
                                           ),
                                           DataColumn(
                                             label: Text('ยอดรวม'),
@@ -192,10 +266,11 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                                                 cells: <DataCell>[
                                                   DataCell(Text('${controller.order!.order_lines![index].id}')),
                                                   DataCell(Text('${controller.order!.order_lines![index].order_no}')),
+                                                  DataCell(Text('${controller.order!.order_lines![index].product!.code}')),
                                                   DataCell(Text('${controller.order!.order_lines![index].product!.name}')),
-                                                  DataCell(Text('${controller.order!.order_lines![index].qty}')),
-                                                  DataCell(Text('${controller.order!.selling_price}')),
-                                                  DataCell(Text('${sum(orderline)}')),
+                                                  DataCell(SizedBox(width: size.width*0.04,child: Center(child: Text('${controller.order!.order_lines![index].qty}')))),
+                                                  DataCell(SizedBox(width: size.width*0.10,child: Center(child: Text('${controller.order!.order_lines![index].price_per_unit}')))),
+                                                  DataCell(Text('${sumcol(controller.order!.order_lines![index])}')),
                                                 ],
                                               )))
                                   : SizedBox(),
