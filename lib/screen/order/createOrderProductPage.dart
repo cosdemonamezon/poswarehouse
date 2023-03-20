@@ -78,7 +78,7 @@ class _CreateOrderProductPageState extends State<CreateOrderProductPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 2),
                   child: Text(
-                    'ราคาขายปลีก',
+                    'วันที่สร้าง',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),

@@ -155,8 +155,7 @@ class _ProductDialogState extends State<ProductDialog> {
                                   rows: List<DataRow>.generate(
                                       products.length,
                                       (index) => DataRow(
-                                            color:
-                                                MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                                            color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                                               // All rows will have the same selected color.
                                               if (states.contains(MaterialState.selected)) {
                                                 return Theme.of(context).colorScheme.primary.withOpacity(0.08);
@@ -217,11 +216,11 @@ class _ProductDialogState extends State<ProductDialog> {
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
                               onPageChange: (p0) async {
                                 LoadingDialog.open(context);
-                                setState(() {
-                                  start = ((p0 - 1) * start) + 10;
-                                  print(start);
-                                });
-                                await context.read<ProductController>().getListProducts(start: start);
+                                // setState(() {
+                                //   start = ((p0 - 1) * start) + 10;
+                                //   print(start);
+                                // });
+                                await context.read<ProductController>().getListProducts(start: p0 * 10);
                                 if (!mounted) {
                                   return;
                                 }
