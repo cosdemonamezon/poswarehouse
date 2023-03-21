@@ -33,7 +33,7 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
-    _printerInitail();
+    //_printerInitail();
   }
 
   int newQty(List<Orderline> orders) => orders.fold(0, (previousValue, e) => previousValue + int.parse(e.qty!));
@@ -47,28 +47,28 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
     LoadingDialog.open(context);
     await context.read<PickupProductController>().getDetailOrders(widget.id);
     setState(() {
-      ordersList = [context.read<PickupProductController>().order!];
-      final qtynew = newQty(context.read<PickupProductController>().order!.order_lines!);
-      ordersList![0].qty = qtynew.toString();
-      change = int.parse(context.read<PickupProductController>().order!.amount.toString()) - int.parse(context.read<PickupProductController>().order!.selling_price.toString());
+      //ordersList = [context.read<PickupProductController>().order!];
+      //final qtynew = newQty(context.read<PickupProductController>().order!.order_lines!);
+      //ordersList![0].qty = qtynew.toString();
+      //change = int.parse(context.read<PickupProductController>().order!.amount.toString()) - int.parse(context.read<PickupProductController>().order!.selling_price.toString());
       orderline = context.read<PickupProductController>().order!.order_lines!;
-      confirmOrder = ConfirmOrder(
-        1,
-        context.read<PickupProductController>().order!.order_no,
-        context.read<PickupProductController>().order!.client_id,
-        '',
-        context.read<PickupProductController>().order!.type,
-        context.read<PickupProductController>().order!.status,
-        context.read<PickupProductController>().order!.payment,
-        context.read<PickupProductController>().order!.amount,
-        context.read<PickupProductController>().order!.selling_price,
-        '',
-        '',
-        change,
-        client,
-        ordersList
-      );
-      printer = Printer(confirmOrder);
+      // confirmOrder = ConfirmOrder(
+      //   1,
+      //   context.read<PickupProductController>().order!.order_no,
+      //   context.read<PickupProductController>().order!.client_id,
+      //   '',
+      //   context.read<PickupProductController>().order!.type,
+      //   context.read<PickupProductController>().order!.status,
+      //   context.read<PickupProductController>().order!.payment,
+      //   context.read<PickupProductController>().order!.amount,
+      //   context.read<PickupProductController>().order!.selling_price,
+      //   '',
+      //   '',
+      //   change,
+      //   client,
+      //   ordersList
+      // );
+      //printer = Printer(confirmOrder);
     });
     LoadingDialog.close(context);
   }
@@ -137,11 +137,11 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                               ),
                             ],
                           ),
-                          IconButton(onPressed: () async{
-                            if (printer != null) {
-                              await PrinterService2().print(printer!);
-                            }                            
-                          }, icon: Icon(Icons.print_rounded, size: 35,))
+                          // IconButton(onPressed: () async{
+                          //   if (printer != null) {
+                          //     await PrinterService2().print(printer!);
+                          //   }                            
+                          // }, icon: Icon(Icons.print_rounded, size: 35,))
                         ],
                       ),
                       SizedBox(
