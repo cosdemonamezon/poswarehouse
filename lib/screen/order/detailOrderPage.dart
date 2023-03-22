@@ -268,7 +268,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
                                                             width: size.width * 0.25,
                                                             height: size.height * 0.07,
                                                             child: Center(
-                                                              child: Text(''
+                                                              child: Text(purchaseOrder!.orders![index].remark ?? ''
                                                                   // '${damageds![index].remark}')
                                                                   ),
                                                             ),
