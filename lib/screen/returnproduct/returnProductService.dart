@@ -22,7 +22,7 @@ class ReturnProductApi {
       body: convert.jsonEncode({
         "draw": 1,
         "order": [
-          {"column": 0, "dir": "asc"}
+          {"column": 1, "dir": "DESC"}
         ],
         "start": start,
         "length": length,
