@@ -349,13 +349,13 @@ class _ProductsPageState extends State<ProductsPage> {
                             NumberPaginator(
                               numberPages: controller.allProduct!.last_page!,
                               config: NumberPaginatorUIConfig(mode: ContentDisplayMode.hidden),
-                              onPageChange: (p0) async {
+                              onPageChange: (v) async {
                                 LoadingDialog.open(context);
                                 // setState(() {
                                 //   start = ((p0 - 1) * start) + 10;
                                 //   print(start);
                                 // });
-                                await context.read<ProductController>().getListProducts(start: p0 * 10);
+                                await context.read<ProductController>().getListProducts(start: v * 10);
                                 if (!mounted) {
                                   return;
                                 }

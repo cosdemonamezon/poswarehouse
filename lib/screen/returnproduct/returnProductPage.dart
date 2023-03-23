@@ -151,8 +151,11 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                     shadowColor: Colors.grey[60],
                                                     backgroundColor: controller.purchaseDamagesList!.data![index].status == 'Finish'
                                                         ? Colors.green
-                                                        : Colors.red[100],
-                                                    label: Text('${controller.purchaseDamagesList!.data![index].status}'))),
+                                                        : Color.fromARGB(255, 238, 13, 35),
+                                                    label: Text(
+                                                      '${controller.purchaseDamagesList!.data![index].status}',
+                                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                                    ))),
                                                 DataCell(Row(
                                                   children: [
                                                     IconButton(
@@ -169,7 +172,6 @@ class _ReturnProductPageState extends State<ReturnProductPage> {
                                                   ],
                                                 ))
                                               ],
-                                              
                                             )))
                                 : SizedBox(),
                           )
