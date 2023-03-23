@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/constants/constants.dart';
 
@@ -248,9 +250,10 @@ class appTextFormField extends StatelessWidget {
 }
 
 class appTextTowFormField extends StatelessWidget {
-  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.controller, this.labelText, this.validator});
+  appTextTowFormField({super.key, this.preIcon, this.sufIcon, required this.sufPress, this.controller, this.labelText, this.validator,this.maxLines});
   IconData? preIcon;
   IconData? sufIcon;
+  int? maxLines;
   VoidCallback sufPress;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
@@ -259,6 +262,7 @@ class appTextTowFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      maxLines: maxLines,
       textAlign: TextAlign.start,
       decoration: InputDecoration(
           labelText: '${labelText}',

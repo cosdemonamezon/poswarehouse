@@ -171,12 +171,15 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(items),
                                           );
                                         }).toList(),
-                                        onChanged: (String? newValue) {
+                                        onChanged: (String? newValue) async{
                                           setState(() {
                                             dropdownvalue = newValue!;
                                             year = newValue;
                                           });
-                                          _initialize();
+                                          //_initialize();
+                                          LoadingDialog.open(context);
+                                          await context.read<HomeController>().getAllReports(year);
+                                          LoadingDialog.close(context);
                                         },
                                       ),
                                     ),

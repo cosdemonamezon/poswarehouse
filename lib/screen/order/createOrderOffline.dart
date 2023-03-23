@@ -33,6 +33,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
   TextEditingController textPriceController = TextEditingController();
   TextEditingController textTotalController = TextEditingController();
   final TextEditingController? datePick = TextEditingController();
+  final TextEditingController? clientId = TextEditingController();
   final TextEditingController? name = TextEditingController();
   final TextEditingController? phone = TextEditingController();
   final TextEditingController? email = TextEditingController();
@@ -70,7 +71,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
     _unitinitialize();
-    _printerInitail();
+    //_printerInitail();
     textPriceController.text;
     setState(() {
       radioButtonItem = checkListItems[0]['valuetitle'];
@@ -256,7 +257,9 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                               SizedBox(
                                                 height: size.height * 0.06,
                                                 child: appTextTowFormField(
+                                                  controller: clientId,
                                                   labelText: 'รหัสสมาชิก',
+                                                  maxLines: 1,
                                                   sufPress: () {},
                                                 ),
                                               ),
@@ -264,10 +267,11 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 height: size.height * 0.01,
                                               ),
                                               SizedBox(
-                                                height: size.height * 0.06,
+                                                height: size.height * 0.075,
                                                 child: appTextTowFormField(
                                                   labelText: 'ชื่อลูกค้า',
                                                   controller: name,
+                                                  maxLines: 1,
                                                   sufPress: () {},
                                                 ),
                                               ),
@@ -279,6 +283,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 child: appTextTowFormField(
                                                   labelText: 'อีเมล',
                                                   controller: email,
+                                                  maxLines: 1,
                                                   sufPress: () {},
                                                 ),
                                               ),
@@ -296,6 +301,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 child: appTextTowFormField(
                                                   controller: datePick,
                                                   labelText: 'วันที่',
+                                                  maxLines: 1,
                                                   sufPress: () async {
                                                     final _pick = await pickDate();
                                                     if (_pick != null) {
@@ -311,10 +317,11 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 height: size.height * 0.01,
                                               ),
                                               SizedBox(
-                                                height: size.height * 0.06,
+                                                height: size.height * 0.075,
                                                 child: appTextTowFormField(
                                                   labelText: 'ที่อยู่',
                                                   controller: address,
+                                                  maxLines: 2,
                                                   sufPress: () {},
                                                 ),
                                               ),
@@ -326,7 +333,56 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                 child: appTextTowFormField(
                                                   labelText: 'เบอร์โทร',
                                                   controller: phone,
-                                                  sufPress: () {},
+                                                  maxLines: 1,
+                                                  sufPress: () async {
+                                                    if (phone!.text != "") {
+                                                      try {
+                                                        LoadingDialog.open(context);
+                                                        await context.read<ProductController>().searchClient(phone!.text);
+                                                        if (controller.client != null) {
+                                                          LoadingDialog.close(context);
+                                                          setState(() {
+                                                            clientId!.text = controller.client!.id.toString();
+                                                            name!.text = controller.client!.name.toString();
+                                                            email!.text = controller.client!.email.toString();
+                                                            address!.text = controller.client!.address.toString();
+                                                          });
+                                                        } else {
+                                                          LoadingDialog.close(context);
+                                                        }
+                                                      } on Exception catch (e) {
+                                                        LoadingDialog.close(context);
+                                                        showDialog(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialogYes(
+                                                              title: 'แจ้งเตือน',
+                                                              description: e.toString(),
+                                                              pressYes: () {
+                                                                Navigator.pop(context, true);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                      }
+                                                    } else {
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible: false,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialogYes(
+                                                            title: 'ไม่พบเบอร์',
+                                                            description: 'โปรดระบุเบอร์โทรของท่าน',
+                                                            pressYes: () {
+                                                              Navigator.pop(context, true);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                  },
+                                                  sufIcon: Icons.search_sharp,
                                                   validator: (val) {
                                                     if (val == null || val.isEmpty) {
                                                       return 'กรุณากรอกหมายเลขโทรศัพท์';
@@ -603,7 +659,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                   onTap: () async {
                                                                     final selectPrice = await showDialog<String>(
                                                                       context: context,
-                                                                      builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}'),
+                                                                      builder: (BuildContext context) =>
+                                                                          InputNumberDialog(code: '${listneworder[index].product!.code}'),
                                                                     );
                                                                     if (selectPrice != null) {
                                                                       setState(() {
@@ -635,7 +692,8 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                                   onTap: () async {
                                                                     final selectNumber = await showDialog<String>(
                                                                       context: context,
-                                                                      builder: (BuildContext context) => InputNumberDialog(code: '${listneworder[index].product!.code}'),
+                                                                      builder: (BuildContext context) =>
+                                                                          InputNumberDialog(code: '${listneworder[index].product!.code}'),
                                                                     );
                                                                     if (selectNumber != null) {
                                                                       setState(() {
@@ -734,24 +792,6 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                     )
                                                   ],
                                                 ),
-                                                // Row(
-                                                //   mainAxisAlignment:
-                                                //       MainAxisAlignment.spaceBetween,
-                                                //   children: [
-                                                //     Text(
-                                                //       'ภาษีมูลค่าเพิ่ม',
-                                                //       style: TextStyle(
-                                                //           fontSize: 16,
-                                                //           fontWeight: FontWeight.bold),
-                                                //     ),
-                                                //     Text(
-                                                //       '${sumVat(listneworder)}',
-                                                //       style: TextStyle(
-                                                //           fontSize: 16,
-                                                //           fontWeight: FontWeight.bold),
-                                                //     )
-                                                //   ],
-                                                // ),
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
@@ -831,25 +871,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                     ),
                                   ),
                                 ),
-                                // SizedBox(
-                                //   height: size.height * 0.10,
-                                //   child: Container(
-                                //     decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                                //     child: Row(
-                                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //       children: [
-                                //         Text(
-                                //           'เงินทอน',
-                                //           style: TextStyle(fontSize: 45.0),
-                                //         ),
-                                //         Text(
-                                //           '${changPrice}',
-                                //           style: TextStyle(fontSize: 45.0),
-                                //         )
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
+
                                 Divider(
                                   thickness: 2,
                                 ),

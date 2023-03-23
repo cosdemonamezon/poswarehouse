@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:poswarehouse/models/allProduct.dart';
+import 'package:poswarehouse/models/client.dart';
 import 'package:poswarehouse/models/confirmorder.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/orderproduct.dart';
@@ -23,6 +24,7 @@ class ProductController extends ChangeNotifier {
   ConfirmOrder? confirmOrder;
   Product? product;
   Product? productCode;
+  Client? client;
 
   //get สินค้าทั้งหมด
   getListProducts({
@@ -92,6 +94,12 @@ class ProductController extends ChangeNotifier {
   createNewOrder(String order_date, String name, String phone, String email, String address, String type,
       List<NewOrders> orders) async {
     orderProduct = await ProductApi.newOrder(order_date, name, phone, email, address, type, orders);
+    notifyListeners();
+  }
+
+  //ค้นหาลูกค้าตามเบอร์โทร
+  searchClient(String phone) async{
+    client = await ProductApi.getClient(phone);
     notifyListeners();
   }
 }

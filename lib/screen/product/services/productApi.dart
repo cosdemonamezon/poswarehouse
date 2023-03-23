@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:poswarehouse/constants/constants.dart';
 import 'package:poswarehouse/models/allProduct.dart';
+import 'package:poswarehouse/models/client.dart';
 import 'package:poswarehouse/models/confirmorder.dart';
 import 'package:poswarehouse/models/neworders.dart';
 import 'package:poswarehouse/models/orderproduct.dart';
@@ -332,6 +333,26 @@ class ProductApi {
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
       return ConfirmOrder.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  //get client by phone
+  static Future<Client> getClient(
+    String phone,
+  ) async {
+    final url = Uri.https(publicUrl, '/pos/public/api/get_client_by_phone/$phone');
+    var headers = {'Content-Type': 'application/json'};
+    final response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+      return Client.fromJson(data['data']);
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);
