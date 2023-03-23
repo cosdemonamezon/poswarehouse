@@ -137,11 +137,11 @@ class _DetailSaleItemState extends State<DetailSaleItem> {
                               ),
                             ],
                           ),
-                          // IconButton(onPressed: () async{
-                          //   if (printer != null) {
-                          //     await PrinterService2().print(printer!);
-                          //   }                            
-                          // }, icon: Icon(Icons.print_rounded, size: 35,))
+                          IconButton(onPressed: () async{
+                            if (printer != null) {
+                              //await PrinterService2().print(printer!);
+                            }                            
+                          }, icon: Icon(Icons.print_rounded, size: 35,))
                         ],
                       ),
                       SizedBox(

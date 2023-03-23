@@ -28,7 +28,13 @@ class PrinterService {
     await SunmiPrinter.printText(
       'ที่อยู่ 100 ตำบล เชียงรากน้อย อำเภอบางปะอิน จังหวัดพระนครศรีอยุธยา 13180 โทร  084 092 8554',
     );
-    //await SunmiPrinter.line();
+    await SunmiPrinter.line();
+    await SunmiPrinter.printText(
+      'ชื่อ  ${printer.confirmOrder!.client!.name ?? '-'}',
+    );
+    await SunmiPrinter.printText(
+      'เบอร์โทร  ${printer.confirmOrder!.client!.phone}',      
+    );
 
     await SunmiPrinter.setCustomFontSize(18);
     await SunmiPrinter.printRow(cols: [
