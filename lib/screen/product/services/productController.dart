@@ -99,7 +99,13 @@ class ProductController extends ChangeNotifier {
 
   //ค้นหาลูกค้าตามเบอร์โทร
   searchClient(String phone) async{
-    client = await ProductApi.getClient(phone);
+    final _client = await ProductApi.getClient(phone);
+    if (_client != null) {
+      client = _client;
+    } else {
+      client = null;
+    }
+    //client = await ProductApi.getClient(phone);
     notifyListeners();
   }
 }

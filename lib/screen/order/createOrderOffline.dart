@@ -71,7 +71,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialize());
     _unitinitialize();
-    //_printerInitail();
+    _printerInitail();
     textPriceController.text;
     setState(() {
       radioButtonItem = checkListItems[0]['valuetitle'];
@@ -349,6 +349,19 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                           });
                                                         } else {
                                                           LoadingDialog.close(context);
+                                                          showDialog(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialogYes(
+                                                              title: 'แจ้งเตือน',
+                                                              description: 'ไม่พบข้อมูลลูกค้า',
+                                                              pressYes: () {
+                                                                Navigator.pop(context, true);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
                                                         }
                                                       } on Exception catch (e) {
                                                         LoadingDialog.close(context);

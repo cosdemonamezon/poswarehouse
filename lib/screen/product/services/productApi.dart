@@ -340,7 +340,7 @@ class ProductApi {
   }
 
   //get client by phone
-  static Future<Client> getClient(
+  static getClient(
     String phone,
   ) async {
     final url = Uri.https(publicUrl, '/pos/public/api/get_client_by_phone/$phone');
@@ -352,7 +352,12 @@ class ProductApi {
 
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
-      return Client.fromJson(data['data']);
+      if (data['data'] != null) {
+        return Client.fromJson(data['data']);
+      } else {
+        return null;
+      }
+      
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);
