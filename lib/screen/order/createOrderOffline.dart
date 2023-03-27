@@ -102,7 +102,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
     LoadingDialog.close(context);
   }
 
-  Future<void> test01(String productcode) async {
+  Future<void> scanProduct(String productcode) async {
     print(productcode);
     // await context.read<ProductController>().getListProducts();
 
@@ -350,18 +350,18 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                         } else {
                                                           LoadingDialog.close(context);
                                                           showDialog(
-                                                          context: context,
-                                                          barrierDismissible: false,
-                                                          builder: (BuildContext context) {
-                                                            return AlertDialogYes(
-                                                              title: 'แจ้งเตือน',
-                                                              description: 'ไม่พบข้อมูลลูกค้า',
-                                                              pressYes: () {
-                                                                Navigator.pop(context, true);
-                                                              },
-                                                            );
-                                                          },
-                                                        );
+                                                            context: context,
+                                                            barrierDismissible: false,
+                                                            builder: (BuildContext context) {
+                                                              return AlertDialogYes(
+                                                                title: 'แจ้งเตือน',
+                                                                description: 'ไม่พบข้อมูลลูกค้า',
+                                                                pressYes: () {
+                                                                  Navigator.pop(context, true);
+                                                                },
+                                                              );
+                                                            },
+                                                          );
                                                         }
                                                       } on Exception catch (e) {
                                                         LoadingDialog.close(context);
@@ -444,7 +444,7 @@ class _CreateOrderOffLineState extends State<CreateOrderOffLine> {
                                                   } else if (event.logicalKey.keyLabel == 'Enter') {
                                                     //test.clear();
                                                     print('55555');
-                                                    test01(searchProduct.text);
+                                                    scanProduct(searchProduct.text);
                                                     searchProduct.clear();
                                                     return;
                                                   }
