@@ -15,54 +15,53 @@ class PrinterService {
     await SunmiPrinter.initPrinter();
     await SunmiPrinter.startTransactionPrint(true);
     const utf8Encoder = Utf8Encoder();
-    
 
     //Uint8List byte = await _getImageFromAsset('assets/images/asha.jpg');
     // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
     // await SunmiPrinter.printImage(byte);
     // await SunmiPrinter.setCustomFontSize(16);
     await SunmiPrinter.printText(
-      'ร้าน หน่อย จิปาถะ',
+      'ร้าน โคตรถูก!!',
     );
     await SunmiPrinter.setCustomFontSize(18);
     await SunmiPrinter.printText(
-      'ที่อยู่ 100 ตำบล เชียงรากน้อย อำเภอบางปะอิน จังหวัดพระนครศรีอยุธยา 13180 โทร  084 092 8554',
+      'ที่อยู่ 34/5 ตำบล มุกดาหาร อำเภอ เมืองมุกดาหาร จังหวัดมุกดาหาร 49000 \nโทร 083 770 7608\nโทร 099 423 2484',
     );
     await SunmiPrinter.line();
     await SunmiPrinter.printText(
       'ชื่อ  ${printer.confirmOrder!.client!.name ?? '-'}',
     );
     await SunmiPrinter.printText(
-      'เบอร์โทร  ${printer.confirmOrder!.client!.phone}',      
+      'เบอร์โทร  ${printer.confirmOrder!.client!.phone}',
     );
 
     await SunmiPrinter.setCustomFontSize(18);
     await SunmiPrinter.printRow(cols: [
-        ColumnMaker(
-          text: 'Product Code',
-          width: 27,
-          align: SunmiPrintAlign.LEFT,
-        ),
-        ColumnMaker(
-          text: 'Qty',
-          width: 6,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-        ColumnMaker(
-          text: 'Price',
-          width: 7,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-      ]);
+      ColumnMaker(
+        text: 'Product Code',
+        width: 27,
+        align: SunmiPrintAlign.LEFT,
+      ),
+      ColumnMaker(
+        text: 'Qty',
+        width: 6,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+      ColumnMaker(
+        text: 'Price',
+        width: 7,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+    ]);
     await SunmiPrinter.line();
     await SunmiPrinter.setCustomFontSize(18);
     for (var i = 0; i < printer.confirmOrder!.orders!.length; i++) {
-    //final encodedStr = utf8Encoder.convert('${printer.confirmOrder!.orders![i].product!.name}');
-      
+      //final encodedStr = utf8Encoder.convert('${printer.confirmOrder!.orders![i].product!.name}');
+
       int qty = int.parse('${printer.confirmOrder!.orders![i].qty}');
       double price = double.parse('${printer.confirmOrder!.orders![i].price_per_unit}');
       double price_per_unit = price * qty;
-      await SunmiPrinter.printRow(cols: [        
+      await SunmiPrinter.printRow(cols: [
         ColumnMaker(
           text: '${printer.confirmOrder!.orders![i].product!.code}',
           width: 27,
@@ -82,64 +81,62 @@ class PrinterService {
       ]);
     }
     await SunmiPrinter.line();
-   
+
     await SunmiPrinter.setCustomFontSize(18);
     await SunmiPrinter.printRow(cols: [
-        ColumnMaker(
-          text: 'Total',
-          width: 27,
-          align: SunmiPrintAlign.LEFT,
-        ),
-        ColumnMaker(
-          text: '',
-          width: 6,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-        ColumnMaker(
-          text: '${printer.confirmOrder!.selling_price}',
-          width: 7,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-      ]);
-      await SunmiPrinter.printRow(cols: [
-        ColumnMaker(
-          text: 'Amount',
-          width: 27,
-          align: SunmiPrintAlign.LEFT,
-        ),
-        ColumnMaker(
-          text: '',
-          width: 6,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-        ColumnMaker(
-          text: '${printer.confirmOrder!.amount}',
-          width: 7,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-      ]);
+      ColumnMaker(
+        text: 'Total',
+        width: 27,
+        align: SunmiPrintAlign.LEFT,
+      ),
+      ColumnMaker(
+        text: '',
+        width: 6,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+      ColumnMaker(
+        text: '${printer.confirmOrder!.selling_price}',
+        width: 7,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+    ]);
     await SunmiPrinter.printRow(cols: [
-        ColumnMaker(
-          text: 'Change',
-          width: 27,
-          align: SunmiPrintAlign.LEFT,
-        ),
-        ColumnMaker(
-          text: '',
-          width: 6,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-        ColumnMaker(
-          text: '${printer.confirmOrder!.change}',
-          width: 7,
-          align: SunmiPrintAlign.RIGHT,
-        ),
-      ]);
+      ColumnMaker(
+        text: 'Amount',
+        width: 27,
+        align: SunmiPrintAlign.LEFT,
+      ),
+      ColumnMaker(
+        text: '',
+        width: 6,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+      ColumnMaker(
+        text: '${printer.confirmOrder!.amount}',
+        width: 7,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+    ]);
+    await SunmiPrinter.printRow(cols: [
+      ColumnMaker(
+        text: 'Change',
+        width: 27,
+        align: SunmiPrintAlign.LEFT,
+      ),
+      ColumnMaker(
+        text: '',
+        width: 6,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+      ColumnMaker(
+        text: '${printer.confirmOrder!.change}',
+        width: 7,
+        align: SunmiPrintAlign.RIGHT,
+      ),
+    ]);
     await SunmiPrinter.line();
-     await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
-    await SunmiPrinter.printText(
-      'Thank you' 
-    );
+    await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
+    await SunmiPrinter.printText('Thank you');
 
     await SunmiPrinter.line();
 
